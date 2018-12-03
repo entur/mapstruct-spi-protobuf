@@ -6,7 +6,7 @@ This naming strategy helps [mapstruct](http://mapstruct.org/) generate working m
 
 ## Maven
 
-In the Maven compiler plugin, add the following section to you maven-compiler-plugin plugin configuration:
+Add the following section to you maven-compiler-plugin plugin configuration:
 
 ```xml
 <annotationProcessorPaths>
