@@ -103,9 +103,7 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 		String methodName = super.getElementName(adderMethod);
 		Element receiver = adderMethod.getEnclosingElement();
 		if (receiver != null && protobufMesageOrBuilderType != null && typeUtils.isAssignable(receiver.asType(), protobufMesageOrBuilderType)) {
-
 			String singularizedMethodName = Nouns.singularize(methodName);
-//			System.out.println(methodName + " -> " + singularizedMethodName);
 			methodName = singularizedMethodName;
 		}
 		return methodName;
@@ -123,7 +121,6 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 					TypeMirror superType = type.getSuperclass();
 					if (superType != null && superType.toString().startsWith(PROTOBUF_GENERATED_MESSAGE_V3)) {
 						String propertyName = IntrospectorUtils.decapitalize(methodName.substring(3, methodName.length() - 4));
-//						System.out.println(methodName + " -> propertyname " + propertyName);
 						return propertyName;
 					}
 				}
