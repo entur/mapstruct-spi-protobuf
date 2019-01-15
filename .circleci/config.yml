@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
   test:
     docker:
@@ -11,14 +11,14 @@ jobs:
     steps:
     - checkout
     - restore_cache:
-      #  key: dep-cache-{{ checksum "pom.xml" }}
-        key: dep-cache-base
+        keys: 
+          - dep-cache-{{ checksum "pom.xml" }}
+          - dep-cache-base
     - run: mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.0:go-offline -s /tools/m2/settings.xml
     - save_cache:
         paths:
         - ~/.m2
-#        key: dep-cache-{{ checksum "pom.xml" }}
-        key: dep-cache-base
+        key: dep-cache-{{ checksum "pom.xml" }}
     # Cannot use -o because of snapshot dependencies.
     - run: mvn test -s /tools/m2/settings.xml
     - run:
@@ -42,7 +42,9 @@ jobs:
     steps:
     - checkout
     - restore_cache:
-        key: dep-cache-{{ checksum "pom.xml" }}
+        keys: 
+          - dep-cache-{{ checksum "pom.xml" }}
+          - dep-cache-base
     - run: mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.0:go-offline -s /tools/m2/settings.xml
     - save_cache:
         paths:
