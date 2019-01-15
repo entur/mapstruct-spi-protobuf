@@ -2,6 +2,12 @@
 
 This naming strategy helps [mapstruct](http://mapstruct.org/) generate working mapping code between your domain classes and protobuf classes.
 
+Manual mapping needed for
+
+* map<k,v>
+* oneof
+
+
 # Usage
 
 ## Maven
@@ -11,9 +17,9 @@ Add the following section to you maven-compiler-plugin plugin configuration:
 ```xml
 <annotationProcessorPaths>
 	<path>
-		<groupId>no.entur</groupId>
-		<artifactId>mapstruct-spi-protobuf</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<groupId>no.entur.mapstruct.spi</groupId>
+		<artifactId>protobuf-spi-impl</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
 	</path>
 </annotationProcessorPaths>
 ```
@@ -29,9 +35,9 @@ Complete example:
 		<target>1.8</target> 
 		<annotationProcessorPaths>
 			<path>
-				<groupId>no.entur</groupId>
-				<artifactId>mapstruct-spi-protobuf</artifactId>
-				<version>1.0-SNAPSHOT</version>
+        		<groupId>no.entur.mapstruct.spi</groupId>
+		        <artifactId>protobuf-spi-impl</artifactId>
+		        <version>1.0.0-SNAPSHOT</version>
 			</path>
 		</annotationProcessorPaths>
 	</configuration>
