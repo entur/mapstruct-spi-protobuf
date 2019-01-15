@@ -1,24 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2012-2017 Gunnar Morling (http://www.gunnarmorling.de/) and/or 
+	other contributors as indicated by the @authors tag. See the copyright.txt 
+	file in the distribution for a full listing of all contributors. Licensed 
+	under the Apache License, Version 2.0 (the "License"); you may not use this 
+	file except in compliance with the License. You may obtain a copy of the 
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by 
+	applicable law or agreed to in writing, software distributed under the License 
+	is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY 
+	KIND, either express or implied. See the License for the specific language 
+	governing permissions and limitations under the License. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>no.entur</groupId>
-	<artifactId>mapstruct-spi-protobuf</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<groupId>no.entur.mapstruct.spi</groupId>
+	<artifactId>spi-protobuf-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-	<name>Protobuf spi for Mapstruct</name>
+	<properties>
+		<os.mavenplugin.version>1.4.0.Final</os.mavenplugin.version>
+		<protobuf.plugin.version>0.5.0</protobuf.plugin.version>
+		<protobuf.java.version>3.2.0</protobuf.java.version>
+		<org.mapstruct.version>1.3.0-SNAPSHOT</org.mapstruct.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
 
-    <developers>
-        <developer>
-            <name>Arne Seime</name>
-            <email>arne.seime@entur.org</email>
-            <organization>Entur</organization>
-            <organizationUrl>http://www.entur.org</organizationUrl>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<name>Arne Seime</name>
+			<email>arne.seime@entur.org</email>
+			<organization>Entur</organization>
+			<organizationUrl>http://www.entur.org</organizationUrl>
+		</developer>
+		<developer>
+			<name>Dainius Figoras</name>
+			<email>dainius.figoras@entur.org</email>
+			<organization>Entur</organization>
+			<organizationUrl>http://www.entur.org</organizationUrl>
+		</developer>
+	</developers>
 
 	<scm>
 		<connection>scm:git:ssh://git@github.com/entur/mapstruct-spi-protobuf.git</connection>
@@ -34,39 +57,55 @@
 		<url>http://www.entur.org/</url>
 	</organization>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>entur2-snapshots</name>
-            <url>https://entur2.jfrog.io/entur2/libs-snapshot-local</url>
-        </snapshotRepository>
-    </distributionManagement>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>entur2-snapshots</name>
+			<url>https://entur2.jfrog.io/entur2/libs-snapshot-local</url>
+		</snapshotRepository>
+	</distributionManagement>
 
-	<properties>
-		<org.mapstruct.version>1.3.0.Beta2</org.mapstruct.version>
-		<java.version>1.8</java.version>
-	</properties>
+	<modules>
+		<module>spi-impl</module>
+		<module>usage</module>
+	</modules>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-processor</artifactId>
-			<version>${org.mapstruct.version}</version>
-		</dependency>
-	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct</artifactId>
+				<version>${org.mapstruct.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct-processor</artifactId>
+				<version>${org.mapstruct.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>5.1.0</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
-		<plugins>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
-				<configuration>
-					<source>${java.version}</source> 
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.0</version>
+					<configuration>
+						<source>${maven.compiler.source}</source>
+						<target>${maven.compiler.target}</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>
