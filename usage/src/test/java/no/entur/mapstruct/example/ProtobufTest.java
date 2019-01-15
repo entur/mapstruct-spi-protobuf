@@ -27,13 +27,15 @@ import no.entur.mapstruct.example.protobuf.Permission;
 import no.entur.mapstruct.example.protobuf.Status;
 import no.entur.mapstruct.example.protobuf.User;
 import no.entur.mapstruct.example.protobuf.UserProtos.UserDTO;
-import org.junit.Assert;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Thomas Kratz
@@ -102,82 +104,82 @@ public class ProtobufTest {
     }
 
     private void assertUser(User orig, User back) {
-        Assert.assertEquals(orig.getId(), back.getId());
-        Assert.assertEquals(orig.getEmail(), back.getEmail());
+        assertEquals(orig.getId(), back.getId());
+        assertEquals(orig.getEmail(), back.getEmail());
 
-        Assert.assertEquals(orig.getMainDepartments().size(), back.getMainDepartments().size());
-        Assert.assertEquals(orig.getMainDepartments().get(0).getName(), back.getMainDepartments().get(0).getName());
+        assertEquals(orig.getMainDepartments().size(), back.getMainDepartments().size());
+        assertEquals(orig.getMainDepartments().get(0).getName(), back.getMainDepartments().get(0).getName());
 
-        Assert.assertEquals(orig.getDepartments().size(), back.getDepartments().size());
-        Assert.assertEquals(orig.getDepartments().get(0).getName(), back.getDepartments().get(0).getName());
+        assertEquals(orig.getDepartments().size(), back.getDepartments().size());
+        assertEquals(orig.getDepartments().get(0).getName(), back.getDepartments().get(0).getName());
 
-        Assert.assertEquals(orig.getV1(), back.getV1(), 0.1);
-        Assert.assertEquals(orig.getV2(), back.getV2(), 0.1);
-        Assert.assertEquals(orig.getV3(), back.getV3());
-        Assert.assertEquals(orig.getV4(), back.getV4());
-        Assert.assertEquals(orig.getV5(), back.getV5());
-        Assert.assertEquals(orig.getV6(), back.getV6());
-        Assert.assertEquals(orig.getV7(), back.getV7());
-        Assert.assertEquals(orig.getV8(), back.getV8());
-        Assert.assertEquals(orig.getV9(), back.getV9());
-        Assert.assertEquals(orig.getV10(), back.getV10());
-        Assert.assertEquals(orig.getV11(), back.getV11());
-        Assert.assertEquals(orig.getV12(), back.getV12());
+        assertEquals(orig.getV1(), back.getV1(), 0.1);
+        assertEquals(orig.getV2(), back.getV2(), 0.1);
+        assertEquals(orig.getV3(), back.getV3());
+        assertEquals(orig.getV4(), back.getV4());
+        assertEquals(orig.getV5(), back.getV5());
+        assertEquals(orig.getV6(), back.getV6());
+        assertEquals(orig.getV7(), back.getV7());
+        assertEquals(orig.getV8(), back.getV8());
+        assertEquals(orig.getV9(), back.getV9());
+        assertEquals(orig.getV10(), back.getV10());
+        assertEquals(orig.getV11(), back.getV11());
+        assertEquals(orig.getV12(), back.getV12());
 
-        Assert.assertEquals(orig.isV13(), back.isV13());
+        assertEquals(orig.isV13(), back.isV13());
 
-        Assert.assertEquals(orig.getV14(), back.getV14());
-        Assert.assertEquals(orig.getV15(), back.getV15());
-        Assert.assertEquals(orig.getV16(), back.getV16());
-        Assert.assertEquals(orig.getV16(), back.getV16());
+        assertEquals(orig.getV14(), back.getV14());
+        assertEquals(orig.getV15(), back.getV15());
+        assertEquals(orig.getV16(), back.getV16());
+        assertEquals(orig.getV16(), back.getV16());
 
-        Assert.assertEquals(orig.getRv1().size(), back.getRv1().size());
-        Assert.assertEquals(orig.getRv1().get(0), back.getRv1().get(0), 0.1);
+        assertEquals(orig.getRv1().size(), back.getRv1().size());
+        assertEquals(orig.getRv1().get(0), back.getRv1().get(0), 0.1);
 
-        Assert.assertEquals(orig.getRv2().size(), back.getRv2().size());
-        Assert.assertEquals(orig.getRv2().get(0), back.getRv2().get(0), 0.1);
+        assertEquals(orig.getRv2().size(), back.getRv2().size());
+        assertEquals(orig.getRv2().get(0), back.getRv2().get(0), 0.1);
 
-        Assert.assertEquals(orig.getRv3().size(), back.getRv3().size());
-        Assert.assertEquals(orig.getRv3().get(0), back.getRv3().get(0));
+        assertEquals(orig.getRv3().size(), back.getRv3().size());
+        assertEquals(orig.getRv3().get(0), back.getRv3().get(0));
 
-        Assert.assertEquals(orig.getRv4().size(), back.getRv4().size());
-        Assert.assertEquals(orig.getRv4().get(0), back.getRv4().get(0));
+        assertEquals(orig.getRv4().size(), back.getRv4().size());
+        assertEquals(orig.getRv4().get(0), back.getRv4().get(0));
 
-        Assert.assertEquals(orig.getRv5().size(), back.getRv5().size());
-        Assert.assertEquals(orig.getRv5().get(0), back.getRv5().get(0));
+        assertEquals(orig.getRv5().size(), back.getRv5().size());
+        assertEquals(orig.getRv5().get(0), back.getRv5().get(0));
 
-        Assert.assertEquals(orig.getRv6().size(), back.getRv6().size());
-        Assert.assertEquals(orig.getRv6().get(0), back.getRv6().get(0));
+        assertEquals(orig.getRv6().size(), back.getRv6().size());
+        assertEquals(orig.getRv6().get(0), back.getRv6().get(0));
 
-        Assert.assertEquals(orig.getRv7().size(), back.getRv7().size());
-        Assert.assertEquals(orig.getRv7().get(0), back.getRv7().get(0));
+        assertEquals(orig.getRv7().size(), back.getRv7().size());
+        assertEquals(orig.getRv7().get(0), back.getRv7().get(0));
 
-        Assert.assertEquals(orig.getRv8().size(), back.getRv8().size());
-        Assert.assertEquals(orig.getRv8().get(0), back.getRv8().get(0));
+        assertEquals(orig.getRv8().size(), back.getRv8().size());
+        assertEquals(orig.getRv8().get(0), back.getRv8().get(0));
 
-        Assert.assertEquals(orig.getRv9().size(), back.getRv9().size());
-        Assert.assertEquals(orig.getRv9().get(0), back.getRv9().get(0));
+        assertEquals(orig.getRv9().size(), back.getRv9().size());
+        assertEquals(orig.getRv9().get(0), back.getRv9().get(0));
 
-        Assert.assertEquals(orig.getRv10().size(), back.getRv10().size());
-        Assert.assertEquals(orig.getRv10().get(0), back.getRv10().get(0));
+        assertEquals(orig.getRv10().size(), back.getRv10().size());
+        assertEquals(orig.getRv10().get(0), back.getRv10().get(0));
 
-        Assert.assertEquals(orig.getRv11().size(), back.getRv11().size());
-        Assert.assertEquals(orig.getRv11().get(0), back.getRv11().get(0));
+        assertEquals(orig.getRv11().size(), back.getRv11().size());
+        assertEquals(orig.getRv11().get(0), back.getRv11().get(0));
 
-        Assert.assertEquals(orig.getRv12().size(), back.getRv12().size());
-        Assert.assertEquals(orig.getRv12().get(0), back.getRv12().get(0));
+        assertEquals(orig.getRv12().size(), back.getRv12().size());
+        assertEquals(orig.getRv12().get(0), back.getRv12().get(0));
 
-        Assert.assertEquals(orig.getRv13().size(), back.getRv13().size());
-        Assert.assertEquals(orig.getRv13().get(0), back.getRv13().get(0));
+        assertEquals(orig.getRv13().size(), back.getRv13().size());
+        assertEquals(orig.getRv13().get(0), back.getRv13().get(0));
 
-        Assert.assertEquals(orig.getRv14().size(), back.getRv14().size());
-        Assert.assertEquals(orig.getRv14().get(0), back.getRv14().get(0));
+        assertEquals(orig.getRv14().size(), back.getRv14().size());
+        assertEquals(orig.getRv14().get(0), back.getRv14().get(0));
 
-        Assert.assertEquals(orig.getRv15().size(), back.getRv15().size());
-        Assert.assertEquals(orig.getRv15().get(0), back.getRv15().get(0));
+        assertEquals(orig.getRv15().size(), back.getRv15().size());
+        assertEquals(orig.getRv15().get(0), back.getRv15().get(0));
 
-        Assert.assertEquals(orig.getRv16().size(), back.getRv16().size());
-        Assert.assertEquals(orig.getRv16().get(0), back.getRv16().get(0));
+        assertEquals(orig.getRv16().size(), back.getRv16().size());
+        assertEquals(orig.getRv16().get(0), back.getRv16().get(0));
     }
 
     @Test
@@ -201,7 +203,7 @@ public class ProtobufTest {
         UserDTO deserialized = UserDTO.parseFrom(dto.toByteArray());
         User back = UserMapper.INSTANCE.map(deserialized);
 
-        Assert.assertEquals(null, back.getId());
-        Assert.assertEquals("test", back.getEmail());
+        assertEquals(null, back.getId());
+        assertEquals("test", back.getEmail());
     }
 }
