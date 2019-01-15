@@ -1,11 +1,4 @@
-package no.entur.mapstruct;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+package no.entur.mapstruct.example.protobuf;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -18,6 +11,11 @@ import org.mapstruct.ap.spi.DefaultAccessorNamingStrategy;
 import org.mapstruct.ap.spi.MapStructProcessingEnvironment;
 import org.mapstruct.ap.spi.util.IntrospectorUtils;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author Arne Seime
  */
@@ -26,17 +24,21 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
     public static final String PROTOBUF_MESSAGE_OR_BUILDER = "com.google.protobuf.MessageOrBuilder";
     public static final String PROTOBUF_GENERATED_MESSAGE_V3 = "com.google.protobuf.GeneratedMessageV3";
     public static final String LIST_SUFFIX = "List";
+    public static final String BUILDER_LIST_SUFFIX = "BuilderList";
 
     public static final Set<String> INTERNAL_METHODS = new HashSet<>(
             Arrays.asList("newBuilder", "newBuilderForType", "parseFrom", "parseDelimitedFrom", "getDefaultInstance", "getDescriptor", "getDescriptorForType",
-                    "getDefaultInstanceForType", "clear", "clearField", "mergeFrom", "setRepeatedField", "setUnknownFields", "getSerializedSize", "getAllFields",
+                    "getDefaultInstanceForType", "clear", "clearField", "clearOneof",
+                    "mergeFrom", "setRepeatedField", "setUnknownFields", "getSerializedSize", "getAllFields",
                     "getAllFieldsMutable", "getAllFieldsRaw", "getDescriptorForType", "getField", "getFieldRaw", "getOneofFieldDescriptor", "getParserForType",
                     "getRepeatedField", "getRepeatedFieldCount", "getUnknownFields", "getInitializationErrorString", "getMemoizedSerializedSize",
-                    "getOneofFieldDescriptor", "getSerializedSize", "getMemoizedSerializedSize", "getSerializingExceptionMessage", "isInitialized"
+                    "getOneofFieldDescriptor", "getSerializedSize", "getMemoizedSerializedSize", "getSerializingExceptionMessage", "isInitialized",
+                    "mergeUnknownFields"
             ));
 
-    public static final List<String> INTERNAL_SPECIAL_METHOD_ENDINGS = Arrays.asList("Value", "Count", "Bytes");
+    public static final List<String> INTERNAL_SPECIAL_METHOD_ENDINGS = Arrays.asList("Value", "Count", "Bytes", "Map", "ValueList");
 
+    public static final List<String> INTERNAL_SPECIAL_METHOD_BEGINNINGS = Arrays.asList("remove", "clear", "mutable", "merge", "putAll", "getMutable");
 
     protected TypeMirror protobufMesageOrBuilderType;
 
@@ -55,10 +57,20 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 
         for (String checkMethod : INTERNAL_SPECIAL_METHOD_ENDINGS) {
             if (methodName.endsWith(checkMethod)) {
-                String enumMethod = methodName.substring(0, methodName.length() - checkMethod.length());
+                String propertyMethod = methodName.substring(0, methodName.length() - checkMethod.length());
+                boolean propertyMethodExists = method.getEnclosingElement().getEnclosedElements().stream().anyMatch(e -> ((Element) e).getSimpleName().toString().equals(propertyMethod));
+                if (propertyMethodExists) {
+                    return true;
+                }
+            }
+        }
 
-                boolean enumMethodExists = method.getEnclosingElement().getEnclosedElements().stream().anyMatch(e -> ((Element) e).getSimpleName().toString().equals(enumMethod));
-                if (enumMethodExists) {
+        for (String checkMethod : INTERNAL_SPECIAL_METHOD_BEGINNINGS) {
+            if (methodName.startsWith(checkMethod)) {
+                String propertyMethod = "get" + methodName.substring(checkMethod.length());
+
+                boolean propertyMethodExists = method.getEnclosingElement().getEnclosedElements().stream().anyMatch(e -> ((Element) e).getSimpleName().toString().equals(propertyMethod));
+                if (propertyMethodExists) {
                     return true;
                 }
             }
@@ -69,12 +81,11 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 
     @Override
     public boolean isGetterMethod(ExecutableElement method) {
-
-        if (isSpecialMethod(method)) {
-            return false;
-        }
-
         String methodName = method.getSimpleName().toString();
+
+//        if (methodName.endsWith("Builder")) {
+//            return false;
+//        }
 
         if (methodName.endsWith("OrBuilder")) {
             return false;
@@ -84,9 +95,17 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
             return false;
         }
 
+        if (methodName.endsWith(BUILDER_LIST_SUFFIX)) {
+            return false;
+        }
+
         if (INTERNAL_METHODS.contains(methodName)) {
             return false;
         } else {
+            if (isSpecialMethod(method)) {
+                return false;
+            }
+
             return super.isGetterMethod(method);
         }
 
@@ -99,6 +118,10 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
         if (INTERNAL_METHODS.contains(methodName)) {
             return false;
         } else {
+            if (isSpecialMethod(method)) {
+                return false;
+            }
+
             return super.isSetterMethod(method);
         }
     }
@@ -146,11 +169,13 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
             String singularizedMethodName = Nouns.singularize(methodName);
             methodName = singularizedMethodName;
         }
+
         return methodName;
     }
 
     @Override
     public String getPropertyName(ExecutableElement getterOrSetterMethod) {
+
         String methodName = getterOrSetterMethod.getSimpleName().toString();
         if (methodName.startsWith("get") || methodName.startsWith("set")) {
 
@@ -160,7 +185,9 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
                     TypeElement type = (TypeElement) receiver;
                     TypeMirror superType = type.getSuperclass();
                     if (superType != null && superType.toString().startsWith(PROTOBUF_GENERATED_MESSAGE_V3)) {
+
                         String propertyName = IntrospectorUtils.decapitalize(methodName.substring(3, methodName.length() - 4));
+
                         return propertyName;
                     }
                 }
