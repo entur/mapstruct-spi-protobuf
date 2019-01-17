@@ -38,7 +38,7 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 
     public static final List<String> INTERNAL_SPECIAL_METHOD_ENDINGS = Arrays.asList("Value", "Count", "Bytes", "Map", "ValueList");
 
-    public static final List<String> INTERNAL_SPECIAL_METHOD_BEGINNINGS = Arrays.asList("remove", "clear", "mutable", "merge", "putAll", "getMutable");
+    public static final List<String> INTERNAL_SPECIAL_METHOD_BEGINNINGS = Arrays.asList("remove", "clear", "mutable", "merge", "putAll", "getMutable", "with");
 
     protected TypeMirror protobufMesageOrBuilderType;
 

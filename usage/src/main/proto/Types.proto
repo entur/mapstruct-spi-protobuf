@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package no.entur.mapstruct.example.protobuf;
+
+message ObjectRef{
+    string value = 2;
+    string ref = 3;
+    string version_ref = 4;
+    string version = 5;
+}
