@@ -35,6 +35,8 @@ jobs:
             root: .
             paths:
               - spi-impl/target/
+              - usage/target/
+
     - run:
         name: Save test results
         command: |
