@@ -1,4 +1,14 @@
 version: 2.1
+aliases:
+  - &sonar-scan
+    command: |
+      mvn sonar:sonar -s /tools/m2/settings.xml \
+        -Dsonar.projectKey=entur_${CIRCLE_PROJECT_REPONAME} \
+        -Dsonar.organization=enturas-github \
+        -Dsonar.projectName=${CIRCLE_PROJECT_REPONAME} \
+        -Dsonar.host.url=https://sonarcloud.io \
+        -Dsonar.login=${ENTUR_SONAR_PASSWORD}
+
 jobs:
   test:
     docker:
@@ -21,6 +31,10 @@ jobs:
         key: dep-cache-{{ checksum "pom.xml" }}
     # Cannot use -o because of snapshot dependencies.
     - run: mvn test -s /tools/m2/settings.xml
+    - persist_to_workspace:
+            root: .
+            paths:
+              - spi-impl/target/
     - run:
         name: Save test results
         command: |
@@ -52,8 +66,42 @@ jobs:
         key: dep-cache-{{ checksum "pom.xml" }}
     # Cannot use -o because of snapshot dependencies.
     - run: mvn deploy -s /tools/m2/settings.xml -DskipTests
+
+  sonar:
+    docker:
+      - image: eu.gcr.io/carbon-1287/circleci-toolbox-image-java11
+        auth:
+          username: _json_key
+          password: $GCLOUD_SERVICE_KEY
+    environment:
+      MAVEN_OPTS: -Xmx1G -Xms1G
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          keys:
+            - dep-cache-{{ checksum "pom.xml" }}
+            - dep-cache-base
+      - run: *sonar-scan
+
 workflows:
   version: 2
+  nightly-sonar-analysis:
+    triggers:
+      - schedule:
+          cron: "0 2 * * *"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - test:
+          context: org-carbon
+      - sonar:
+          context: org-carbon
+          requires:
+            - test
+
   build_test_deploy:
     jobs:
     - test:
@@ -65,3 +113,7 @@ workflows:
         filters:
           branches:
             only: master
+    - sonar:
+        context: org-carbon
+        requires:
+          - test
