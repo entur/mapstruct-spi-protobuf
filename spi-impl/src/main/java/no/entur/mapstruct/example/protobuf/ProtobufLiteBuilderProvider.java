@@ -1,10 +1,11 @@
 package no.entur.mapstruct.example.protobuf;
 
-import com.sun.tools.javac.code.Type;
 import org.mapstruct.ap.spi.DefaultBuilderProvider;
 
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeMirror;
+import javax.lang.model.type.TypeVariable;
 
 /**
  * Detect builder methods for protobuf lite generated classes.
@@ -22,10 +23,10 @@ public class ProtobufLiteBuilderProvider extends DefaultBuilderProvider {
     protected boolean isBuildMethod(ExecutableElement buildMethod, TypeElement typeElement) {
 
         if (PROTOBUF_BUILD_METHOD_NAME.equals(buildMethod.getSimpleName().toString())) {
-            if (buildMethod.getReturnType() instanceof Type.TypeVar) {
-                Type.TypeVar tv = (Type.TypeVar) buildMethod.getReturnType();
+            if (buildMethod.getReturnType() instanceof TypeVariable) {
+                TypeVariable tv = (TypeVariable) buildMethod.getReturnType();
 
-                Type upperBound = tv.getUpperBound() == null ? tv : tv.getUpperBound();
+                TypeMirror upperBound = tv.getUpperBound() == null ? tv : tv.getUpperBound();
 
                 if (upperBound.toString().startsWith(PROTOBUF_LITE_GENERATED_MESSAGE)) {
                     return true;
