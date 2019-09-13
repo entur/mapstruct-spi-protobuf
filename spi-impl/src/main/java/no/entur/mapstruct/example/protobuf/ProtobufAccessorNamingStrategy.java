@@ -26,7 +26,7 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
     public static final String LIST_SUFFIX = "List";
     public static final String BUILDER_LIST_SUFFIX = "BuilderList";
 
-    public static final Set<String> INTERNAL_METHODS = new HashSet<>(
+    protected static final Set<String> INTERNAL_METHODS = new HashSet<>(
             Arrays.asList("newBuilder", "newBuilderForType", "parseFrom", "parseDelimitedFrom", "getDefaultInstance", "getDescriptor", "getDescriptorForType",
                     "getDefaultInstanceForType", "clear", "clearField", "clearOneof",
                     "mergeFrom", "setRepeatedField", "setUnknownFields", "getSerializedSize", "getAllFields",
@@ -36,9 +36,9 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
                     "mergeUnknownFields"
             ));
 
-    public static final List<String> INTERNAL_SPECIAL_METHOD_ENDINGS = Arrays.asList("Value", "Count", "Bytes", "Map", "ValueList");
+    protected static final List<String> INTERNAL_SPECIAL_METHOD_ENDINGS = Arrays.asList("Value", "Count", "Bytes", "Map", "ValueList");
 
-    public static final List<String> INTERNAL_SPECIAL_METHOD_BEGINNINGS = Arrays.asList("remove", "clear", "mutable", "merge", "putAll", "getMutable");
+    protected static final List<String> INTERNAL_SPECIAL_METHOD_BEGINNINGS = Arrays.asList("remove", "clear", "mutable", "merge", "putAll", "getMutable");
 
     protected TypeMirror protobufMesageOrBuilderType;
 
