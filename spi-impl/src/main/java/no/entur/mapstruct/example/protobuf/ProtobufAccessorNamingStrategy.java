@@ -20,7 +20,7 @@ import java.util.Set;
  * @author Arne Seime
  */
 public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrategy {
-
+    public static final String PROTOBUF_STRING_LIST_TYPE = "com.google.protobuf.ProtocolStringList";
     public static final String PROTOBUF_MESSAGE_OR_BUILDER = "com.google.protobuf.MessageLiteOrBuilder";
     public static final String PROTOBUF_GENERATED_MESSAGE = "com.google.protobuf.AbstractMessageLite";
     public static final String LIST_SUFFIX = "List";
@@ -177,21 +177,33 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
     public String getPropertyName(ExecutableElement getterOrSetterMethod) {
 
         String methodName = getterOrSetterMethod.getSimpleName().toString();
-        if (methodName.startsWith("get") || methodName.startsWith("set")) {
-
-            if (methodName.endsWith(LIST_SUFFIX)) {
-                Element receiver = getterOrSetterMethod.getEnclosingElement();
-                if (receiver != null && receiver.getKind() == ElementKind.CLASS) {
-                    TypeElement type = (TypeElement) receiver;
-                    if (isProtobufGeneratedMessage(type)) {
-                        String propertyName = IntrospectorUtils.decapitalize(methodName.substring(3, methodName.length() - 4));
-                        return propertyName;
-                    }
-
+        if (isGetList(getterOrSetterMethod) || isSetList(getterOrSetterMethod)) {
+            Element receiver = getterOrSetterMethod.getEnclosingElement();
+            if (receiver != null && receiver.getKind() == ElementKind.CLASS) {
+                TypeElement type = (TypeElement) receiver;
+                if (isProtobufGeneratedMessage(type)) {
+                    String propertyName = IntrospectorUtils.decapitalize(methodName.substring(3, methodName.length() - 4));
+                    return propertyName;
                 }
             }
         }
         return super.getPropertyName(getterOrSetterMethod);
+    }
+
+    private boolean isGetList(ExecutableElement element) {
+        return element.getSimpleName().toString().startsWith("get") && isListType(element.getReturnType());
+    }
+
+    private boolean isSetList(ExecutableElement element) {
+        if (element.getSimpleName().toString().startsWith("set") && element.getParameters().size() == 1) {
+            TypeMirror param = element.getParameters().get(0).asType();
+            return isListType(param);
+        }
+        return false;
+    }
+
+    private boolean isListType(TypeMirror t) {
+        return t.toString().startsWith(List.class.getCanonicalName()) || t.toString().startsWith(PROTOBUF_STRING_LIST_TYPE);
     }
 
 

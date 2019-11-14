@@ -4,7 +4,6 @@ import com.google.protobuf.ByteString;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Thomas Kratz
@@ -16,6 +15,8 @@ public class User {
     //private List<Permission> permissions = new ArrayList<>();
     private List<Department> mainDepartments = new ArrayList<>();
     private List<Department> departments = new ArrayList<>();
+
+	private String nonRepeatableFieldWithSuffixList;
 
     public String getId() {
         return id;
@@ -406,4 +407,11 @@ public class User {
 
     List<MultiNumber> repMultiNumbers;
 
+	public String getNonRepeatableFieldWithSuffixList() {
+		return nonRepeatableFieldWithSuffixList;
+	}
+
+	public void setNonRepeatableFieldWithSuffixList(String nonRepeatableFieldWithSuffixList) {
+		this.nonRepeatableFieldWithSuffixList = nonRepeatableFieldWithSuffixList;
+	}
 }
