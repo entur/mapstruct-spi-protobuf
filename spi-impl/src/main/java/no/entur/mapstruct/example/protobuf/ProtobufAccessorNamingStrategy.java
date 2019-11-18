@@ -178,7 +178,7 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
         String methodName = getterOrSetterMethod.getSimpleName().toString();
         if (isGetList(getterOrSetterMethod) || isSetList(getterOrSetterMethod)) {
             Element receiver = getterOrSetterMethod.getEnclosingElement();
-            if (receiver != null && receiver.getKind() == ElementKind.CLASS) {
+            if (receiver != null && (receiver.getKind() == ElementKind.CLASS || receiver.getKind() == ElementKind.INTERFACE)) {
                 TypeElement type = (TypeElement) receiver;
                 if (isProtobufGeneratedMessage(type)) {
                     String propertyName = IntrospectorUtils.decapitalize(methodName.substring(3, methodName.length() - 4));
