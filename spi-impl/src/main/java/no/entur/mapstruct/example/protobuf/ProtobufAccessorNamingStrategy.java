@@ -22,8 +22,7 @@ import java.util.Set;
 public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrategy {
     public static final String PROTOBUF_STRING_LIST_TYPE = "com.google.protobuf.ProtocolStringList";
     public static final String PROTOBUF_MESSAGE_OR_BUILDER = "com.google.protobuf.MessageLiteOrBuilder";
-    public static final String PROTOBUF_GENERATED_MESSAGE = "com.google.protobuf.AbstractMessageLite";
-    public static final String LIST_SUFFIX = "List";
+    public static final String PROTOBUF_GENERATED_MESSAGE = "com.google.protobuf.Message";
     public static final String BUILDER_LIST_SUFFIX = "BuilderList";
 
     protected static final Set<String> INTERNAL_METHODS = new HashSet<>(
@@ -208,16 +207,27 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 
 
     private boolean isProtobufGeneratedMessage(TypeElement type) {
-        TypeMirror superType = type.getSuperclass();
+        List<? extends TypeMirror> interfaces = type.getInterfaces();
 
-        if (superType != null) {
-            if (superType.toString().startsWith(PROTOBUF_GENERATED_MESSAGE)) {
-                return true;
-            } else if (superType instanceof DeclaredType) {
-                DeclaredType declared = (DeclaredType) superType;
-                Element supertypeElement = declared.asElement();
-                return isProtobufGeneratedMessage((TypeElement) supertypeElement);
+        if (interfaces != null) {
+            for (TypeMirror implementedInterface : interfaces) {
+                if (implementedInterface.toString().startsWith(PROTOBUF_MESSAGE_OR_BUILDER)) {
+                    return true;
+                } else if (implementedInterface instanceof DeclaredType) {
+                    DeclaredType declared = (DeclaredType) implementedInterface;
+                    Element supertypeElement = declared.asElement();
+                    if (isProtobufGeneratedMessage((TypeElement) supertypeElement)) {
+                        return true;
+                    }
+                }
             }
+        }
+
+        TypeMirror superType = type.getSuperclass();
+        if (superType instanceof DeclaredType) {
+            DeclaredType declared = (DeclaredType) superType;
+            Element supertypeElement = declared.asElement();
+            return isProtobufGeneratedMessage((TypeElement) supertypeElement);
         }
         return false;
     }
