@@ -3,7 +3,7 @@ aliases:
   - &sonar-scan
     command: |
       mvn sonar:sonar -s /tools/m2/settings.xml \
-        -Dsonar.projectKey=${CIRCLE_PROJECT_REPONAME} \
+        -Dsonar.projectKey=entur_${CIRCLE_PROJECT_REPONAME} \
         -Dsonar.organization=enturas-github \
         -Dsonar.projectName=${CIRCLE_PROJECT_REPONAME} \
         -Dsonar.host.url=https://sonarcloud.io \
