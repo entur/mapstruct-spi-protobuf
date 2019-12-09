@@ -1,6 +1,7 @@
 # Protobuf accessor naming strategy [![CircleCI](https://circleci.com/gh/entur/mapstruct-spi-protobuf.svg?style=svg)](https://circleci.com/gh/entur/mapstruct-spi-protobuf)
 
 This naming strategy helps [mapstruct](http://mapstruct.org/) generate working mapping code between your domain classes and protobuf classes.
+Both [fullblown Java protobuf](https://github.com/protocolbuffers/protobuf/tree/master/java) and [protolite](https://github.com/protocolbuffers/protobuf/blob/master/java/lite.md) classes suported.
 
 Manual mapping needed for
 
@@ -22,6 +23,14 @@ Add the following section to you maven-compiler-plugin plugin configuration:
 		<version>1.0.0-SNAPSHOT</version>
 	</path>
 </annotationProcessorPaths>
+<dependencies>
+    <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct</artifactId>
+        <version>${org.mapstruct.version}</version>
+    </dependency>
+</dependencies>
+
 ```
 
 Complete example:
@@ -41,6 +50,14 @@ Complete example:
 			</path>
 		</annotationProcessorPaths>
 	</configuration>
+    <dependencies>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+    </dependencies>
+
 </plugin>
 ```
 

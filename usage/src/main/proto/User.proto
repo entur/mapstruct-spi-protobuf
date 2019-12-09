@@ -73,6 +73,8 @@ message UserDTO {
     // repeated google.protobuf.Any rv17 = 116;
 
     repeated MultiNumberDTO rep_multi_numbers = 120;
+
+    string non_repeatable_field_with_suffix_list = 121;
 }
 
 enum PermissionDTO {

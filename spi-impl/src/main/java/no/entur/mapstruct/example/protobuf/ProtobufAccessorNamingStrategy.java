@@ -1,16 +1,16 @@
 package no.entur.mapstruct.example.protobuf;
 
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.TypeMirror;
-
 import org.mapstruct.ap.internal.util.Nouns;
 import org.mapstruct.ap.spi.DefaultAccessorNamingStrategy;
 import org.mapstruct.ap.spi.MapStructProcessingEnvironment;
 import org.mapstruct.ap.spi.util.IntrospectorUtils;
 
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeMirror;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -20,10 +20,9 @@ import java.util.Set;
  * @author Arne Seime
  */
 public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrategy {
-
-    public static final String PROTOBUF_MESSAGE_OR_BUILDER = "com.google.protobuf.MessageOrBuilder";
-    public static final String PROTOBUF_GENERATED_MESSAGE_V3 = "com.google.protobuf.GeneratedMessageV3";
-    public static final String LIST_SUFFIX = "List";
+    public static final String PROTOBUF_STRING_LIST_TYPE = "com.google.protobuf.ProtocolStringList";
+    public static final String PROTOBUF_MESSAGE_OR_BUILDER = "com.google.protobuf.MessageLiteOrBuilder";
+    public static final String PROTOBUF_GENERATED_MESSAGE = "com.google.protobuf.Message";
     public static final String BUILDER_LIST_SUFFIX = "BuilderList";
 
     protected static final Set<String> INTERNAL_METHODS = new HashSet<>(
@@ -58,7 +57,7 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
         for (String checkMethod : INTERNAL_SPECIAL_METHOD_ENDINGS) {
             if (methodName.endsWith(checkMethod)) {
                 String propertyMethod = methodName.substring(0, methodName.length() - checkMethod.length());
-                boolean propertyMethodExists = method.getEnclosingElement().getEnclosedElements().stream().anyMatch(e -> ((Element) e).getSimpleName().toString().equals(propertyMethod));
+                boolean propertyMethodExists = method.getEnclosingElement().getEnclosedElements().stream().anyMatch(e -> e.getSimpleName().toString().equals(propertyMethod));
                 if (propertyMethodExists) {
                     return true;
                 }
@@ -69,7 +68,7 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
             if (methodName.startsWith(checkMethod)) {
                 String propertyMethod = "get" + methodName.substring(checkMethod.length());
 
-                boolean propertyMethodExists = method.getEnclosingElement().getEnclosedElements().stream().anyMatch(e -> ((Element) e).getSimpleName().toString().equals(propertyMethod));
+                boolean propertyMethodExists = method.getEnclosingElement().getEnclosedElements().stream().anyMatch(e -> (e).getSimpleName().toString().equals(propertyMethod));
                 if (propertyMethodExists) {
                     return true;
                 }
@@ -177,23 +176,60 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
     public String getPropertyName(ExecutableElement getterOrSetterMethod) {
 
         String methodName = getterOrSetterMethod.getSimpleName().toString();
-        if (methodName.startsWith("get") || methodName.startsWith("set")) {
-
-            if (methodName.endsWith(LIST_SUFFIX)) {
-                Element receiver = getterOrSetterMethod.getEnclosingElement();
-                if (receiver != null && receiver.getKind() == ElementKind.CLASS) {
-                    TypeElement type = (TypeElement) receiver;
-                    TypeMirror superType = type.getSuperclass();
-                    if (superType != null && superType.toString().startsWith(PROTOBUF_GENERATED_MESSAGE_V3)) {
-
-                        String propertyName = IntrospectorUtils.decapitalize(methodName.substring(3, methodName.length() - 4));
-
-                        return propertyName;
-                    }
+        if (isGetList(getterOrSetterMethod) || isSetList(getterOrSetterMethod)) {
+            Element receiver = getterOrSetterMethod.getEnclosingElement();
+            if (receiver != null && (receiver.getKind() == ElementKind.CLASS || receiver.getKind() == ElementKind.INTERFACE)) {
+                TypeElement type = (TypeElement) receiver;
+                if (isProtobufGeneratedMessage(type)) {
+                    String propertyName = IntrospectorUtils.decapitalize(methodName.substring(3, methodName.length() - 4));
+                    return propertyName;
                 }
             }
         }
         return super.getPropertyName(getterOrSetterMethod);
+    }
+
+    private boolean isGetList(ExecutableElement element) {
+        return element.getSimpleName().toString().startsWith("get") && isListType(element.getReturnType());
+    }
+
+    private boolean isSetList(ExecutableElement element) {
+        if (element.getSimpleName().toString().startsWith("set") && element.getParameters().size() == 1) {
+            TypeMirror param = element.getParameters().get(0).asType();
+            return isListType(param);
+        }
+        return false;
+    }
+
+    private boolean isListType(TypeMirror t) {
+        return t.toString().startsWith(List.class.getCanonicalName()) || t.toString().startsWith(PROTOBUF_STRING_LIST_TYPE);
+    }
+
+
+    private boolean isProtobufGeneratedMessage(TypeElement type) {
+        List<? extends TypeMirror> interfaces = type.getInterfaces();
+
+        if (interfaces != null) {
+            for (TypeMirror implementedInterface : interfaces) {
+                if (implementedInterface.toString().startsWith(PROTOBUF_MESSAGE_OR_BUILDER)) {
+                    return true;
+                } else if (implementedInterface instanceof DeclaredType) {
+                    DeclaredType declared = (DeclaredType) implementedInterface;
+                    Element supertypeElement = declared.asElement();
+                    if (isProtobufGeneratedMessage((TypeElement) supertypeElement)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        TypeMirror superType = type.getSuperclass();
+        if (superType instanceof DeclaredType) {
+            DeclaredType declared = (DeclaredType) superType;
+            Element supertypeElement = declared.asElement();
+            return isProtobufGeneratedMessage((TypeElement) supertypeElement);
+        }
+        return false;
     }
 
 }
