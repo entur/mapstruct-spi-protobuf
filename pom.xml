@@ -61,7 +61,7 @@
 		<snapshotRepository>
 			<id>snapshots</id>
 			<name>entur2-snapshots</name>
-			<url>https://entur2.jfrog.io/entur2/libs-snapshot-local</url>
+			<url>https://entur2.jfrog.io/entur2/partner-snapshot</url>
 		</snapshotRepository>
 	</distributionManagement>
 
