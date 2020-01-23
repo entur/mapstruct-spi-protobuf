@@ -1,6 +1,6 @@
 version: 2.1
 aliases:
-  - &sonar-scan
+ - &sonar-scan
     command: |
       mvn sonar:sonar \
         -Dsonar.projectKey=${CIRCLE_PROJECT_REPONAME} \
@@ -95,9 +95,9 @@ aliases:
             </settings>\""
 
 
-    - &java-container-config
-      docker:
-        - image: circleci/openjdk:8-jdk
+  - &java-container-config
+    docker:
+      - image: circleci/openjdk:8-jdk
 
   commands:
     generate-maven-settings-file:
