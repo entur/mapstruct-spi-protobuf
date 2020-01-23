@@ -9,7 +9,7 @@ aliases:
         -Dsonar.host.url=https://sonarcloud.io \
         -Dsonar.login=${ENTUR_SONAR_PASSWORD}
 
-  - &release
+ - &release
     name: Release
     command: |
       if [ "$(git log -1 --pretty=%B)" == "Start release" ]
