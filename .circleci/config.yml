@@ -116,6 +116,8 @@ jobs:
       MAVEN_OPTS: -Xmx3G
     steps:
       - checkout
+      - generate-maven-settings-file:
+          settings-file: *maven-settings-file
       - restore_cache:
           keys:
             - dep-cache-{{ checksum "pom.xml" }}
@@ -149,6 +151,8 @@ jobs:
       MAVEN_OPTS: -Xmx3G
     steps:
       - checkout
+      - generate-maven-settings-file:
+          settings-file: *maven-settings-file
       - restore_cache:
           keys:
             - dep-cache-{{ checksum "pom.xml" }}
@@ -167,6 +171,8 @@ jobs:
       MAVEN_OPTS: -Xmx1G -Xms1G
     steps:
       - checkout
+      - generate-maven-settings-file:
+          settings-file: *maven-settings-file
       - attach_workspace:
           at: .
       - restore_cache:
