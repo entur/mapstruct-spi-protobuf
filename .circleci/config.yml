@@ -1,15 +1,6 @@
 version: 2.1
 aliases:
- - &sonar-scan
-    command: |
-      mvn sonar:sonar \
-        -Dsonar.projectKey=${CIRCLE_PROJECT_REPONAME} \
-        -Dsonar.organization=enturas-github \
-        -Dsonar.projectName=${CIRCLE_PROJECT_REPONAME} \
-        -Dsonar.host.url=https://sonarcloud.io \
-        -Dsonar.login=${ENTUR_SONAR_PASSWORD}
-
- - &release
+  - &release
     name: Release
     command: |
       if [ "$(git log -1 --pretty=%B)" == "Start release" ]
@@ -21,7 +12,7 @@ aliases:
         git pull --no-edit
         git checkout develop
         mvn versions:use-releases
-        mvn gitflow:release-start gitflow:release-finish -Prelease -DpostReleaseGoals=deploy -DargLine=-Prelease -B
+        mvn gitflow:release-start gitflow:release-finish -Prelease -DpostReleaseGoals=deploy -DargLine=-Prelease,'!protoc' -B
       else
         echo "Skipping release"
       fi
@@ -33,7 +24,7 @@ aliases:
 
 
   - &maven-settings-file
-        "\"<settings xsi:schemaLocation='http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd' xmlns='http://maven.apache.org/SETTINGS/1.1.0'
+          "\"<settings xsi:schemaLocation='http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd' xmlns='http://maven.apache.org/SETTINGS/1.1.0'
                 xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
               <servers>
               <server>
@@ -94,74 +85,81 @@ aliases:
               </activeProfiles>
             </settings>\""
 
-
   - &java-container-config
-    docker:
-      - image: circleci/openjdk:8-jdk
+      docker:
+        - image: circleci/openjdk:8-jdk
 
-  commands:
-    generate-maven-settings-file:
-      parameters:
-        settings-file:
-          type: string
-      steps:
-        - run:
-            name: Generate Maven Settings File
-            command: |
-              mkdir -p ~/.m2
-              echo -e << parameters.settings-file >> > ~/.m2/settings.xml
+  - &sonar-scan
+    command: |
+      mvn sonar:sonar \
+        -Dsonar.projectKey=${CIRCLE_PROJECT_REPONAME} \
+        -Dsonar.organization=enturas-github \
+        -Dsonar.projectName=${CIRCLE_PROJECT_REPONAME} \
+        -Dsonar.host.url=https://sonarcloud.io \
+        -Dsonar.login=${ENTUR_SONAR_PASSWORD}
 
+commands:
+  generate-maven-settings-file:
+    parameters:
+      settings-file:
+        type: string
+    steps:
+      - run:
+          name: Generate Maven Settings File
+          command: |
+            mkdir -p ~/.m2
+            echo -e << parameters.settings-file >> > ~/.m2/settings.xml
 jobs:
   test:
     <<: *java-container-config
     environment:
       MAVEN_OPTS: -Xmx3G
     steps:
-    - checkout
-    - restore_cache:
-        keys: 
-          - dep-cache-{{ checksum "pom.xml" }}
-          - dep-cache-base
-    - run: mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.0:go-offline
-    - save_cache:
-        paths:
-        - ~/.m2
-        key: dep-cache-{{ checksum "pom.xml" }}
-    # Cannot use -o because of snapshot dependencies.
-    - run: mvn verify
-    - persist_to_workspace:
-            root: .
-            paths:
-              - spi-impl/target/
-              - usage/target/
+      - checkout
+      - restore_cache:
+          keys:
+            - dep-cache-{{ checksum "pom.xml" }}
+            - dep-cache-base
+      - run: mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.0:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: dep-cache-{{ checksum "pom.xml" }}
+      # Cannot use -o because of snapshot dependencies.
+      - run: mvn verify
+      - persist_to_workspace:
+          root: .
+          paths:
+            - spi-impl/target/
+            - usage/target/
 
-    - run:
-        name: Save test results
-        command: |
-          mkdir -p ~/junit/
-          find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
-        when: always
-    - store_test_results:
-        path: ~/junit
-    - store_artifacts:
-        path: ~/junit
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/junit/
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/junit
+      - store_artifacts:
+          path: ~/junit
   deploy-artifactory:
     <<: *java-container-config
     environment:
       MAVEN_OPTS: -Xmx3G
     steps:
-    - checkout
-    - restore_cache:
-        keys: 
-          - dep-cache-{{ checksum "pom.xml" }}
-          - dep-cache-base
-    - run: mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.0:go-offline
-    - save_cache:
-        paths:
-        - ~/.m2
-        key: dep-cache-{{ checksum "pom.xml" }}
-    # Cannot use -o because of snapshot dependencies.
-    - run: mvn deploy -DskipTests
+      - checkout
+      - restore_cache:
+          keys:
+            - dep-cache-{{ checksum "pom.xml" }}
+            - dep-cache-base
+      - run: mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.0:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: dep-cache-{{ checksum "pom.xml" }}
+      # Cannot use -o because of snapshot dependencies.
+      - run: mvn deploy -DskipTests
 
   sonar:
     <<: *java-container-config
@@ -211,20 +209,20 @@ workflows:
 
   build_test_deploy:
     jobs:
-    - test:
-        context: org-default-build
-    - deploy-artifactory:
-        context: org-default-build
-        requires:
-        - test
-        filters:
-          branches:
-            only: develop
-    - release:
-        context: org-default-build
-        requires:
-          - test
-        filters:
-          branches:
-            only: develop
+      - test:
+          context: org-default-build
+      - deploy-artifactory:
+          context: org-default-build
+          requires:
+            - test
+          filters:
+            branches:
+              only: develop
+      - release:
+          context: org-default-build
+          requires:
+            - test
+          filters:
+            branches:
+              only: develop
 
