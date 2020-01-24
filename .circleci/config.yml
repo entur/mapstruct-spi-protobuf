@@ -12,7 +12,7 @@ aliases:
         git pull --no-edit
         git checkout develop
         mvn versions:use-releases
-        mvn gitflow:release-start gitflow:release-finish -Prelease -DpostReleaseGoals=deploy -DargLine=-Prelease,'!protoc' -B
+        mvn gitflow:release-start gitflow:release-finish -Prelease -DpostReleaseGoals=deploy -DargLine=-Prelease -B
       else
         echo "Skipping release"
       fi
