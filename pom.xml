@@ -128,7 +128,6 @@
 				<executions>
 					<execution>
 						<id>attach-sources</id>
-						<phase>package</phase>
 						<goals>
 							<goal>jar-no-fork</goal>
 						</goals>
@@ -137,11 +136,28 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.1.1</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
-						<phase>deploy</phase>
 						<goals><goal>jar</goal></goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>1.16</version>
+				<executions>
+					<execution>
+						<id>first</id>
+						<goals>
+							<goal>update-file-header</goal>
+						</goals>
+						<phase>process-sources</phase>
+						<configuration>
+							<licenseName>apache_v2</licenseName>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
