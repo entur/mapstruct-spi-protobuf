@@ -20,6 +20,7 @@
     <packaging>pom</packaging>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <os.mavenplugin.version>1.4.0.Final</os.mavenplugin.version>
         <protobuf.plugin.version>0.6.1</protobuf.plugin.version>
         <protobuf.java.version>3.10.0</protobuf.java.version>

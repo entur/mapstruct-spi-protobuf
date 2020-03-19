@@ -18,6 +18,12 @@
  */
 package no.entur.mapstruct.example.mapper;
 
+import org.mapstruct.CollectionMappingStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.ReportingPolicy;
+import org.mapstruct.factory.Mappers;
+
 import no.entur.mapstruct.example.protobuf.Department;
 import no.entur.mapstruct.example.protobuf.MultiNumber;
 import no.entur.mapstruct.example.protobuf.Permission;
@@ -27,51 +33,44 @@ import no.entur.mapstruct.example.protobuf.UserProtos;
 import no.entur.mapstruct.example.protobuf.UserProtos.DepartmentDTO;
 import no.entur.mapstruct.example.protobuf.UserProtos.PermissionDTO;
 import no.entur.mapstruct.example.protobuf.UserProtos.UserDTO;
-import org.mapstruct.CollectionMappingStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.ReportingPolicy;
-import org.mapstruct.ValueMapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED,
-        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
-        unmappedSourcePolicy = ReportingPolicy.ERROR, unmappedTargetPolicy = ReportingPolicy.ERROR)
+@Mapper(collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, unmappedSourcePolicy = ReportingPolicy.ERROR, unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface UserMapper {
 
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    default String mapString(String in) {
-        if ((null == in) || in.isEmpty()) {
-            return null;
-        }
-        return in;
-    }
+	default String mapString(String in) {
+		if ((null == in) || in.isEmpty()) {
+			return null;
+		}
+		return in;
+	}
 
-    default Double mapDouble(Double in) {
-        return in;
-    }
+	default Double mapDouble(Double in) {
+		return in;
+	}
 
-    default MultiNumber map(UserProtos.MultiNumberDTO number) {
-        return new MultiNumber();
-    }
+	default MultiNumber map(UserProtos.MultiNumberDTO number) {
+		return new MultiNumber();
+	}
 
-    default UserProtos.MultiNumberDTO map(MultiNumber number) {
-        return UserProtos.MultiNumberDTO.newBuilder().build();
-    }
+	default UserProtos.MultiNumberDTO map(MultiNumber number) {
+		return UserProtos.MultiNumberDTO.newBuilder().build();
+	}
 
-    UserDTO map(User user);
+	UserDTO map(User user);
 
-    User map(UserDTO userDTO);
+	User map(UserDTO userDTO);
 
-    @ValueMapping(source = "UNRECOGNIZED", target = MappingConstants.NULL)
-    Permission map(PermissionDTO permissionDTO);
-    PermissionDTO map(Permission perm);
+	Permission map(PermissionDTO permissionDTO);
 
-    Status map(UserProtos.EnumStatus permissionDTO);
-    UserProtos.EnumStatus map(Status perm);
+	PermissionDTO map(Permission perm);
 
-    Department map(DepartmentDTO departmentDTO);
-    DepartmentDTO map(Department department);
+	Status map(UserProtos.EnumStatus permissionDTO);
+
+	UserProtos.EnumStatus map(Status perm);
+
+	Department map(DepartmentDTO departmentDTO);
+
+	DepartmentDTO map(Department department);
 }
