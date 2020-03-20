@@ -68,3 +68,4 @@ Figure it out and create a pull request ;)
 # More information:
 
 http://mapstruct.org/documentation/stable/reference/html/index.html#using-spi
+
