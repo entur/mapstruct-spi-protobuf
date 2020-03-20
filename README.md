@@ -16,6 +16,9 @@ which requires manual mapping.
 
 ## ProtobufEnumConstantNamingStrategy
 
+NOTE: Depends on mapstruct https://github.com/mapstruct/mapstruct/pull/2045 as of March 20th 2020. 
+Until merged you must build mapstruct from our branch https://github.com/entur/mapstruct/tree/valuemapping_accessor_spi 
+
 Extends ```DefaultEnumConstantNamingStrategy``` and provides complete enum constant mappings if you follow Googles style guide for enums https://developers.google.com/protocol-buffers/docs/style#enums
 
 # Usage
