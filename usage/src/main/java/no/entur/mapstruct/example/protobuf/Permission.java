@@ -5,7 +5,7 @@ package no.entur.mapstruct.example.protobuf;
  */
 public enum Permission {
 
-    ADMIN,
-    USER,
-    NONE
+	ADMIN,
+	USER,
+	NONE
 }

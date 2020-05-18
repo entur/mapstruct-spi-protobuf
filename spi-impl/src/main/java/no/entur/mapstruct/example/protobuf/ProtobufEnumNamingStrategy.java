@@ -6,18 +6,17 @@ import java.util.List;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
-import org.mapstruct.ap.spi.DefaultEnumConstantNamingStrategy;
-import org.mapstruct.ap.spi.MapStructProcessingEnvironment;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ap.spi.EnumNamingStrategy;
 
 import com.google.common.base.CaseFormat;
 
-public class ProtobufEnumConstantNamingStrategy extends DefaultEnumConstantNamingStrategy {
+public class ProtobufEnumNamingStrategy implements EnumNamingStrategy {
 
+	protected static final String DEFAULT_ENUM_CONSTANT;
 	private static final String PROTOBUF_ENUM_INTERFACE = "com.google.protobuf.ProtocolMessageEnum";
 	private static final String PROTOBUF_LITE_ENUM_INTERFACE = "com.google.protobuf.Internal.EnumLite";
-
 	private static final HashMap<TypeElement, Boolean> knownEnums = new HashMap<>();
-	protected static final String DEFAULT_ENUM_CONSTANT;
 
 	static {
 		DEFAULT_ENUM_CONSTANT = getDefaultEnumConstant();
@@ -32,27 +31,23 @@ public class ProtobufEnumConstantNamingStrategy extends DefaultEnumConstantNamin
 		return "UNSPECIFIED";
 	}
 
-	@Override
-	public void init(MapStructProcessingEnvironment processingEnvironment) {
-		super.init(processingEnvironment);
-	}
-
-	@Override
+	// @Override
 	public boolean isMapEnumConstantToNull(TypeElement enumType, String sourceEnumValue) {
 		if (isProtobufEnum(enumType)) {
 			if ("UNRECOGNIZED".equals(sourceEnumValue)) {
 				return true;
-			} else {
-				String trimmedEnumValue = removeEnumNamePrefixFromConstant(enumType, sourceEnumValue);
-				if (DEFAULT_ENUM_CONSTANT.equals(trimmedEnumValue)) {
-					return true;
-				}
 			}
+
+			String trimmedEnumValue = removeEnumNamePrefixFromConstant(enumType, sourceEnumValue);
+			if (DEFAULT_ENUM_CONSTANT.equals(trimmedEnumValue)) {
+				return true;
+			}
+
 		}
 		return false;
 	}
 
-	@Override
+	// @Override
 	public String getDefaultEnumConstant(TypeElement enumType) {
 		boolean isProtobufEnum = isProtobufEnum(enumType);
 
@@ -69,6 +64,12 @@ public class ProtobufEnumConstantNamingStrategy extends DefaultEnumConstantNamin
 		boolean isProtobufEnum = isProtobufEnum(enumType);
 
 		if (isProtobufEnum) {
+			if (isMapEnumConstantToNull(enumType, sourceEnumValue)) {
+				return MappingConstants.NULL;
+			} else if (sourceEnumValue == null) {
+				return getDefaultEnumConstant(enumType);
+			}
+
 			return removeEnumNamePrefixFromConstant(enumType, sourceEnumValue);
 		} else {
 			return sourceEnumValue;

@@ -1,15 +1,14 @@
 package no.entur.mapstruct.example.protobuf;
 
 public class MultiNumber {
-    public Number getNumber() {
-        return number;
-    }
+	Number number;
 
-    public void setNumber(Number number) {
-        this.number = number;
-    }
+	public Number getNumber() {
+		return number;
+	}
 
-    Number number;
-
+	public void setNumber(Number number) {
+		this.number = number;
+	}
 
 }
