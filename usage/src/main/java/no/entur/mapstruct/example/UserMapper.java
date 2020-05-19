@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.entur.mapstruct.example.mapper;
+package no.entur.mapstruct.example;
 
 import org.mapstruct.CollectionMappingStrategy;
 import org.mapstruct.Mapper;
@@ -24,15 +24,14 @@ import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-import no.entur.mapstruct.example.protobuf.Department;
-import no.entur.mapstruct.example.protobuf.MultiNumber;
-import no.entur.mapstruct.example.protobuf.Permission;
-import no.entur.mapstruct.example.protobuf.Status;
-import no.entur.mapstruct.example.protobuf.User;
-import no.entur.mapstruct.example.protobuf.UserProtos;
-import no.entur.mapstruct.example.protobuf.UserProtos.DepartmentDTO;
-import no.entur.mapstruct.example.protobuf.UserProtos.PermissionDTO;
-import no.entur.mapstruct.example.protobuf.UserProtos.UserDTO;
+import no.entur.mapstruct.example.UserProtos.DepartmentDTO;
+import no.entur.mapstruct.example.UserProtos.PermissionDTO;
+import no.entur.mapstruct.example.UserProtos.UserDTO;
+import no.entur.mapstruct.example.domain.Department;
+import no.entur.mapstruct.example.domain.MultiNumber;
+import no.entur.mapstruct.example.domain.Permission;
+import no.entur.mapstruct.example.domain.Status;
+import no.entur.mapstruct.example.domain.User;
 
 @Mapper(collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, unmappedSourcePolicy = ReportingPolicy.ERROR, unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface UserMapper {

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option java_package = "no.entur.mapstruct.example.protobuf";
+option java_package = "no.entur.mapstruct.example";
 option java_outer_classname = "UserProtos";
 
 enum EnumStatus {
@@ -19,8 +19,6 @@ message MultiNumberDTO {
 message UserDTO {
   string id = 1;
   string email = 2;
-  // repeated PermissionDTO permissions = 3;
-
   repeated DepartmentDTO main_departments = 4;
   repeated DepartmentDTO departments = 5;
 

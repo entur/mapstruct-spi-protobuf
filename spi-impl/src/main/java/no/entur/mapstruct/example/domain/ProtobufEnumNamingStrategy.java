@@ -1,4 +1,4 @@
-package no.entur.mapstruct.example.protobuf;
+package no.entur.mapstruct.example.domain;
 
 import java.util.HashMap;
 import java.util.List;

@@ -7,19 +7,19 @@ NOTE: No prebuilt binaries yet, you must build it yourself.
 
 ## ProtobufAccessorNamingStrategy
 
-Extends ```DefaultProtobufAccessorNamingStrategy``` and provides necessary information to map all fields automatically except 
+Extends ```DefaultProtobufAccessorNamingStrategy``` and provides necessary information to map all fields automatically *except* 
 
 * map<k,v>
 * oneof
 
-which requires manual mapping.
+which require manual mapping.
 
-## ProtobufEnumConstantNamingStrategy
+## ProtobufEnumNamingStrategy
 
-NOTE: Depends on mapstruct https://github.com/mapstruct/mapstruct/pull/2045 as of March 20th 2020. 
-Until merged you must build mapstruct from our branch https://github.com/entur/mapstruct/tree/valuemapping_accessor_spi 
+NOTE: Depends on mapstruct https://github.com/mapstruct/mapstruct/pull/2100 as of May 19th 2020. 
+Until merged you must build mapstruct from our branch https://github.com/entur/mapstruct/tree/filiphr_enumnamingstrategy 
 
-Extends ```DefaultEnumConstantNamingStrategy``` and provides complete enum constant mappings if you follow Googles style guide for enums https://developers.google.com/protocol-buffers/docs/style#enums
+Implements ```EnumNamingStrategy``` and provides complete enum constant mappings if you follow Googles style guide for enums https://developers.google.com/protocol-buffers/docs/style#enums
 
 # Usage
 
@@ -74,10 +74,6 @@ Complete example:
 
 </plugin>
 ```
-
-## Gradle
-
-Figure it out and create a pull request ;)
 
 # More information:
 

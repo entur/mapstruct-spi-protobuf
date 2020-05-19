@@ -19,6 +19,7 @@
 package no.entur.mapstruct.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,17 +30,17 @@ import org.junit.jupiter.api.Test;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import no.entur.mapstruct.example.mapper.UserMapper;
-import no.entur.mapstruct.example.protobuf.Department;
-import no.entur.mapstruct.example.protobuf.MultiNumber;
-import no.entur.mapstruct.example.protobuf.Status;
-import no.entur.mapstruct.example.protobuf.User;
-import no.entur.mapstruct.example.protobuf.UserProtos.UserDTO;
+import no.entur.mapstruct.example.UserProtos.UserDTO;
+import no.entur.mapstruct.example.domain.Department;
+import no.entur.mapstruct.example.domain.MultiNumber;
+import no.entur.mapstruct.example.domain.Status;
+import no.entur.mapstruct.example.domain.User;
 
-/**
- * @author Thomas Kratz
- */
-public class ProtobufTest {
+
+public class MappingTest {
+
+	private static final String MAP_VALUE = "some value";
+	private static final String MAP_KEY = "some key";
 
 	private User generateUser() {
 		User user = new User();
@@ -67,14 +68,13 @@ public class ProtobufTest {
 		user.setV16(Status.STARTED);
 
 		Map<String, String> v19 = new HashMap<>();
-		v19.put("some key", "some value");
-		// user.setV19(v19);
+		v19.put(MAP_KEY, MAP_VALUE);
+		user.setV19(v19);
 
-		Map<String, Department> v20 = new HashMap<>();
-		Department d = new Department();
-		d.setName("department name");
-		v20.put("soem department", d);
-		// user.setV20(v20);
+		/*
+		 * Map<String, Department> v20 = new HashMap<>(); Department d = new Department(); d.setName("department name"); v20.put("soem department", d);
+		 * user.setV20(v20);
+		 */
 
 		user.setRv1(Arrays.asList(1.0));
 		user.setRv2(Arrays.asList(2.0f));
@@ -103,6 +103,9 @@ public class ProtobufTest {
 	}
 
 	private void assertUser(User orig, User back) {
+
+		assertMapEquals(orig.getV19(), back.getV19());
+
 		assertEquals(orig.getId(), back.getId());
 		assertEquals(orig.getEmail(), back.getEmail());
 
@@ -179,6 +182,15 @@ public class ProtobufTest {
 
 		assertEquals(orig.getRv16().size(), back.getRv16().size());
 		assertEquals(orig.getRv16().get(0), back.getRv16().get(0));
+	}
+
+	private void assertMapEquals(Map<String, String> orig, Map<String, String> back) {
+		assertNotNull(orig);
+		assertNotNull(back);
+
+		assertEquals(orig.keySet(), back.keySet(), "Original keys: " + orig.keySet() + " does not match " + back.keySet());
+		assertEquals(orig.values(), back.values(), "Original values: " + orig.values() + " does not match " + back.values());
+
 	}
 
 	@Test
