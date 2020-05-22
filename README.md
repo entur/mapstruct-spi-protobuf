@@ -63,7 +63,11 @@ Complete example:
 
 ## Gradle
 
-Figure it out and create a pull request ;)
+```java
+implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+annotationProcessor "no.entur.mapstruct.spi:protobuf-spi-impl:1.0.0"
+```
 
 # More information:
 
