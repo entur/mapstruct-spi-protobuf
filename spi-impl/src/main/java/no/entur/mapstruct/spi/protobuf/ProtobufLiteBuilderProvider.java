@@ -1,4 +1,4 @@
-package no.entur.mapstruct.example.domain;
+package no.entur.mapstruct.spi.protobuf;
 
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;

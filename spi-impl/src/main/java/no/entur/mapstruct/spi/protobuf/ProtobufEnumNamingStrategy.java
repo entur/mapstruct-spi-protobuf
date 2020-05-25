@@ -1,4 +1,4 @@
-package no.entur.mapstruct.example.domain;
+package no.entur.mapstruct.spi.protobuf;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,8 +47,8 @@ public class ProtobufEnumNamingStrategy implements EnumNamingStrategy {
 		return false;
 	}
 
-	// @Override
-	public String getDefaultEnumConstant(TypeElement enumType) {
+	@Override
+	public String getDefaultNullEnumConstant(TypeElement enumType) {
 		boolean isProtobufEnum = isProtobufEnum(enumType);
 
 		if (isProtobufEnum) {
@@ -67,7 +67,7 @@ public class ProtobufEnumNamingStrategy implements EnumNamingStrategy {
 			if (isMapEnumConstantToNull(enumType, sourceEnumValue)) {
 				return MappingConstants.NULL;
 			} else if (sourceEnumValue == null) {
-				return getDefaultEnumConstant(enumType);
+				return getDefaultNullEnumConstant(enumType);
 			}
 
 			return removeEnumNamePrefixFromConstant(enumType, sourceEnumValue);

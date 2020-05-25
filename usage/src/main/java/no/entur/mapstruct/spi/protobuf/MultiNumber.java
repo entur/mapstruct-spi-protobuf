@@ -1,4 +1,4 @@
-package no.entur.mapstruct.example.domain;
+package no.entur.mapstruct.spi.protobuf;
 
 public class MultiNumber {
 	Number number;

@@ -31,10 +31,10 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import no.entur.mapstruct.example.UserProtos.UserDTO;
-import no.entur.mapstruct.example.domain.Department;
-import no.entur.mapstruct.example.domain.MultiNumber;
-import no.entur.mapstruct.example.domain.Status;
-import no.entur.mapstruct.example.domain.User;
+import no.entur.mapstruct.spi.protobuf.Department;
+import no.entur.mapstruct.spi.protobuf.MultiNumber;
+import no.entur.mapstruct.spi.protobuf.Status;
+import no.entur.mapstruct.spi.protobuf.User;
 
 
 public class MappingTest {
@@ -67,9 +67,9 @@ public class MappingTest {
 		user.setV15(ByteString.copyFromUtf8("byte string"));
 		user.setV16(Status.STARTED);
 
-		Map<String, String> v19 = new HashMap<>();
+		/*Map<String, String> v19 = new HashMap<>();
 		v19.put(MAP_KEY, MAP_VALUE);
-		user.setV19(v19);
+		user.setV19(v19);*/
 
 		/*
 		 * Map<String, Department> v20 = new HashMap<>(); Department d = new Department(); d.setName("department name"); v20.put("soem department", d);
@@ -104,7 +104,7 @@ public class MappingTest {
 
 	private void assertUser(User orig, User back) {
 
-		assertMapEquals(orig.getV19(), back.getV19());
+		//assertMapEquals(orig.getV19(), back.getV19());
 
 		assertEquals(orig.getId(), back.getId());
 		assertEquals(orig.getEmail(), back.getEmail());

@@ -27,11 +27,11 @@ import org.mapstruct.factory.Mappers;
 import no.entur.mapstruct.example.UserProtos.DepartmentDTO;
 import no.entur.mapstruct.example.UserProtos.PermissionDTO;
 import no.entur.mapstruct.example.UserProtos.UserDTO;
-import no.entur.mapstruct.example.domain.Department;
-import no.entur.mapstruct.example.domain.MultiNumber;
-import no.entur.mapstruct.example.domain.Permission;
-import no.entur.mapstruct.example.domain.Status;
-import no.entur.mapstruct.example.domain.User;
+import no.entur.mapstruct.spi.protobuf.Department;
+import no.entur.mapstruct.spi.protobuf.MultiNumber;
+import no.entur.mapstruct.spi.protobuf.Permission;
+import no.entur.mapstruct.spi.protobuf.Status;
+import no.entur.mapstruct.spi.protobuf.User;
 
 @Mapper(collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, unmappedSourcePolicy = ReportingPolicy.ERROR, unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface UserMapper {

@@ -1,1 +1,1 @@
-no.entur.mapstruct.example.domain.ProtobufLiteBuilderProvider
+no.entur.mapstruct.spi.protobuf.ProtobufLiteBuilderProvider
