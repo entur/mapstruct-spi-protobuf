@@ -26,7 +26,7 @@
     <parent>
         <groupId>no.entur.mapstruct.spi</groupId>
         <artifactId>spi-protobuf-parent</artifactId>
-        <version>1.1-filiphr_enumnamingstrategy</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>protobuf-spi-impl</artifactId>
