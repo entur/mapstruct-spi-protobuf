@@ -16,7 +16,7 @@
 
     <groupId>no.entur.mapstruct.spi</groupId>
     <artifactId>spi-protobuf-parent</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2-filiphr_enumnamingstrategy</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -60,14 +60,14 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>ossrh</id>
-            <name>Sonatype snapshot</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>partner-snapshot</id>
+            <name>Partner snapshot</name>
+            <url>https://entur2.jfrog.io/entur2/partner-snapshot-local</url>
         </snapshotRepository>
         <repository>
-            <id>ossrh</id>
-            <name>Sonatype release</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>partner-release</id>
+            <name>Partner release</name>
+            <url>https://entur2.jfrog.io/entur2/partner-release-local</url>
         </repository>
     </distributionManagement>
 
