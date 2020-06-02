@@ -19,6 +19,17 @@
     <version>1.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <name>Mapstruct SPI implementation for protobuf stubs</name>
+    <description>Protobuf support for mapstruct</description>
+    <url>https://github.com/entur/mapstruct-spi-protobuf</url>
+    <licenses>
+        <license>
+            <name>EUPL-1.2 with modifications</name>
+            <url>https://joinup.ec.europa.eu/software/page/eupl</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <os.mavenplugin.version>1.4.0.Final</os.mavenplugin.version>
@@ -110,6 +121,20 @@
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
