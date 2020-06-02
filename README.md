@@ -3,8 +3,6 @@
 This naming strategy helps [mapstruct](http://mapstruct.org/) generate working mapping code between your domain classes and protobuf classes.
 Both [fullblown Java protobuf](https://github.com/protocolbuffers/protobuf/tree/master/java) and [protolite](https://github.com/protocolbuffers/protobuf/blob/master/java/lite.md) classes suported.
 
-NOTE: No prebuilt binaries yet, you must build it yourself.
-
 ## ProtobufAccessorNamingStrategy
 
 Extends ```DefaultProtobufAccessorNamingStrategy``` and provides necessary information to map all fields automatically *except* 
