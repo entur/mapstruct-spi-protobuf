@@ -16,8 +16,7 @@ which require manual mapping.
 
 ## ProtobufEnumNamingStrategy
 
-NOTE: Depends on mapstruct https://github.com/mapstruct/mapstruct/pull/2100 as of May 19th 2020. 
-Until merged you must build mapstruct from our branch https://github.com/entur/mapstruct/tree/filiphr_enumnamingstrategy 
+NOTE: Depends on mapstruct 1.4.0.Beta1
 
 Implements ```EnumNamingStrategy``` and provides complete enum constant mappings if you follow Googles style guide for enums https://developers.google.com/protocol-buffers/docs/style#enums
 
@@ -34,7 +33,7 @@ Add the following section to you maven-compiler-plugin plugin configuration:
 	<path>
 		<groupId>no.entur.mapstruct.spi</groupId>
 		<artifactId>protobuf-spi-impl</artifactId>
-		<version>1.1-SNAPSHOT</version>
+		<version>1.2</version>
 	</path>
 </annotationProcessorPaths>
 <dependencies>
@@ -60,7 +59,7 @@ Complete example:
 			<path>
         		<groupId>no.entur.mapstruct.spi</groupId>
 		        <artifactId>protobuf-spi-impl</artifactId>
-		        <version>1.1-SNAPSHOT</version>
+		        <version>1.2</version>
 			</path>
 		</annotationProcessorPaths>
 	</configuration>
@@ -73,6 +72,14 @@ Complete example:
     </dependencies>
 
 </plugin>
+```
+
+## Gradle
+
+```java
+implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+annotationProcessor "no.entur.mapstruct.spi:protobuf-spi-impl:1.2"
 ```
 
 # More information:
