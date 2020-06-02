@@ -3,6 +3,8 @@
 This naming strategy helps [mapstruct](http://mapstruct.org/) generate working mapping code between your domain classes and protobuf classes.
 Both [fullblown Java protobuf](https://github.com/protocolbuffers/protobuf/tree/master/java) and [protolite](https://github.com/protocolbuffers/protobuf/blob/master/java/lite.md) classes suported.
 
+NOTE: Depends on mapstruct 1.4.0.Beta1
+
 ## ProtobufAccessorNamingStrategy
 
 Extends ```DefaultProtobufAccessorNamingStrategy``` and provides necessary information to map all fields automatically *except* 
@@ -13,8 +15,6 @@ Extends ```DefaultProtobufAccessorNamingStrategy``` and provides necessary infor
 which require manual mapping.
 
 ## ProtobufEnumNamingStrategy
-
-NOTE: Depends on mapstruct 1.4.0.Beta1
 
 Implements ```EnumNamingStrategy``` and provides complete enum constant mappings if you follow Googles style guide for enums https://developers.google.com/protocol-buffers/docs/style#enums
 
