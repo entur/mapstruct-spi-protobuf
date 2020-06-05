@@ -9,84 +9,27 @@
 	is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY 
 	KIND, either express or implied. See the License for the specific language 
 	governing permissions and limitations under the License. -->
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>no.entur.mapstruct.spi</groupId>
     <artifactId>spi-protobuf-parent</artifactId>
     <version>1.2-SNAPSHOT</version>
     <packaging>pom</packaging>
-
     <name>Mapstruct SPI implementation for protobuf stubs</name>
     <description>Protobuf support for mapstruct</description>
-    <url>https://github.com/entur/mapstruct-spi-protobuf</url>
-    <licenses>
-        <license>
-            <name>EUPL-1.2 with modifications</name>
-            <url>https://joinup.ec.europa.eu/software/page/eupl</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <os.mavenplugin.version>1.4.0.Final</os.mavenplugin.version>
-        <protobuf.plugin.version>0.6.1</protobuf.plugin.version>
-        <protobuf.java.version>3.10.0</protobuf.java.version>
-        <org.mapstruct.version>1.4.0.Beta1</org.mapstruct.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
-    <developers>
-        <developer>
-            <name>Arne Seime</name>
-            <email>arne.seime@entur.org</email>
-            <organization>Entur</organization>
-            <organizationUrl>http://www.entur.org</organizationUrl>
-        </developer>
-        <developer>
-            <name>Dainius Figoras</name>
-            <email>dainius.figoras@entur.org</email>
-            <organization>Entur</organization>
-            <organizationUrl>http://www.entur.org</organizationUrl>
-        </developer>
-    </developers>
-
-    <scm>
-        <connection>scm:git:ssh://git@github.com/entur/mapstruct-spi-protobuf.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/entur/mapstruct-spi-protobuf.git</developerConnection>
-        <url>https://github.com/entur/mapstruct-spi-protobuf/tree/master</url>
-        <tag>HEAD</tag>
-    </scm>
-
-    <inceptionYear>2018</inceptionYear>
-
-    <organization>
-        <name>Entur AS and original authors</name>
-        <url>http://www.entur.org/</url>
-    </organization>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <name>Sonatype snapshot</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <name>Sonatype release</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
     <modules>
         <module>spi-impl</module>
         <module>usage</module>
     </modules>
-
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <org.mapstruct.version>1.4.0.Beta1</org.mapstruct.version>
+        <os.mavenplugin.version>1.4.0.Final</os.mavenplugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <protobuf.java.version>3.10.0</protobuf.java.version>
+        <protobuf.plugin.version>0.6.1</protobuf.plugin.version>
+    </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -94,13 +37,11 @@
                 <artifactId>mapstruct</artifactId>
                 <version>${org.mapstruct.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${org.mapstruct.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
@@ -109,7 +50,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
         <pluginManagement>
             <plugins>
@@ -129,10 +69,10 @@
                     <executions>
                         <execution>
                             <id>attach-sources</id>
-                            <phase>package</phase>
                             <goals>
                                 <goal>jar-no-fork</goal>
                             </goals>
+                            <phase>package</phase>
                         </execution>
                     </executions>
                 </plugin>
@@ -143,15 +83,6 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
                 <version>1.20</version>
-                <executions>
-                    <execution>
-                        <id>check-license-header</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>update-file-header</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <organizationName>Entur</organizationName>
                     <inceptionYear>2019</inceptionYear>
@@ -161,6 +92,15 @@
                         <include>**/*.java</include>
                     </includes>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>check-license-header</id>
+                        <goals>
+                            <goal>update-file-header</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.amashchenko.maven.plugin</groupId>
@@ -170,9 +110,75 @@
                     <allowSnapshots>false</allowSnapshots>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.github.ekryd.sortpom</groupId>
+                <artifactId>sortpom-maven-plugin</artifactId>
+                <version>2.11.0</version>
+                <configuration>
+                    <predefinedSortOrder>custom_1</predefinedSortOrder>
+                    <nrOfIndentSpace>4</nrOfIndentSpace>
+                    <lineSeparator>\n</lineSeparator>
+                    <sortProperties>true</sortProperties>
+                    <keepBlankLines>false</keepBlankLines>
+                    <createBackupFile>false</createBackupFile>
+                    <sortDependencies>scope</sortDependencies>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>sort</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-
     </build>
+    <url>https://github.com/entur/mapstruct-spi-protobuf</url>
+    <inceptionYear>2018</inceptionYear>
+    <organization>
+        <name>Entur AS and original authors</name>
+        <url>http://www.entur.org/</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>EUPL-1.2 with modifications</name>
+            <url>https://joinup.ec.europa.eu/software/page/eupl</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Arne Seime</name>
+            <email>arne.seime@entur.org</email>
+            <organization>Entur</organization>
+            <organizationUrl>http://www.entur.org</organizationUrl>
+        </developer>
+        <developer>
+            <name>Dainius Figoras</name>
+            <email>dainius.figoras@entur.org</email>
+            <organization>Entur</organization>
+            <organizationUrl>http://www.entur.org</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:ssh://git@github.com/entur/mapstruct-spi-protobuf.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/entur/mapstruct-spi-protobuf.git</developerConnection>
+        <url>https://github.com/entur/mapstruct-spi-protobuf/tree/master</url>
+        <tag>HEAD</tag>
+    </scm>
+    <distributionManagement>
+        <repository>
+            <id>ossrh</id>
+            <name>Sonatype release</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <name>Sonatype snapshot</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
     <profiles>
         <profile>
             <id>release</id>
@@ -188,10 +194,10 @@
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
-                                <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
+                                <phase>verify</phase>
                                 <configuration>
                                     <passphrase>${env.SONATYPE_GPG_KEY_PASSWORD}</passphrase>
                                     <gpgArguments>
@@ -217,5 +223,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>
