@@ -84,3 +84,4 @@ annotationProcessor "no.entur.mapstruct.spi:protobuf-spi-impl:1.2"
 
 http://mapstruct.org/documentation/stable/reference/html/index.html#using-spi
 
+
