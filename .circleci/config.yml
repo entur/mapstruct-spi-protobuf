@@ -8,7 +8,7 @@ aliases:
         echo "Start release"
         git config --global user.email "circleci@entur.no"
         git config --global user.name "circleci"
-        git checkout master
+        git checkout -B master origin/master
         git pull --no-edit
         git checkout develop
         mvn versions:use-releases
