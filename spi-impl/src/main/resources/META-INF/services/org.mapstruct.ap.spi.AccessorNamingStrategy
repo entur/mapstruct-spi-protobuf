@@ -1,1 +1,1 @@
-no.entur.mapstruct.example.protobuf.ProtobufAccessorNamingStrategy
+no.entur.mapstruct.spi.protobuf.ProtobufAccessorNamingStrategy

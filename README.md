@@ -1,15 +1,26 @@
-# Protobuf accessor naming strategy [![CircleCI](https://circleci.com/gh/entur/mapstruct-spi-protobuf.svg?style=svg)](https://circleci.com/gh/entur/mapstruct-spi-protobuf)
+# Mapstruct SPI implementation for protocol buffers [![CircleCI](https://circleci.com/gh/entur/mapstruct-spi-protobuf.svg?style=svg)](https://circleci.com/gh/entur/mapstruct-spi-protobuf)
 
 This naming strategy helps [mapstruct](http://mapstruct.org/) generate working mapping code between your domain classes and protobuf classes.
 Both [fullblown Java protobuf](https://github.com/protocolbuffers/protobuf/tree/master/java) and [protolite](https://github.com/protocolbuffers/protobuf/blob/master/java/lite.md) classes suported.
 
-Manual mapping needed for
+NOTE: Depends on mapstruct 1.4.0.Beta1
+
+## ProtobufAccessorNamingStrategy
+
+Extends ```DefaultProtobufAccessorNamingStrategy``` and provides necessary information to map all fields automatically *except* 
 
 * map<k,v>
 * oneof
 
+which require manual mapping.
+
+## ProtobufEnumNamingStrategy
+
+Implements ```EnumNamingStrategy``` and provides complete enum constant mappings if you follow Googles style guide for enums https://developers.google.com/protocol-buffers/docs/style#enums
 
 # Usage
+
+[See example project](usage/)
 
 ## Maven
 
@@ -20,7 +31,7 @@ Add the following section to you maven-compiler-plugin plugin configuration:
 	<path>
 		<groupId>no.entur.mapstruct.spi</groupId>
 		<artifactId>protobuf-spi-impl</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.2</version>
 	</path>
 </annotationProcessorPaths>
 <dependencies>
@@ -46,7 +57,7 @@ Complete example:
 			<path>
         		<groupId>no.entur.mapstruct.spi</groupId>
 		        <artifactId>protobuf-spi-impl</artifactId>
-		        <version>1.0.0-SNAPSHOT</version>
+		        <version>1.2</version>
 			</path>
 		</annotationProcessorPaths>
 	</configuration>
@@ -63,8 +74,13 @@ Complete example:
 
 ## Gradle
 
-Figure it out and create a pull request ;)
+```java
+implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+annotationProcessor "no.entur.mapstruct.spi:protobuf-spi-impl:1.2"
+```
 
 # More information:
 
 http://mapstruct.org/documentation/stable/reference/html/index.html#using-spi
+
