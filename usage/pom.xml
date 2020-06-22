@@ -83,7 +83,7 @@
 							<!-- Add your SPI implementation. -->
 							<groupId>no.entur.mapstruct.spi</groupId>
 							<artifactId>protobuf-spi-impl</artifactId>
-							<version>1.1</version>
+							<version>${project.version}</version>
 							<!-- In real life, this should be a fixed version from a different 
 								reactor project and not be part of the same multi-module project. Maven wouldn't 
 								be able to consider that in the build-order calculation and might pull in 
