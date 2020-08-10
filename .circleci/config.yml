@@ -87,7 +87,7 @@ aliases:
 
   - &java-container-config
       docker:
-        - image: circleci/openjdk:8-jdk
+        - image: circleci/openjdk:11-jdk
 
   - &sonar-scan
     command: |
