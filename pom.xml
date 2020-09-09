@@ -109,6 +109,7 @@
                 <artifactId>gitflow-maven-plugin</artifactId>
                 <version>1.14.0</version>
                 <configuration>
+                    <verbose>true</verbose>
                     <commitMessagePrefix>[ci skip]</commitMessagePrefix>
                     <allowSnapshots>false</allowSnapshots>
                     <skipTestProject>true</skipTestProject>
