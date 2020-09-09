@@ -111,6 +111,7 @@
                 <configuration>
                     <commitMessagePrefix>[ci skip]</commitMessagePrefix>
                     <allowSnapshots>false</allowSnapshots>
+                    <skipTestProject>true</skipTestProject>
                 </configuration>
             </plugin>
             <plugin>
