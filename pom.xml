@@ -13,7 +13,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.entur.mapstruct.spi</groupId>
     <artifactId>spi-protobuf-parent</artifactId>
-    <version>1.3</version>
+    <version>1.4</version>
     <packaging>pom</packaging>
     <name>Mapstruct SPI implementation for protobuf stubs</name>
     <description>Protobuf support for mapstruct</description>
@@ -185,6 +185,19 @@
         </snapshotRepository>
     </distributionManagement>
     <profiles>
+        <profile>
+            <id>entur-maven-central-local</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <distributionManagement>
+                <repository>
+                    <id>entur-maven-central-local</id>
+                    <name>Entur maven central local</name>
+                    <url>https://entur2.jfrog.io/entur2/entur-maven-central-release-local</url>
+                </repository>
+            </distributionManagement>
+        </profile>
         <profile>
             <id>release</id>
             <activation>

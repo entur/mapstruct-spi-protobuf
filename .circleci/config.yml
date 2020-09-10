@@ -11,6 +11,9 @@ aliases:
         git checkout develop
         mvn versions:use-releases
         mvn gitflow:release-start gitflow:release-finish -Prelease -DpostReleaseGoals=deploy -DargLine='-Prelease -DskipTests' -B
+        git checkout master
+        git pull --no-edit
+        mvn deploy -DskipTests -Pentur-maven-central-local
 
   - &import_gpg_key
     name: Configure GPG private key for signing project artifacts in OSS Sonatype
@@ -37,6 +40,11 @@ aliases:
                   <password>$ARTIFACTORY_PASSWORD</password>
                   <id>snapshots</id>
                 </server>
+                <server>
+                        <username>$ARTIFACTORY_USER</username>
+                        <password>$ARTIFACTORY_PASSWORD</password>
+                        <id>entur-maven-central-local</id>
+                      </server>
               </servers>
               <profiles>
           <profile>
