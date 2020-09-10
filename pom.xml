@@ -242,6 +242,7 @@
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>${maven-javadoc-plugin.version}</version>
                         <configuration>
+                            <source>${maven.compiler.source}</source>
                             <doclint>none</doclint>
                         </configuration>
                         <executions>
