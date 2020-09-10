@@ -3,8 +3,6 @@ aliases:
   - &release
     name: Release
     command: |
-      if [ "$(git log -1 --pretty=%B)" == "Start release" ]
-      then
         echo "Start release"
         git config --global user.email "circleci@entur.no"
         git config --global user.name "circleci"
@@ -12,10 +10,7 @@ aliases:
         git pull --no-edit
         git checkout develop
         mvn versions:use-releases
-        mvn gitflow:release-start gitflow:release-finish -Prelease -DpostReleaseGoals=deploy -DargLine=-Prelease -B
-      else
-        echo "Skipping release"
-      fi
+        mvn gitflow:release-start gitflow:release-finish -Prelease -DpostReleaseGoals=deploy -DargLine='-Prelease -DskipTests' -B
 
   - &import_gpg_key
     name: Configure GPG private key for signing project artifacts in OSS Sonatype
@@ -87,7 +82,7 @@ aliases:
 
   - &java-container-config
       docker:
-        - image: circleci/openjdk:8-jdk
+        - image: circleci/openjdk:11-jdk
 
   - &sonar-scan
     command: |
@@ -145,26 +140,6 @@ jobs:
           path: ~/junit
       - store_artifacts:
           path: ~/junit
-  deploy-artifactory:
-    <<: *java-container-config
-    environment:
-      MAVEN_OPTS: -Xmx3G
-    steps:
-      - checkout
-      - generate-maven-settings-file:
-          settings-file: *maven-settings-file
-      - restore_cache:
-          keys:
-            - dep-cache-{{ checksum "pom.xml" }}
-            - dep-cache-base
-      - run: mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.0:go-offline
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: dep-cache-{{ checksum "pom.xml" }}
-      # Cannot use -o because of snapshot dependencies.
-      - run: mvn deploy -DskipTests
-
   sonar:
     <<: *java-container-config
     environment:
@@ -194,6 +169,8 @@ jobs:
             - dep-cache-{{ checksum "pom.xml" }}
             - dep-cache-base
       - run: *release
+orbs:
+  queue: eddiewebb/queue@volatile
 
 workflows:
   version: 2
@@ -215,15 +192,15 @@ workflows:
 
   build_test_deploy:
     jobs:
+      - queue/block_workflow:
+          only-on-branch: develop
+          time: '30'
+          circleci-api-key: CIRCLE_API_USER_TOKEN
+          context: global
       - test:
           context: global
-      - deploy-artifactory:
-          context: global
           requires:
-            - test
-          filters:
-            branches:
-              only: develop
+            - queue/block_workflow
       - release:
           context: global
           requires:
