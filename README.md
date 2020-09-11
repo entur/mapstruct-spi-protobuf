@@ -3,7 +3,7 @@
 This naming strategy helps [mapstruct](http://mapstruct.org/) generate working mapping code between your domain classes and protobuf classes.
 Both [fullblown Java protobuf](https://github.com/protocolbuffers/protobuf/tree/master/java) and [protolite](https://github.com/protocolbuffers/protobuf/blob/master/java/lite.md) classes suported.
 
-NOTE: Depends on mapstruct 1.4.0.Beta1
+NOTE: Depends on mapstruct 1.4.0.CR1
 
 ## ProtobufAccessorNamingStrategy
 
@@ -14,9 +14,9 @@ Extends ```DefaultProtobufAccessorNamingStrategy``` and provides necessary infor
 
 which require manual mapping.
 
-## ProtobufEnumNamingStrategy
+## ProtobufEnumMappingStrategy
 
-Implements ```EnumNamingStrategy``` and provides complete enum constant mappings if you follow Googles style guide for enums https://developers.google.com/protocol-buffers/docs/style#enums
+Implements ```EnumMappingStrategy``` and provides complete enum constant mappings if you follow Googles style guide for enums https://developers.google.com/protocol-buffers/docs/style#enums
 
 # Usage
 
@@ -31,7 +31,7 @@ Add the following section to you maven-compiler-plugin plugin configuration:
 	<path>
 		<groupId>no.entur.mapstruct.spi</groupId>
 		<artifactId>protobuf-spi-impl</artifactId>
-		<version>1.2</version>
+		<version>LATEST.VERSION</version>
 	</path>
 </annotationProcessorPaths>
 <dependencies>
@@ -57,7 +57,7 @@ Complete example:
 			<path>
         		<groupId>no.entur.mapstruct.spi</groupId>
 		        <artifactId>protobuf-spi-impl</artifactId>
-		        <version>1.2</version>
+		        <version>LATEST.VERSION</version>
 			</path>
 		</annotationProcessorPaths>
 	</configuration>
@@ -77,7 +77,7 @@ Complete example:
 ```java
 implementation "org.mapstruct:mapstruct:${mapstructVersion}"
 annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
-annotationProcessor "no.entur.mapstruct.spi:protobuf-spi-impl:1.2"
+annotationProcessor "no.entur.mapstruct.spi:protobuf-spi-impl:LATEST.VERSION"
 ```
 
 # More information:
