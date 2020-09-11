@@ -30,11 +30,11 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
 import org.mapstruct.MappingConstants;
-import org.mapstruct.ap.spi.EnumNamingStrategy;
+import org.mapstruct.ap.spi.DefaultEnumMappingStrategy;
 
 import com.google.common.base.CaseFormat;
 
-public class ProtobufEnumNamingStrategy implements EnumNamingStrategy {
+public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 
 	protected static final String DEFAULT_ENUM_CONSTANT;
 	private static final String PROTOBUF_ENUM_INTERFACE = "com.google.protobuf.ProtocolMessageEnum";
