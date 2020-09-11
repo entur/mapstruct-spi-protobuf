@@ -3,17 +3,22 @@ aliases:
   - &release
     name: Release
     command: |
-        echo "Start release"
-        git config --global user.email "circleci@entur.no"
-        git config --global user.name "circleci"
-        git checkout -B master origin/master
-        git pull --no-edit
-        git checkout develop
-        mvn versions:use-releases
-        mvn gitflow:release-start gitflow:release-finish -Prelease -DpostReleaseGoals=deploy -DargLine='-Prelease -DskipTests' -B
-        git checkout master
-        git pull --no-edit
-        mvn deploy -DskipTests -Pentur-maven-central-local
+      if [ "$(git log -n 1 --pretty="%an")" == "Renovate Bot" ]
+      then
+        echo "Skipping release"
+      else
+         echo "Start release"
+         git config --global user.email "circleci@entur.no"
+         git config --global user.name "circleci"
+         git checkout -B master origin/master
+         git pull --no-edit
+         git checkout develop
+         mvn versions:use-releases
+         mvn gitflow:release-start gitflow:release-finish -Prelease -DpostReleaseGoals=deploy -DargLine='-Prelease -DskipTests' -B
+         git checkout master
+         git pull --no-edit
+         mvn deploy -DskipTests -Pentur-maven-central-local
+      fi
 
   - &import_gpg_key
     name: Configure GPG private key for signing project artifacts in OSS Sonatype
