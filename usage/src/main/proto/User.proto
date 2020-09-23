@@ -51,6 +51,8 @@ message UserDTO {
 
   MultiNumberDTO multi_number = 27;
 
+  UserDTO user = 28;
+
   repeated double rv1 = 100;
   repeated float rv2 = 101;
   repeated int32 rv3 = 102;
@@ -73,6 +75,8 @@ message UserDTO {
   repeated MultiNumberDTO rep_multi_numbers = 120;
 
   string non_repeatable_field_with_suffix_list = 121;
+
+  repeated UserDTO users = 122;
 }
 
 enum PermissionDTO {

@@ -9,12 +9,12 @@ package no.entur.mapstruct.spi.protobuf;
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -43,7 +43,7 @@ public class User {
 	long v8;
 	int v9;
 
-//    public List<Permission> getPermissions() {
+	// public List<Permission> getPermissions() {
 //        return permissions;
 //    }
 //
@@ -57,6 +57,7 @@ public class User {
 	String v14;
 	ByteString v15;
 	Status v16;
+	User user;
 	List<Double> rv1;
 	List<Float> rv2;
 	List<Integer> rv3;
@@ -81,6 +82,7 @@ public class User {
 	private List<Department> mainDepartments = new ArrayList<>();
 	private List<Department> departments = new ArrayList<>();
 	private String nonRepeatableFieldWithSuffixList;
+	private List<User> users;
 
 	public String getId() {
 		return id;
@@ -430,5 +432,21 @@ public class User {
 
 	public void setNonRepeatableFieldWithSuffixList(String nonRepeatableFieldWithSuffixList) {
 		this.nonRepeatableFieldWithSuffixList = nonRepeatableFieldWithSuffixList;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 }
