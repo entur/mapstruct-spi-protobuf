@@ -196,7 +196,7 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 	public String getElementName(ExecutableElement adderMethod) {
 
 		String methodName = super.getElementName(adderMethod);
-		if (protobufMesageOrBuilderType != null && isMethodFromProtobufGeneratedClass(adderMethod)) {
+		if (isMethodFromProtobufGeneratedClass(adderMethod)) {
 			String singularizedMethodName = Nouns.singularize(methodName);
 			methodName = singularizedMethodName;
 		}
@@ -265,6 +265,6 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 
 	private boolean isMethodFromProtobufGeneratedClass(ExecutableElement method) {
 		Element receiver = method.getEnclosingElement();
-		return receiver != null && typeUtils.isAssignable(receiver.asType(), protobufMesageOrBuilderType);
+		return protobufMesageOrBuilderType != null && receiver != null && typeUtils.isAssignable(receiver.asType(), protobufMesageOrBuilderType);
 	}
 }
