@@ -19,7 +19,7 @@
     <artifactId>protobuf-support</artifactId>
     <properties>
         <entur.logging.version>1.0.18</entur.logging.version>
-        <juniper.version>5.7.0</juniper.version>
+        <juniper.version>5.7.1</juniper.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -141,7 +141,7 @@
                     <dependency>
                         <groupId>org.junit.jupiter</groupId>
                         <artifactId>junit-jupiter-engine</artifactId>
-                        <version>5.7.0</version>
+                        <version>5.7.1</version>
                     </dependency>
                 </dependencies>
             </plugin>
