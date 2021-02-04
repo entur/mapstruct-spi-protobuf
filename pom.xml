@@ -20,6 +20,7 @@
     <modules>
         <module>spi-impl</module>
         <module>usage</module>
+        <module>support</module>
     </modules>
     <properties>
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
