@@ -18,6 +18,15 @@ which require manual mapping.
 
 Implements ```EnumMappingStrategy``` and provides complete enum constant mappings if you follow Googles style guide for enums https://developers.google.com/protocol-buffers/docs/style#enums
 
+
+## Support - Mapping funcions:
+Standard mapping functions between often used proto types and java types:
+
+* Timestamp<->Instant
+* Duration
+* Date <-> LocalDate
+* TimeOfDay<->LocalTime
+
 # Usage
 
 [See example project](usage/)
@@ -79,8 +88,6 @@ implementation "org.mapstruct:mapstruct:${mapstructVersion}"
 annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 annotationProcessor "no.entur.mapstruct.spi:protobuf-spi-impl:LATEST.VERSION"
 ```
-
 # More information:
 
 http://mapstruct.org/documentation/stable/reference/html/index.html#using-spi
-

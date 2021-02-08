@@ -13,23 +13,24 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.entur.mapstruct.spi</groupId>
     <artifactId>spi-protobuf-parent</artifactId>
-    <version>1.8</version>
+    <version>1.9</version>
     <packaging>pom</packaging>
     <name>Mapstruct SPI implementation for protobuf stubs</name>
     <description>Protobuf support for mapstruct</description>
     <modules>
         <module>spi-impl</module>
         <module>usage</module>
+        <module>support</module>
     </modules>
     <properties>
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
-        <os.mavenplugin.version>1.6.2</os.mavenplugin.version>
+        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+        <os.mavenplugin.version>1.7.0</os.mavenplugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <protobuf.java.version>3.13.0</protobuf.java.version>
+        <protobuf.java.version>3.14.0</protobuf.java.version>
         <protobuf.plugin.version>0.6.1</protobuf.plugin.version>
     </properties>
     <dependencyManagement>
@@ -47,7 +48,7 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
-                <version>5.7.0</version>
+                <version>5.7.1</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
@@ -107,7 +108,7 @@
             <plugin>
                 <groupId>com.amashchenko.maven.plugin</groupId>
                 <artifactId>gitflow-maven-plugin</artifactId>
-                <version>1.14.0</version>
+                <version>1.15.1</version>
                 <configuration>
                     <verbose>true</verbose>
                     <commitMessagePrefix>[ci skip]</commitMessagePrefix>
@@ -118,7 +119,7 @@
             <plugin>
                 <groupId>com.github.ekryd.sortpom</groupId>
                 <artifactId>sortpom-maven-plugin</artifactId>
-                <version>2.12.0</version>
+                <version>2.13.1</version>
                 <configuration>
                     <predefinedSortOrder>custom_1</predefinedSortOrder>
                     <nrOfIndentSpace>4</nrOfIndentSpace>
