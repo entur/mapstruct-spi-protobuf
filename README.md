@@ -91,4 +91,3 @@ annotationProcessor "no.entur.mapstruct.spi:protobuf-spi-impl:LATEST.VERSION"
 # More information:
 
 http://mapstruct.org/documentation/stable/reference/html/index.html#using-spi
-
