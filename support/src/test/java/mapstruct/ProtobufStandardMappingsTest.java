@@ -1,4 +1,4 @@
-package no.entur.abt.mapstruct;
+package mapstruct;
 
 /*-
  * #%L
@@ -31,14 +31,16 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 
 import com.google.protobuf.Timestamp;
+import com.google.protobuf.util.Durations;
 
 public class ProtobufStandardMappingsTest {
 
-	ProtobufStandardMappings MAPPER = ProtobufStandardMappings.INSTANCE;
+	no.entur.abt.mapstruct.ProtobufStandardMappings MAPPER = no.entur.abt.mapstruct.ProtobufStandardMappings.INSTANCE;
 
 	@Test
 	public void testMapLocalDateToTimestampSummertime() {
@@ -74,12 +76,41 @@ public class ProtobufStandardMappingsTest {
 		assertEquals(3000, MAPPER.mapToInstant(Timestamp.newBuilder().setNanos(3000).build()).getNano());
 	}
 
+
 	@Test
-	public void mapDuration() {
+	public void mapPositiveDuration() {
 		Duration duration = Duration.of(3, ChronoUnit.NANOS);
 
 		com.google.protobuf.Duration pbDuration = MAPPER.mapDuration(duration);
+		Durations.checkValid(pbDuration);
 		assertEquals(duration, MAPPER.mapDuration(pbDuration));
+	}
 
+	@Test
+	public void mapNegativeDurationToProto_whenSecondsAreNegativeAndNanoPositive() {
+		Duration duration = Duration.ofSeconds(-3, 2);
+
+		com.google.protobuf.Duration pbDuration = MAPPER.mapDuration(duration);
+		Durations.checkValid(pbDuration);
+		assertEquals(duration, MAPPER.mapDuration(pbDuration));
+	}
+
+	@Test
+	public void mapNegativeDurationToProto_whenSecondsArePositiveAndNanoNegative() {
+		// Duration.ofSeconds accepts negative values. Will still be stored as positive values in Duration
+		Duration duration = Duration.ofSeconds(3, -(TimeUnit.SECONDS.toNanos(1) - 2));
+
+		com.google.protobuf.Duration pbDuration = MAPPER.mapDuration(duration);
+		Durations.checkValid(pbDuration);
+		assertEquals(duration, MAPPER.mapDuration(pbDuration));
+	}
+
+	@Test
+	public void mapNegativeDuration_fromProto() {
+		com.google.protobuf.Duration pbDuration = com.google.protobuf.Duration.newBuilder().setSeconds(-10).setNanos(-5).build();
+
+		Duration duration = MAPPER.mapDuration(pbDuration);
+		Durations.checkValid(pbDuration);
+		assertEquals(pbDuration, MAPPER.mapDuration(duration));
 	}
 }
