@@ -32,6 +32,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -100,7 +101,16 @@ public interface ProtobufStandardMappings {
 	}
 
 	default com.google.protobuf.Duration mapDuration(Duration t) {
-		return com.google.protobuf.Duration.newBuilder().setSeconds(t.toMillis() / 1000).setNanos(t.getNano()).build();
+		long seconds = t.getSeconds();
+		int nanos = t.getNano();
+
+		// Protobuf requires same sign for seconds & nanos parts. Java time treats nano part as relative adjustment. Adjust to proto expectations
+		if (seconds < 0 && nanos > 0) {
+			seconds = seconds + 1;
+			nanos = (int) (nanos - TimeUnit.SECONDS.toNanos(1));
+		}
+
+		return com.google.protobuf.Duration.newBuilder().setSeconds(seconds).setNanos(nanos).build();
 	}
 
 	default com.google.type.Date mapLocalDate(LocalDate t) {
