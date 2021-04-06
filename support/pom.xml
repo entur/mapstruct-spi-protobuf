@@ -26,7 +26,7 @@
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <protobuf.mapstruct.spi.version>1.10</protobuf.mapstruct.spi.version>
+        <protobuf.mapstruct.spi.version>1.12</protobuf.mapstruct.spi.version>
         <spotless.version>2.9.0</spotless.version>
     </properties>
     <dependencies>
