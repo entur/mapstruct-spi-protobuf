@@ -36,33 +36,30 @@ import com.google.common.base.CaseFormat;
 
 public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 
-	protected static final String DEFAULT_ENUM_CONSTANT;
+	private static final String DEFAULT_ENUM_POSTFIX = "UNSPECIFIED";
+	private static final String UNPARSABLE_ENUM_CONSTANT_UNRECOGNIZED = "UNRECOGNIZED";
 	private static final String PROTOBUF_ENUM_INTERFACE = "com.google.protobuf.ProtocolMessageEnum";
 	private static final String PROTOBUF_LITE_ENUM_INTERFACE = "com.google.protobuf.Internal.EnumLite";
-	private static final HashMap<TypeElement, Boolean> knownEnums = new HashMap<>();
-
-	static {
-		DEFAULT_ENUM_CONSTANT = getDefaultEnumConstant();
-	}
+	private static final HashMap<TypeElement, Boolean> KNOWN_ENUMS = new HashMap<>();
 
 	/**
 	 * The enum constant postfix used as default value in protobuf, ie for enum "Cake" the default constant should be CAKE_UNSPECIFIED = 0; This is the
 	 * recommended style according to Googles style guide https://developers.google.com/protocol-buffers/docs/style#enums . If you use some other pattern in
 	 * your protobuf files you can simply subclass this class and override this method.
 	 */
-	protected static String getDefaultEnumConstant() {
-		return "UNSPECIFIED";
+	protected String getDefaultEnumConstant() {
+		return DEFAULT_ENUM_POSTFIX;
 	}
 
 	// @Override
 	public boolean isMapEnumConstantToNull(TypeElement enumType, String sourceEnumValue) {
 		if (isProtobufEnum(enumType)) {
-			if ("UNRECOGNIZED".equals(sourceEnumValue)) {
+			if (UNPARSABLE_ENUM_CONSTANT_UNRECOGNIZED.equals(sourceEnumValue)) {
 				return true;
 			}
 
 			String trimmedEnumValue = removeEnumNamePrefixFromConstant(enumType, sourceEnumValue);
-			if (DEFAULT_ENUM_CONSTANT.equals(trimmedEnumValue)) {
+			if (getDefaultEnumConstant().equals(trimmedEnumValue)) {
 				return true;
 			}
 
@@ -75,7 +72,7 @@ public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 		boolean isProtobufEnum = isProtobufEnum(enumType);
 
 		if (isProtobufEnum) {
-			return addEnumNamePrefixToConstant(enumType, DEFAULT_ENUM_CONSTANT);
+			return addEnumNamePrefixToConstant(enumType, getDefaultEnumConstant());
 		} else {
 			return null;
 		}
@@ -117,7 +114,7 @@ public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 	}
 
 	private boolean isProtobufEnum(TypeElement enumType) {
-		Boolean isProtobufEnum = knownEnums.get(enumType);
+		Boolean isProtobufEnum = KNOWN_ENUMS.get(enumType);
 		if (isProtobufEnum == null) {
 			List<? extends TypeMirror> interfaces = enumType.getInterfaces();
 			isProtobufEnum = Boolean.FALSE;
@@ -129,7 +126,7 @@ public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 				}
 			}
 
-			knownEnums.put(enumType, isProtobufEnum);
+			KNOWN_ENUMS.put(enumType, isProtobufEnum);
 		}
 
 		return isProtobufEnum;
