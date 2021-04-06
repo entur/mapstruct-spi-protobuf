@@ -73,6 +73,9 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 	}
 
 	private boolean isSpecialMethod(ExecutableElement method) {
+		if (!isMethodFromProtobufGeneratedClass(method)) {
+			return false;
+		}
 		String methodName = method.getSimpleName().toString();
 
 		for (String checkMethod : INTERNAL_SPECIAL_METHOD_ENDINGS) {
@@ -193,8 +196,7 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 	public String getElementName(ExecutableElement adderMethod) {
 
 		String methodName = super.getElementName(adderMethod);
-		Element receiver = adderMethod.getEnclosingElement();
-		if (receiver != null && protobufMesageOrBuilderType != null && typeUtils.isAssignable(receiver.asType(), protobufMesageOrBuilderType)) {
+		if (isMethodFromProtobufGeneratedClass(adderMethod)) {
 			String singularizedMethodName = Nouns.singularize(methodName);
 			methodName = singularizedMethodName;
 		}
@@ -261,4 +263,8 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 		return false;
 	}
 
+	private boolean isMethodFromProtobufGeneratedClass(ExecutableElement method) {
+		Element receiver = method.getEnclosingElement();
+		return protobufMesageOrBuilderType != null && receiver != null && typeUtils.isAssignable(receiver.asType(), protobufMesageOrBuilderType);
+	}
 }
