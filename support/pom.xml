@@ -14,7 +14,7 @@
     <parent>
         <groupId>no.entur.mapstruct.spi</groupId>
         <artifactId>spi-protobuf-parent</artifactId>
-        <version>1.13</version>
+        <version>1.14</version>
     </parent>
     <artifactId>protobuf-support</artifactId>
     <properties>
@@ -26,8 +26,8 @@
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <protobuf.mapstruct.spi.version>1.12</protobuf.mapstruct.spi.version>
-        <spotless.version>2.9.0</spotless.version>
+        <protobuf.mapstruct.spi.version>1.13</protobuf.mapstruct.spi.version>
+        <spotless.version>2.10.3</spotless.version>
     </properties>
     <dependencies>
         <dependency>
@@ -39,6 +39,7 @@
             <groupId>com.google.api.grpc</groupId>
             <artifactId>proto-google-common-protos</artifactId>
             <version>2.1.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.protobuf</groupId>
@@ -86,7 +87,7 @@
                         <dependency>
                             <groupId>no.entur</groupId>
                             <artifactId>abt-codestyle</artifactId>
-                            <version>0.13</version>
+                            <version>0.14</version>
                         </dependency>
                     </dependencies>
                 </plugin>
