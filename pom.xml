@@ -207,6 +207,20 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+    <developers>
+        <developer>
+            <name>Arne Seime</name>
+            <email>arne.seime@entur.org</email>
+            <organization>Entur</organization>
+            <organizationUrl>http://www.entur.org</organizationUrl>
+        </developer>
+        <developer>
+            <name>Dainius Figoras</name>
+            <email>dainius.figoras@entur.org</email>
+            <organization>Entur</organization>
+            <organizationUrl>http://www.entur.org</organizationUrl>
+        </developer>
+    </developers>
     <scm>
         <connection>scm:git:ssh://git@github.com/entur/mapstruct-spi-protobuf.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/entur/mapstruct-spi-protobuf.git</developerConnection>
