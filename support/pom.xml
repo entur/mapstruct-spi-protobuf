@@ -14,31 +14,18 @@
     <parent>
         <groupId>no.entur.mapstruct.spi</groupId>
         <artifactId>spi-protobuf-parent</artifactId>
-        <version>1.14</version>
+        <version>1.15</version>
     </parent>
     <artifactId>protobuf-support</artifactId>
-    <properties>
-        <entur.logging.version>1.0.18</entur.logging.version>
-        <juniper.version>5.7.1</juniper.version>
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <protobuf.mapstruct.spi.version>1.13</protobuf.mapstruct.spi.version>
-        <spotless.version>2.10.3</spotless.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>${org.mapstruct.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.api.grpc</groupId>
             <artifactId>proto-google-common-protos</artifactId>
-            <version>2.1.0</version>
+            <version>2.3.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -50,106 +37,33 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>${juniper.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- and the engine for surefire and failsafe -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${juniper.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>com.diffplug.spotless</groupId>
-                    <artifactId>spotless-maven-plugin</artifactId>
-                    <version>${spotless.version}</version>
-                    <configuration>
-                        <java>
-                            <eclipse>
-                                <file>eclipsecodestyle/abt_codestyle.xml</file>
-                                <version>4.11.0</version>
-                                <!-- Eclipse JDT version of the formatter implementation -->
-                            </eclipse>
-                            <removeUnusedImports></removeUnusedImports>
-                            <importOrder>
-                                <file>eclipsecodestyle/abt.importorder</file>
-                            </importOrder>
-                            <endWithNewline></endWithNewline>
-                        </java>
-                        <encoding>UTF-8</encoding>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>no.entur</groupId>
-                            <artifactId>abt-codestyle</artifactId>
-                            <version>0.14</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
-                    <groupId>com.amashchenko.maven.plugin</groupId>
-                    <artifactId>gitflow-maven-plugin</artifactId>
-                    <version>1.16.0</version>
-                    <configuration>
-                        <commitMessagePrefix>[ci skip]</commitMessagePrefix>
-                        <allowSnapshots>false</allowSnapshots>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>9</source>
-                    <target>9</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>no.entur.mapstruct.spi</groupId>
                             <artifactId>protobuf-spi-impl</artifactId>
-                            <version>${protobuf.mapstruct.spi.version}</version>
+                            <version>${parent.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
-                <configuration>
-                    <useSystemClassLoader>false</useSystemClassLoader>
-                    <excludes>
-                        <exclude>**/*IT.java</exclude>
-                    </excludes>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.junit.jupiter</groupId>
-                        <artifactId>junit-jupiter-engine</artifactId>
-                        <version>5.7.1</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>

@@ -76,7 +76,6 @@ public class ProtobufStandardMappingsTest {
 		assertEquals(3000, MAPPER.mapToInstant(Timestamp.newBuilder().setNanos(3000).build()).getNano());
 	}
 
-
 	@Test
 	public void mapPositiveDuration() {
 		Duration duration = Duration.of(3, ChronoUnit.NANOS);

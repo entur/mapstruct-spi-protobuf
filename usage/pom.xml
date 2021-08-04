@@ -14,7 +14,7 @@
     <parent>
         <groupId>no.entur.mapstruct.spi</groupId>
         <artifactId>spi-protobuf-parent</artifactId>
-        <version>1.14</version>
+        <version>1.15</version>
     </parent>
     <artifactId>protobuf-usage</artifactId>
     <dependencies>
@@ -64,15 +64,19 @@
                             <artifactId>protobuf-spi-impl</artifactId>
                             <version>${project.version}</version>
                             <!-- In real life, this should be a fixed version from a different
-                                reactor project and not be part of the same multi-module project. Maven wouldn't
-                                be able to consider that in the build-order calculation and might pull in
-                                the spi-impl from a previous build (especially tricky in multi-threaded builds).
-                                For Eclipse, there would be similar problems, as it can't reference build
-                                artifacts of workspace projects in the processor classpath but only jar-files
-                                (in this case from the local M2-repo cache). -->
+                  reactor project and not be part of the same multi-module project. Maven wouldn't
+                  be able to consider that in the build-order calculation and might pull in
+                  the spi-impl from a previous build (especially tricky in multi-threaded builds).
+                  For Eclipse, there would be similar problems, as it can't reference build
+                  artifacts of workspace projects in the processor classpath but only jar-files
+                  (in this case from the local M2-repo cache). -->
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
             </plugin>
         </plugins>
         <extensions>

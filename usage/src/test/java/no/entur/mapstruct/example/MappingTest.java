@@ -45,7 +45,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -58,7 +57,6 @@ import no.entur.mapstruct.spi.protobuf.Department;
 import no.entur.mapstruct.spi.protobuf.MultiNumber;
 import no.entur.mapstruct.spi.protobuf.Status;
 import no.entur.mapstruct.spi.protobuf.User;
-
 
 public class MappingTest {
 
@@ -90,9 +88,9 @@ public class MappingTest {
 		user.setV15(ByteString.copyFromUtf8("byte string"));
 		user.setV16(Status.STARTED);
 
-		/*Map<String, String> v19 = new HashMap<>();
-		v19.put(MAP_KEY, MAP_VALUE);
-		user.setV19(v19);*/
+		/*
+		 * Map<String, String> v19 = new HashMap<>(); v19.put(MAP_KEY, MAP_VALUE); user.setV19(v19);
+		 */
 
 		/*
 		 * Map<String, Department> v20 = new HashMap<>(); Department d = new Department(); d.setName("department name"); v20.put("soem department", d);
@@ -127,7 +125,7 @@ public class MappingTest {
 
 	private void assertUser(User orig, User back) {
 
-		//assertMapEquals(orig.getV19(), back.getV19());
+		// assertMapEquals(orig.getV19(), back.getV19());
 
 		assertEquals(orig.getId(), back.getId());
 		assertEquals(orig.getEmail(), back.getEmail());
