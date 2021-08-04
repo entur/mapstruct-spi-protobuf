@@ -137,7 +137,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-          key: dep-cache-base
+          key: dep-cache-{{ checksum "pom.xml" }}
       # Cannot use -o because of snapshot dependencies.
       - run: mvn verify
       - persist_to_workspace:
