@@ -23,6 +23,7 @@
         <module>support</module>
     </modules>
     <properties>
+        <jupiter.version>5.7.2</jupiter.version>
         <maven-javadoc-plugin.version>3.3.0</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -32,6 +33,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <protobuf.java.version>3.17.3</protobuf.java.version>
         <protobuf.plugin.version>0.6.1</protobuf.plugin.version>
+        <spotless.version>2.12.2</spotless.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -48,7 +50,13 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
-                <version>5.7.2</version>
+                <version>${jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${jupiter.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
@@ -78,6 +86,52 @@
                             <phase>package</phase>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.diffplug.spotless</groupId>
+                    <artifactId>spotless-maven-plugin</artifactId>
+                    <version>${spotless.version}</version>
+                    <configuration>
+                        <java>
+                            <eclipse>
+                                <file>eclipsecodestyle/abt_codestyle.xml</file>
+                                <version>4.11.0</version>
+                                <!-- Eclipse JDT version of the formatter implementation -->
+                            </eclipse>
+                            <removeUnusedImports></removeUnusedImports>
+                            <importOrder>
+                                <file>eclipsecodestyle/abt.importorder</file>
+                            </importOrder>
+                            <endWithNewline></endWithNewline>
+                        </java>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                    <dependencies>
+                        <!-- NOTE not publicly available artifact -->
+                        <dependency>
+                            <groupId>no.entur</groupId>
+                            <artifactId>abt-codestyle</artifactId>
+                            <version>0.14</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M5</version>
+                    <configuration>
+                        <useSystemClassLoader>false</useSystemClassLoader>
+                        <excludes>
+                            <exclude>**/*IT.java</exclude>
+                        </excludes>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.junit.jupiter</groupId>
+                            <artifactId>junit-jupiter-engine</artifactId>
+                            <version>5.7.2</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -153,20 +207,6 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    <developers>
-        <developer>
-            <name>Arne Seime</name>
-            <email>arne.seime@entur.org</email>
-            <organization>Entur</organization>
-            <organizationUrl>http://www.entur.org</organizationUrl>
-        </developer>
-        <developer>
-            <name>Dainius Figoras</name>
-            <email>dainius.figoras@entur.org</email>
-            <organization>Entur</organization>
-            <organizationUrl>http://www.entur.org</organizationUrl>
-        </developer>
-    </developers>
     <scm>
         <connection>scm:git:ssh://git@github.com/entur/mapstruct-spi-protobuf.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/entur/mapstruct-spi-protobuf.git</developerConnection>
