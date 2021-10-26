@@ -21,6 +21,30 @@ which require manual mapping.
 Implements ```EnumMappingStrategy``` and provides complete enum constant mappings if you follow Googles style guide for
 enums https://developers.google.com/protocol-buffers/docs/style#enums
 
+If needed you can specify a different postfix for the 0 value enum by passing in `mapstructSpi.enumPostfix` as a compilerArg.
+Otherwise, this will default to `UNSPECIFIED` as per the Google style guide.
+
+```xml
+
+<plugin>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <configuration>
+        <annotationProcessorPaths>
+            <path>
+                <groupId>no.entur.mapstruct.spi</groupId>
+                <artifactId>protobuf-spi-impl</artifactId>
+                <version>LATEST.VERSION</version>
+            </path>
+        </annotationProcessorPaths>
+        <compilerArgs>
+            <arg>-AmapstructSpi.enumPostfix=UNSPECIFIED</arg>
+        </compilerArgs>
+    </configuration>
+</plugin>
+
+```
+
+
 ## Support - Mapping funcions:
 
 Standard mapping functions between often used proto types and java types:
