@@ -45,10 +45,11 @@ public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 	/**
 	 * The enum constant postfix used as default value in protobuf, ie for enum "Cake" the default constant should be CAKE_UNSPECIFIED = 0; This is the
 	 * recommended style according to Googles style guide https://developers.google.com/protocol-buffers/docs/style#enums . If you use some other pattern in
-	 * your protobuf files you can simply subclass this class and override this method.
+	 * your protobuf files you can pass in "mapstructSpi.enumPostfix" as a compilerArg.
 	 */
 	protected String getDefaultEnumConstant() {
-		return DEFAULT_ENUM_POSTFIX;
+		return ProcessingEnvOptionsHolder
+				.getOption(ProcessingEnvOptionsHolder.ENUM_POSTFIX, DEFAULT_ENUM_POSTFIX);
 	}
 
 	// @Override

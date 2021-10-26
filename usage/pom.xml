@@ -72,6 +72,9 @@
                   (in this case from the local M2-repo cache). -->
                         </path>
                     </annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>-AmapstructSpi.enumPostfix=UNSPECIFIED</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
