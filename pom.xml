@@ -31,7 +31,7 @@
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <os.mavenplugin.version>1.7.0</os.mavenplugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <protobuf.java.version>3.18.1</protobuf.java.version>
+        <protobuf.java.version>3.19.0</protobuf.java.version>
         <protobuf.plugin.version>0.6.1</protobuf.plugin.version>
         <spotless.version>2.17.2</spotless.version>
     </properties>
