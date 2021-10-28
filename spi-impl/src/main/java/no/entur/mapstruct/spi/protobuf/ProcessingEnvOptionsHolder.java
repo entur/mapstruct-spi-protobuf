@@ -40,10 +40,10 @@ import java.util.Set;
  * that is accessible by the MapStruct classes which would otherwise not have visibility to these.
  */
 @SupportedAnnotationTypes({})
-@SupportedOptions({ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDE})
+@SupportedOptions({ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDES})
 public class ProcessingEnvOptionsHolder extends AbstractProcessor {
 
-    static final String ENUM_POSTFIX_OVERRIDE = "mapstructSpi.enumPostfixOverrides";
+    static final String ENUM_POSTFIX_OVERRIDES = "mapstructSpi.enumPostfixOverrides";
 
     private static Map<String, String> OPTIONS;
 

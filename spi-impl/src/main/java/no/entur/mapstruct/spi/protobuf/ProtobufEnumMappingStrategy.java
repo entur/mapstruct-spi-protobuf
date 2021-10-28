@@ -38,7 +38,6 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.ap.spi.DefaultEnumMappingStrategy;
 
 import com.google.common.base.CaseFormat;
-import org.mapstruct.ap.spi.MapStructProcessingEnvironment;
 
 public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 
@@ -69,9 +68,9 @@ public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 	}
 
 	private void initEnumPostfixOverrides() {
-		if (ProcessingEnvOptionsHolder.containsKey(ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDE)) {
+		if (ProcessingEnvOptionsHolder.containsKey(ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDES)) {
 			String[] postfixOverrides = ProcessingEnvOptionsHolder
-					.getOption(ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDE)
+					.getOption(ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDES)
 					.split(",");
 
 			enumPostfixOverrides = Arrays.stream(postfixOverrides)
