@@ -24,7 +24,7 @@ enums https://developers.google.com/protocol-buffers/docs/style#enums
 If needed you can specify a different postfix for the 0 value enum by passing in `mapstructSpi.enumPostfixOverrides` as 
 a compilerArg in the format of:
 
-`-AmapstructSpi.enumPostfixOverrides=com.package.root.a=POSTFIX_1,com.package.root.b=POSTFIX_2,`
+`-AmapstructSpi.enumPostfixOverrides=com.package.root.a=POSTFIX_1,com.package.root.b=POSTFIX_2`
 
 Otherwise, this will default to `UNSPECIFIED` as per the Google style guide.
 
