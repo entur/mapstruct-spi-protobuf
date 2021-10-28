@@ -55,8 +55,8 @@ public interface EnumPostfixOverrideMapper {
 
 	EnumPostfixOverrideMapper INSTANCE = Mappers.getMapper(EnumPostfixOverrideMapper.class);
 
-	EnumPostfixOverrideValuesDTO map(EnumPostfixOverrideValues user);
+	EnumPostfixOverrideValuesDTO map(EnumPostfixOverrideValues value);
 
-	EnumPostfixOverrideValues map(EnumPostfixOverrideValuesDTO userDTO);
+	EnumPostfixOverrideValues map(EnumPostfixOverrideValuesDTO dto);
 
 }
