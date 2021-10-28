@@ -40,10 +40,10 @@ import java.util.Set;
  * that is accessible by the MapStruct classes which would otherwise not have visibility to these.
  */
 @SupportedAnnotationTypes({})
-@SupportedOptions({ProcessingEnvOptionsHolder.ENUM_POSTFIX})
+@SupportedOptions({ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDE})
 public class ProcessingEnvOptionsHolder extends AbstractProcessor {
 
-    static final String ENUM_POSTFIX = "mapstructSpi.enumPostfix";
+    static final String ENUM_POSTFIX_OVERRIDE = "mapstructSpi.enumPostfixOverrides";
 
     private static Map<String, String> OPTIONS;
 
@@ -63,10 +63,17 @@ public class ProcessingEnvOptionsHolder extends AbstractProcessor {
         return SourceVersion.latestSupported();
     }
 
-    static String getOption(String key, String defaultValue) {
+    static boolean containsKey(String key) {
         if (OPTIONS == null) {
             throw new IllegalStateException("ProcessingEnvOptionsHolder not initialized yet.");
         }
-        return OPTIONS.getOrDefault(key, defaultValue);
+        return OPTIONS.containsKey(key);
+    }
+
+    static String getOption(String key) {
+        if (OPTIONS == null) {
+            throw new IllegalStateException("ProcessingEnvOptionsHolder not initialized yet.");
+        }
+        return OPTIONS.get(key);
     }
 }

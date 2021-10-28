@@ -73,7 +73,7 @@
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
-                        <arg>-AmapstructSpi.enumPostfix=UNSPECIFIED</arg>
+                        <arg>-AmapstructSpi.enumPostfixOverrides=no.entur.mapstruct.example.EnumPostfixOverrideProtos=INVALID</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>

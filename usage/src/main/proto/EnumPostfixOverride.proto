@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "no.entur.mapstruct.example";
+option java_outer_classname = "EnumPostfixOverrideProtos";
+
+enum EnumPostfixOverrideValuesDTO {
+  ENUM_POSTFIX_OVERRIDE_VALUES_D_T_O_INVALID = 0;
+  ENUM_POSTFIX_OVERRIDE_VALUES_D_T_O_ONE = 1;
+  ENUM_POSTFIX_OVERRIDE_VALUES_D_T_O_TWO = 2;
+}
