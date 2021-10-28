@@ -21,7 +21,11 @@ which require manual mapping.
 Implements ```EnumMappingStrategy``` and provides complete enum constant mappings if you follow Googles style guide for
 enums https://developers.google.com/protocol-buffers/docs/style#enums
 
-If needed you can specify a different postfix for the 0 value enum by passing in `mapstructSpi.enumPostfix` as a compilerArg.
+If needed you can specify a different postfix for the 0 value enum by passing in `mapstructSpi.enumPostfixOverrides` as 
+a compilerArg in the format of:
+
+`-AmapstructSpi.enumPostfixOverrides=com.package.root.a=POSTFIX_1,com.package.root.b=POSTFIX_2,`
+
 Otherwise, this will default to `UNSPECIFIED` as per the Google style guide.
 
 ```xml
@@ -37,7 +41,7 @@ Otherwise, this will default to `UNSPECIFIED` as per the Google style guide.
             </path>
         </annotationProcessorPaths>
         <compilerArgs>
-            <arg>-AmapstructSpi.enumPostfix=UNSPECIFIED</arg>
+            <arg>-AmapstructSpi.enumPostfixOverrides=com.company.name=INVALID</arg>
         </compilerArgs>
     </configuration>
 </plugin>
