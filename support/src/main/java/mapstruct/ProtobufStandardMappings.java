@@ -34,6 +34,15 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import com.google.protobuf.BoolValue;
+import com.google.protobuf.BytesValue;
+import com.google.protobuf.DoubleValue;
+import com.google.protobuf.FloatValue;
+import com.google.protobuf.Int32Value;
+import com.google.protobuf.Int64Value;
+import com.google.protobuf.StringValue;
+import com.google.protobuf.UInt32Value;
+import com.google.protobuf.UInt64Value;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -145,5 +154,42 @@ public interface ProtobufStandardMappings {
 	default Timestamp map(OffsetDateTime in) {
 		return Timestamp.newBuilder().setSeconds(in.toEpochSecond()).setNanos(0).build();
 	}
+
+	default float map(FloatValue f) {
+		return f.getValue();
+	}
+
+	default double map(DoubleValue f) {
+		return f.getValue();
+	}
+
+	default int map(Int32Value f) {
+		return f.getValue();
+	}
+
+	default long map(Int64Value f) {
+		return f.getValue();
+	}
+
+	default int map(UInt32Value f) {
+		return f.getValue();
+	}
+
+	default long map(UInt64Value f) {
+		return f.getValue();
+	}
+
+	default String map(StringValue f) {
+		return f.getValue();
+	}
+
+	default boolean map(BoolValue f) {
+		return f.getValue();
+	}
+
+	default ByteString map(BytesValue f) {
+		return f.getValue();
+	}
+
 
 }
