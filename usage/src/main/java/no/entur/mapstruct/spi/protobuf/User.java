@@ -84,6 +84,25 @@ public class User {
 	private String nonRepeatableFieldWithSuffixList;
 	private List<User> users;
 
+	private Department fireDepartment;
+	private Department policeDepartment;
+
+	public Department getFireDepartment() {
+		return fireDepartment;
+	}
+
+	public void setFireDepartment(Department fireDepartment) {
+		this.fireDepartment = fireDepartment;
+	}
+
+	public Department getPoliceDepartment() {
+		return policeDepartment;
+	}
+
+	public void setPoliceDepartment(Department policeDepartment) {
+		this.policeDepartment = policeDepartment;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -171,44 +190,6 @@ public class User {
 	public void setV7(int v7) {
 		this.v7 = v7;
 	}
-
-//    public int getOneofv1() {
-//        return oneofv1;
-//    }
-//
-//    public void setOneofv1(int oneofv1) {
-//        this.oneofv1 = oneofv1;
-//    }
-//
-//    public double getOneofv2() {
-//        return oneofv2;
-//    }
-//
-//    public void setOneofv2(double oneofv2) {
-//        this.oneofv2 = oneofv2;
-//    }
-//
-//    int oneofv1;
-//    double oneofv2;
-
-//    public Map<String, String> getV19() {
-//        return v19;
-//    }
-//
-//    public void setV19(Map<String, String> v19) {
-//        this.v19 = v19;
-//    }
-//
-//    public Map<String, Department> getV20() {
-//        return v20;
-//    }
-//
-//    public void setV20(Map<String, Department> v20) {
-//        this.v20 = v20;
-//    }
-//
-//    Map<String, String> v19;
-//    Map<String, Department> v20;
 
 	public long getV8() {
 		return v8;

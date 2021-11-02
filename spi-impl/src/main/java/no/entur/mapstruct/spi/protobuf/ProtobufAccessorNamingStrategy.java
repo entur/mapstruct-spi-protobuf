@@ -105,6 +105,10 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 			}
 		}
 
+		if (isOneOfCaseSelector(method)) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -140,6 +144,14 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 
 	}
 
+	private boolean isOneOfCaseSelector(ExecutableElement method) {
+		String methodName = method.getSimpleName().toString();
+		if (methodName.startsWith("getOneOf") && methodName.endsWith("Case")) {
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public boolean isSetterMethod(ExecutableElement method) {
 		String methodName = method.getSimpleName().toString();
@@ -166,6 +178,10 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 			// For instance UserDTO.getUsersBuilder(idx) in provided test case
 			return false;
 		} else {
+			if (isOneOfCaseSelector(method)) {
+				return false;
+			}
+
 			return super.isFluentSetter(method);
 		}
 	}
@@ -177,6 +193,9 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 		if (INTERNAL_METHODS.contains(methodName)) {
 			return false;
 		} else {
+			if (isOneOfCaseSelector(method)) {
+				return false;
+			}
 			return super.isAdderMethod(method);
 		}
 	}
@@ -188,6 +207,9 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 		if (INTERNAL_METHODS.contains(methodName)) {
 			return false;
 		} else {
+			if (isOneOfCaseSelector(method)) {
+				return true;
+			}
 			return super.isPresenceCheckMethod(method);
 		}
 	}

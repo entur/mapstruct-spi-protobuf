@@ -17,6 +17,11 @@ message MultiNumberDTO {
 }
 
 message UserDTO {
+  oneof OneOfDepartments {
+    DepartmentDTO fire_department = 123;
+    DepartmentDTO police_department = 124;
+  }
+
   string id = 1;
   string email = 2;
   repeated DepartmentDTO main_departments = 4;
@@ -77,6 +82,7 @@ message UserDTO {
   string non_repeatable_field_with_suffix_list = 121;
 
   repeated UserDTO users = 122;
+
 }
 
 enum PermissionDTO {
