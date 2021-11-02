@@ -120,6 +120,8 @@ public class MappingTest {
 		user.setMultiNumber(mm);
 		user.setRepMultiNumbers(Arrays.asList(mm));
 
+		user.setPoliceDepartment(new Department("POLICE"));
+
 		return user;
 	}
 
@@ -203,6 +205,10 @@ public class MappingTest {
 
 		assertEquals(orig.getRv16().size(), back.getRv16().size());
 		assertEquals(orig.getRv16().get(0), back.getRv16().get(0));
+
+		assertNotNull(back.getPoliceDepartment());
+		assertEquals(back.getPoliceDepartment().getName(), "POLICE");
+		// WILL FAIL: Mapstruct cannot handle presence checker on oneOfs : assertNull(back.getFireDepartment());
 	}
 
 	private void assertMapEquals(Map<String, String> orig, Map<String, String> back) {
