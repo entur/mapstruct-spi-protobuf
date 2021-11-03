@@ -14,7 +14,7 @@
     <parent>
         <groupId>no.entur.mapstruct.spi</groupId>
         <artifactId>spi-protobuf-parent</artifactId>
-        <version>1.17</version>
+        <version>1.18</version>
     </parent>
     <artifactId>protobuf-usage</artifactId>
     <dependencies>
@@ -72,6 +72,9 @@
                   (in this case from the local M2-repo cache). -->
                         </path>
                     </annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>-AmapstructSpi.enumPostfixOverrides=no.entur.mapstruct.example.EnumPostfixOverrideProtos=INVALID</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>

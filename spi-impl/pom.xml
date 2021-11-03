@@ -24,7 +24,7 @@
     <parent>
         <groupId>no.entur.mapstruct.spi</groupId>
         <artifactId>spi-protobuf-parent</artifactId>
-        <version>1.17</version>
+        <version>1.18</version>
     </parent>
     <artifactId>protobuf-spi-impl</artifactId>
     <dependencies>
@@ -51,6 +51,28 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <configuration>
+                            <compilerArgument>-proc:none</compilerArgument>
+                            <includes>
+                                <include>no/entur/mapstruct/spi/protobuf/ProcessingEnvOptionsHolder.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>compile-project</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

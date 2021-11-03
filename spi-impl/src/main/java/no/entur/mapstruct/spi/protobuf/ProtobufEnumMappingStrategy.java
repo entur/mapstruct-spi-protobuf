@@ -23,12 +23,17 @@ package no.entur.mapstruct.spi.protobuf;
  * #L%
  */
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
+import com.google.common.collect.ImmutableMap;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ap.spi.DefaultEnumMappingStrategy;
 
@@ -42,13 +47,38 @@ public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 	private static final String PROTOBUF_LITE_ENUM_INTERFACE = "com.google.protobuf.Internal.EnumLite";
 	private static final HashMap<TypeElement, Boolean> KNOWN_ENUMS = new HashMap<>();
 
+	private Map<String, String> enumPostfixOverrides = null;
+
 	/**
 	 * The enum constant postfix used as default value in protobuf, ie for enum "Cake" the default constant should be CAKE_UNSPECIFIED = 0; This is the
-	 * recommended style according to Googles style guide https://developers.google.com/protocol-buffers/docs/style#enums . If you use some other pattern in
-	 * your protobuf files you can simply subclass this class and override this method.
+	 * recommended style according to Googles style guide https://developers.google.com/protocol-buffers/docs/style#enums. If you use some other pattern in
+	 * your protobuf files you can pass in "mapstructSpi.enumPostfixOverrides" as a compilerArg.
 	 */
-	protected String getDefaultEnumConstant() {
-		return DEFAULT_ENUM_POSTFIX;
+	private String getEnumPostfix(TypeElement enumType) {
+		if (enumPostfixOverrides == null) {
+			initEnumPostfixOverrides();
+		}
+
+		String enumTypeName = enumType.getQualifiedName().toString();
+		Optional<String> override = enumPostfixOverrides.keySet().stream()
+				.filter(enumTypeName::startsWith)
+				.map(enumPostfixOverrides::get).findAny();
+
+		return override.orElse(DEFAULT_ENUM_POSTFIX);
+	}
+
+	private void initEnumPostfixOverrides() {
+		if (ProcessingEnvOptionsHolder.containsKey(ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDES)) {
+			String[] postfixOverrides = ProcessingEnvOptionsHolder
+					.getOption(ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDES)
+					.split(",");
+
+			enumPostfixOverrides = Arrays.stream(postfixOverrides)
+					.map(override -> override.split("=", 2))
+					.collect(Collectors.toMap(args -> args[0].trim(), args -> args[1].trim()));
+		} else {
+			enumPostfixOverrides = ImmutableMap.of();
+		}
 	}
 
 	// @Override
@@ -59,7 +89,7 @@ public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 			}
 
 			String trimmedEnumValue = removeEnumNamePrefixFromConstant(enumType, sourceEnumValue);
-			if (getDefaultEnumConstant().equals(trimmedEnumValue)) {
+			if (getEnumPostfix(enumType).equals(trimmedEnumValue)) {
 				return true;
 			}
 
@@ -72,7 +102,7 @@ public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 		boolean isProtobufEnum = isProtobufEnum(enumType);
 
 		if (isProtobufEnum) {
-			return addEnumNamePrefixToConstant(enumType, getDefaultEnumConstant());
+			return addEnumNamePrefixToConstant(enumType, getEnumPostfix(enumType));
 		} else {
 			return null;
 		}

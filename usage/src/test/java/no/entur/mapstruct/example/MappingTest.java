@@ -47,11 +47,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.Arrays;
 import java.util.Map;
 
+import no.entur.mapstruct.spi.protobuf.EnumPostfixOverrideValues;
 import org.junit.jupiter.api.Test;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import no.entur.mapstruct.example.EnumPostfixOverrideProtos.EnumPostfixOverrideValuesDTO;
 import no.entur.mapstruct.example.UserProtos.UserDTO;
 import no.entur.mapstruct.spi.protobuf.Department;
 import no.entur.mapstruct.spi.protobuf.MultiNumber;
@@ -242,5 +244,14 @@ public class MappingTest {
 
 		assertEquals(null, back.getId());
 		assertEquals("test", back.getEmail());
+	}
+
+	@Test
+	public void testEnumPostfixOverride() {
+		EnumPostfixOverrideValues enumValue = EnumPostfixOverrideValues.TWO;
+		EnumPostfixOverrideValuesDTO dto = EnumPostfixOverrideMapper.INSTANCE.map(enumValue);
+		EnumPostfixOverrideValues back = EnumPostfixOverrideMapper.INSTANCE.map(dto);
+
+		assertEquals(enumValue, back);
 	}
 }
