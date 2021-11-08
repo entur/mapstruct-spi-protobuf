@@ -45,9 +45,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Arrays;
-import java.util.Map;
 
-import no.entur.mapstruct.spi.protobuf.EnumPostfixOverrideValues;
 import org.junit.jupiter.api.Test;
 
 import com.google.protobuf.ByteString;
@@ -56,14 +54,37 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import no.entur.mapstruct.example.EnumPostfixOverrideProtos.EnumPostfixOverrideValuesDTO;
 import no.entur.mapstruct.example.UserProtos.UserDTO;
 import no.entur.mapstruct.spi.protobuf.Department;
+import no.entur.mapstruct.spi.protobuf.EnumPostfixOverrideValues;
 import no.entur.mapstruct.spi.protobuf.MultiNumber;
 import no.entur.mapstruct.spi.protobuf.Status;
 import no.entur.mapstruct.spi.protobuf.User;
 
 public class MappingTest {
 
-	private static final String MAP_VALUE = "some value";
-	private static final String MAP_KEY = "some key";
+	@Test
+	public void testMapAllFields() throws InvalidProtocolBufferException {
+		User user = generateUser();
+
+		UserDTO dto = UserMapper.INSTANCE.map(user);
+		UserDTO deserialized = UserDTO.parseFrom(dto.toByteArray());
+		User back = UserMapper.INSTANCE.map(deserialized);
+
+		assertUser(user, back);
+	}
+
+	@Test
+	public void testNulls() throws InvalidProtocolBufferException {
+		User user = new User();
+		user.setEmail("test");
+
+		UserDTO dto = UserMapper.INSTANCE.map(user);
+		UserDTO deserialized = UserDTO.parseFrom(dto.toByteArray());
+		User back = UserMapper.INSTANCE.map(deserialized);
+
+		assertEquals(null, back.getId());
+		assertEquals("test", back.getEmail());
+		assertEquals(null, back.getV16());
+	}
 
 	private User generateUser() {
 		User user = new User();
@@ -89,15 +110,6 @@ public class MappingTest {
 		user.setV14("some string");
 		user.setV15(ByteString.copyFromUtf8("byte string"));
 		user.setV16(Status.STARTED);
-
-		/*
-		 * Map<String, String> v19 = new HashMap<>(); v19.put(MAP_KEY, MAP_VALUE); user.setV19(v19);
-		 */
-
-		/*
-		 * Map<String, Department> v20 = new HashMap<>(); Department d = new Department(); d.setName("department name"); v20.put("soem department", d);
-		 * user.setV20(v20);
-		 */
 
 		user.setRv1(Arrays.asList(1.0));
 		user.setRv2(Arrays.asList(2.0f));
@@ -128,9 +140,6 @@ public class MappingTest {
 	}
 
 	private void assertUser(User orig, User back) {
-
-		// assertMapEquals(orig.getV19(), back.getV19());
-
 		assertEquals(orig.getId(), back.getId());
 		assertEquals(orig.getEmail(), back.getEmail());
 
@@ -211,39 +220,6 @@ public class MappingTest {
 		assertNotNull(back.getPoliceDepartment());
 		assertEquals(back.getPoliceDepartment().getName(), "POLICE");
 		// WILL FAIL: Mapstruct cannot handle presence checker on oneOfs : assertNull(back.getFireDepartment());
-	}
-
-	private void assertMapEquals(Map<String, String> orig, Map<String, String> back) {
-		assertNotNull(orig);
-		assertNotNull(back);
-
-		assertEquals(orig.keySet(), back.keySet(), "Original keys: " + orig.keySet() + " does not match " + back.keySet());
-		assertEquals(orig.values(), back.values(), "Original values: " + orig.values() + " does not match " + back.values());
-
-	}
-
-	@Test
-	public void test() throws InvalidProtocolBufferException {
-		User user = generateUser();
-
-		UserDTO dto = UserMapper.INSTANCE.map(user);
-		UserDTO deserialized = UserDTO.parseFrom(dto.toByteArray());
-		User back = UserMapper.INSTANCE.map(deserialized);
-
-		assertUser(user, back);
-	}
-
-	@Test
-	public void testNulls() throws InvalidProtocolBufferException {
-		User user = new User();
-		user.setEmail("test");
-
-		UserDTO dto = UserMapper.INSTANCE.map(user);
-		UserDTO deserialized = UserDTO.parseFrom(dto.toByteArray());
-		User back = UserMapper.INSTANCE.map(deserialized);
-
-		assertEquals(null, back.getId());
-		assertEquals("test", back.getEmail());
 	}
 
 	@Test

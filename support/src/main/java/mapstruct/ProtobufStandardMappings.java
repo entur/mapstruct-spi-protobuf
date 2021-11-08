@@ -34,20 +34,20 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
 import com.google.protobuf.BoolValue;
+import com.google.protobuf.ByteString;
 import com.google.protobuf.BytesValue;
 import com.google.protobuf.DoubleValue;
 import com.google.protobuf.FloatValue;
 import com.google.protobuf.Int32Value;
 import com.google.protobuf.Int64Value;
 import com.google.protobuf.StringValue;
+import com.google.protobuf.Timestamp;
 import com.google.protobuf.UInt32Value;
 import com.google.protobuf.UInt64Value;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-
-import com.google.protobuf.ByteString;
-import com.google.protobuf.Timestamp;
 
 @Mapper
 public interface ProtobufStandardMappings {
@@ -190,6 +190,5 @@ public interface ProtobufStandardMappings {
 	default ByteString map(BytesValue f) {
 		return f.getValue();
 	}
-
 
 }
