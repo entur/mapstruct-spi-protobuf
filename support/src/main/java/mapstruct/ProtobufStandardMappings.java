@@ -32,7 +32,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -48,6 +47,8 @@ import com.google.protobuf.StringValue;
 import com.google.protobuf.Timestamp;
 import com.google.protobuf.UInt32Value;
 import com.google.protobuf.UInt64Value;
+import com.google.protobuf.util.Durations;
+import com.google.protobuf.util.Timestamps;
 
 @Mapper
 public interface ProtobufStandardMappings {
@@ -79,47 +80,47 @@ public interface ProtobufStandardMappings {
 	}
 
 	default Instant mapToInstant(Timestamp t) {
-		if (t == null || (t.getSeconds() == 0 && t.getNanos() == 0)) {
+		if (Timestamps.isValid(t) && (t.getSeconds() > 0 || t.getNanos() > 0)) {
+			return Instant.ofEpochSecond(t.getSeconds(), t.getNanos());
+		} else {
 			return null;
 		}
-		return Instant.ofEpochSecond(t.getSeconds(), t.getNanos());
 	}
 
 	default Long toEpochMilliseconds(Timestamp instance) {
-		Instant instant = mapToInstant(instance);
-		return instant == null ? null : instant.toEpochMilli();
+		if (instance != null) {
+			return Timestamps.toMillis(instance);
+		} else {
+			return null;
+		}
 	}
 
 	default Timestamp mapToTimestamp(Instant i) {
 		if (i == null || i.getEpochSecond() == 0) {
 			return null;
+		} else {
+			return Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build();
 		}
-		return Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build();
 	}
 
-	default Timestamp fromEpochMilliseconds(Long instance) {
-		if (instance == null) {
-			return null;
-		}
-		Instant instant = Instant.ofEpochMilli(instance);
-		return mapToTimestamp(instant);
+	default Timestamp fromEpochMilliseconds(long millis) {
+		return Timestamps.fromMillis(millis);
 	}
 
 	default Duration mapDuration(com.google.protobuf.Duration t) {
-		return Duration.ofSeconds(t.getSeconds(), t.getNanos());
+		if (t != null) {
+			return Duration.ofSeconds(t.getSeconds(), t.getNanos());
+		} else {
+			return null;
+		}
 	}
 
 	default com.google.protobuf.Duration mapDuration(Duration t) {
-		long seconds = t.getSeconds();
-		int nanos = t.getNano();
-
-		// Protobuf requires same sign for seconds & nanos parts. Java time treats nano part as relative adjustment. Adjust to proto expectations
-		if (seconds < 0 && nanos > 0) {
-			seconds = seconds + 1;
-			nanos = (int) (nanos - TimeUnit.SECONDS.toNanos(1));
+		if (t != null) {
+			return Durations.fromNanos(t.toNanos());
+		} else {
+			return null;
 		}
-
-		return com.google.protobuf.Duration.newBuilder().setSeconds(seconds).setNanos(nanos).build();
 	}
 
 	default com.google.type.Date mapLocalDate(LocalDate t) {
