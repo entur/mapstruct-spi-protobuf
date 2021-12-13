@@ -13,14 +13,16 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.entur.mapstruct.spi</groupId>
     <artifactId>spi-protobuf-parent</artifactId>
-    <version>1.19</version>
+    <version>1.20</version>
     <packaging>pom</packaging>
     <name>Mapstruct SPI implementation for protobuf stubs</name>
     <description>Protobuf support for mapstruct</description>
     <modules>
         <module>spi-impl</module>
         <module>usage</module>
-        <module>support</module>
+        <module>support-core</module>
+        <module>support-standard</module>
+        <module>support-lite</module>
     </modules>
     <properties>
         <jupiter.version>5.8.2</jupiter.version>
