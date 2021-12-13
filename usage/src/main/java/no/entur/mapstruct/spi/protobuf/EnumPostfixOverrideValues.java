@@ -24,5 +24,6 @@ package no.entur.mapstruct.spi.protobuf;
  */
 
 public enum EnumPostfixOverrideValues {
-    ONE, TWO
+	ONE,
+	TWO
 }
