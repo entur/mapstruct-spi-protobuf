@@ -23,7 +23,8 @@ package no.entur.mapstruct.spi.protobuf;
  * #L%
  */
 
-import com.google.common.collect.ImmutableMap;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -32,48 +33,48 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedOptions;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
-import java.util.Map;
-import java.util.Set;
+
+import com.google.common.collect.ImmutableMap;
 
 /**
- * This is not a true processor. It merely exists to pass the defined supported options to a global context
- * that is accessible by the MapStruct classes which would otherwise not have visibility to these.
+ * This is not a true processor. It merely exists to pass the defined supported options to a global context that is accessible by the MapStruct classes which
+ * would otherwise not have visibility to these.
  */
 @SupportedAnnotationTypes({})
-@SupportedOptions({ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDES})
+@SupportedOptions({ ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDES })
 public class ProcessingEnvOptionsHolder extends AbstractProcessor {
 
-    static final String ENUM_POSTFIX_OVERRIDES = "mapstructSpi.enumPostfixOverrides";
+	static final String ENUM_POSTFIX_OVERRIDES = "mapstructSpi.enumPostfixOverrides";
 
-    private static Map<String, String> OPTIONS;
+	private static Map<String, String> OPTIONS;
 
-    @Override
-    public synchronized void init(ProcessingEnvironment processingEnv) {
-        super.init(processingEnv);
-        OPTIONS = ImmutableMap.copyOf(processingEnv.getOptions());
-    }
+	@Override
+	public synchronized void init(ProcessingEnvironment processingEnv) {
+		super.init(processingEnv);
+		OPTIONS = ImmutableMap.copyOf(processingEnv.getOptions());
+	}
 
-    @Override
-    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        return false;
-    }
+	@Override
+	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+		return false;
+	}
 
-    @Override
-    public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.latestSupported();
-    }
+	@Override
+	public SourceVersion getSupportedSourceVersion() {
+		return SourceVersion.latestSupported();
+	}
 
-    static boolean containsKey(String key) {
-        if (OPTIONS == null) {
-            throw new IllegalStateException("ProcessingEnvOptionsHolder not initialized yet.");
-        }
-        return OPTIONS.containsKey(key);
-    }
+	static boolean containsKey(String key) {
+		if (OPTIONS == null) {
+			throw new IllegalStateException("ProcessingEnvOptionsHolder not initialized yet.");
+		}
+		return OPTIONS.containsKey(key);
+	}
 
-    static String getOption(String key) {
-        if (OPTIONS == null) {
-            throw new IllegalStateException("ProcessingEnvOptionsHolder not initialized yet.");
-        }
-        return OPTIONS.get(key);
-    }
+	static String getOption(String key) {
+		if (OPTIONS == null) {
+			throw new IllegalStateException("ProcessingEnvOptionsHolder not initialized yet.");
+		}
+		return OPTIONS.get(key);
+	}
 }

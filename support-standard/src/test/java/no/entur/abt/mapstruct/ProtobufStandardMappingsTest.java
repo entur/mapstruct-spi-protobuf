@@ -1,4 +1,4 @@
-package mapstruct;
+package no.entur.abt.mapstruct;
 
 /*-
  * #%L

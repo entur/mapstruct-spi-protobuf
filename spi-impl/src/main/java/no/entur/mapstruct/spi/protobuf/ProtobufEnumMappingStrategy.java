@@ -33,11 +33,11 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
-import com.google.common.collect.ImmutableMap;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ap.spi.DefaultEnumMappingStrategy;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.collect.ImmutableMap;
 
 public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 
@@ -51,8 +51,8 @@ public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 
 	/**
 	 * The enum constant postfix used as default value in protobuf, ie for enum "Cake" the default constant should be CAKE_UNSPECIFIED = 0; This is the
-	 * recommended style according to Googles style guide https://developers.google.com/protocol-buffers/docs/style#enums. If you use some other pattern in
-	 * your protobuf files you can pass in "mapstructSpi.enumPostfixOverrides" as a compilerArg.
+	 * recommended style according to Googles style guide https://developers.google.com/protocol-buffers/docs/style#enums. If you use some other pattern in your
+	 * protobuf files you can pass in "mapstructSpi.enumPostfixOverrides" as a compilerArg.
 	 */
 	private String getEnumPostfix(TypeElement enumType) {
 		if (enumPostfixOverrides == null) {
@@ -60,18 +60,14 @@ public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 		}
 
 		String enumTypeName = enumType.getQualifiedName().toString();
-		Optional<String> override = enumPostfixOverrides.keySet().stream()
-				.filter(enumTypeName::startsWith)
-				.map(enumPostfixOverrides::get).findAny();
+		Optional<String> override = enumPostfixOverrides.keySet().stream().filter(enumTypeName::startsWith).map(enumPostfixOverrides::get).findAny();
 
 		return override.orElse(DEFAULT_ENUM_POSTFIX);
 	}
 
 	private void initEnumPostfixOverrides() {
 		if (ProcessingEnvOptionsHolder.containsKey(ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDES)) {
-			String[] postfixOverrides = ProcessingEnvOptionsHolder
-					.getOption(ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDES)
-					.split(",");
+			String[] postfixOverrides = ProcessingEnvOptionsHolder.getOption(ProcessingEnvOptionsHolder.ENUM_POSTFIX_OVERRIDES).split(",");
 
 			enumPostfixOverrides = Arrays.stream(postfixOverrides)
 					.map(override -> override.split("=", 2))
