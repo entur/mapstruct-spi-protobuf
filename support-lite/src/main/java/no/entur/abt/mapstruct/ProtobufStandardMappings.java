@@ -32,6 +32,12 @@ import org.mapstruct.factory.Mappers;
 
 import com.google.protobuf.Timestamp;
 
+/***
+ *
+ * Note: This mapper must be kept in sync with its corresponding 'standard' equivalent
+ *
+ */
+
 @Mapper
 public interface ProtobufStandardMappings extends no.entur.abt.mapstruct.common.ProtobufStandardMappings {
 

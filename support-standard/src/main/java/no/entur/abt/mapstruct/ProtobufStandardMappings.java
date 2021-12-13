@@ -33,6 +33,12 @@ import com.google.protobuf.Timestamp;
 import com.google.protobuf.util.Durations;
 import com.google.protobuf.util.Timestamps;
 
+/***
+ *
+ * Note: This mapper must be kept in sync with its corresponding 'lite' equivalent
+ *
+ */
+
 @Mapper
 public interface ProtobufStandardMappings extends no.entur.abt.mapstruct.common.ProtobufStandardMappings {
 
