@@ -130,12 +130,16 @@ jobs:
       - generate-maven-settings-file:
           settings-file: *maven-settings-file
       - maven/with_cache:
+          steps:
           - run: mvn verify
+      # Cannot use -o because of snapshot dependencies.
+      - run: mvn verify
       - persist_to_workspace:
           root: .
           paths:
             - spi-impl/target/
             - usage/target/
+
       - run:
           name: Save test results
           command: |
@@ -157,6 +161,7 @@ jobs:
       - attach_workspace:
           at: .
       - maven/with_cache:
+          steps:
           - run: *sonar-scan
 
   release:
@@ -169,6 +174,7 @@ jobs:
       - generate-maven-settings-file:
           settings-file: *maven-settings-file
       - maven/with_cache:
+          steps:
           - run: *release
 orbs:
   queue: eddiewebb/queue@volatile
@@ -210,4 +216,3 @@ workflows:
           filters:
             branches:
               only: develop
-
