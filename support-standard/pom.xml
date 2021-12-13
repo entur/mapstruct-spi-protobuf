@@ -16,8 +16,13 @@
         <artifactId>spi-protobuf-parent</artifactId>
         <version>1.20-SNAPSHOT</version>
     </parent>
-    <artifactId>protobuf-support</artifactId>
+    <artifactId>protobuf-support-standard</artifactId>
     <dependencies>
+        <dependency>
+            <groupId>no.entur.mapstruct.spi</groupId>
+            <artifactId>protobuf-support-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>

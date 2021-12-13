@@ -129,15 +129,9 @@ jobs:
       - checkout
       - generate-maven-settings-file:
           settings-file: *maven-settings-file
-      - restore_cache:
-          keys:
-            - dep-cache-{{ checksum "pom.xml" }}
-            - dep-cache-base
-      - run: mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.0:go-offline
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: dep-cache-{{ checksum "pom.xml" }}
+      - maven/with_cache:
+          steps:
+          - run: mvn verify
       # Cannot use -o because of snapshot dependencies.
       - run: mvn verify
       - persist_to_workspace:
@@ -166,11 +160,10 @@ jobs:
           settings-file: *maven-settings-file
       - attach_workspace:
           at: .
-      - restore_cache:
-          keys:
-            - dep-cache-{{ checksum "pom.xml" }}
-            - dep-cache-base
-      - run: *sonar-scan
+      - maven/with_cache:
+          steps:
+          - run: *sonar-scan
+
   release:
     <<: *java-container-config
     environment:
@@ -180,13 +173,12 @@ jobs:
       - run: *import_gpg_key
       - generate-maven-settings-file:
           settings-file: *maven-settings-file
-      - restore_cache:
-          keys:
-            - dep-cache-{{ checksum "pom.xml" }}
-            - dep-cache-base
-      - run: *release
+      - maven/with_cache:
+          steps:
+          - run: *release
 orbs:
   queue: eddiewebb/queue@volatile
+  maven: entur/maven-orb@0.0.9
 
 workflows:
   version: 2
@@ -224,4 +216,3 @@ workflows:
           filters:
             branches:
               only: develop
-
