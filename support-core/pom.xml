@@ -14,7 +14,7 @@
     <parent>
         <groupId>no.entur.mapstruct.spi</groupId>
         <artifactId>spi-protobuf-parent</artifactId>
-        <version>1.22</version>
+        <version>1.23</version>
     </parent>
     <artifactId>protobuf-support-core</artifactId>
     <dependencies>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.google.api.grpc</groupId>
             <artifactId>proto-google-common-protos</artifactId>
-            <version>2.7.1</version>
+            <version>2.7.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
