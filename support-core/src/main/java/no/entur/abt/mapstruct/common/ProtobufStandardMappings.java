@@ -9,12 +9,12 @@ package no.entur.abt.mapstruct.common;
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -50,44 +50,44 @@ public interface ProtobufStandardMappings {
 	}
 
 	default byte[] mapByteString(ByteString in) {
-		if (in != null && !in.isEmpty()) {
-			return in.toByteArray();
-		}
-
-		return null;
+		return in != null ? in.toByteArray() : new byte[0];
 	}
 
 	default ByteString mapByteStringToString(String string) {
-		return ByteString.copyFromUtf8(string);
+		return ByteString.copyFromUtf8(string != null ? string : "");
 	}
 
 	default String mapStringToByteString(ByteString in) {
-		if (in != null && !in.isEmpty()) {
-			return in.toStringUtf8();
-		}
-
-		return null;
+		return in != null ? in.toStringUtf8() : "";
 	}
 
 	default com.google.type.Date mapLocalDate(LocalDate t) {
-		return com.google.type.Date.newBuilder().setYear(t.getYear()).setMonth(t.getMonthValue()).setDay(t.getDayOfMonth()).build();
+		return t != null
+				? com.google.type.Date.newBuilder().setYear(t.getYear()).setMonth(t.getMonthValue()).setDay(t.getDayOfMonth()).build()
+				: com.google.type.Date.getDefaultInstance();
 	}
 
 	default LocalDate mapDate(com.google.type.Date t) {
-		return LocalDate.of(t.getYear(), t.getMonth(), t.getDay());
+		return t != null
+				? LocalDate.of(t.getYear(), t.getMonth(), t.getDay())
+				: LocalDate.of(1970, 1, 1);
 	}
 
 	default com.google.type.TimeOfDay mapLocalTime(LocalTime t) {
-		return com.google.type.TimeOfDay.newBuilder().setHours(t.getHour()).setMinutes(t.getMinute()).setSeconds(t.getSecond()).setNanos(t.getNano()).build();
+		return t != null
+				? com.google.type.TimeOfDay.newBuilder().setHours(t.getHour()).setMinutes(t.getMinute()).setSeconds(t.getSecond()).setNanos(t.getNano()).build()
+				: com.google.type.TimeOfDay.getDefaultInstance();
 	}
 
 	default LocalTime mapTimeOfDay(com.google.type.TimeOfDay t) {
-		return LocalTime.of(t.getHours(), t.getMinutes(), t.getSeconds(), t.getNanos());
+		return t != null
+				? LocalTime.of(t.getHours(), t.getMinutes(), t.getSeconds(), t.getNanos())
+				: LocalTime.MIDNIGHT;
 	}
 
 	default Timestamp map(LocalDateTime i) {
 		if (i == null) {
-			return null;
+			return Timestamp.getDefaultInstance();
 		}
 
 		TimeZone systemDefault = TimeZone.getDefault();
@@ -99,7 +99,9 @@ public interface ProtobufStandardMappings {
 	}
 
 	default Timestamp map(OffsetDateTime in) {
-		return Timestamp.newBuilder().setSeconds(in.toEpochSecond()).setNanos(0).build();
+		return in != null
+				? Timestamp.newBuilder().setSeconds(in.toEpochSecond()).setNanos(0).build()
+				: Timestamp.getDefaultInstance();
 	}
 
 	default float map(FloatValue f) {
