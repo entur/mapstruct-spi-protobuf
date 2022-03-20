@@ -66,9 +66,16 @@ public class ProtobufStandardMappingsTest {
 		assertEquals(l, back);
 	}
 
+	// No longer true with the new implementation that ban null.
 	@Test
+	@org.junit.jupiter.api.Disabled
 	public void mapToInstant_whenSecondsAndNanosIs0_thenMapToNull() {
 		assertNull(MAPPER.mapToInstant(Timestamp.newBuilder().build()));
+	}
+
+	@Test
+	public void mapToInstant_whenSecondsAndNanosIs0_thenMapToEPOCH() {
+		assertEquals(MAPPER.mapToInstant(Timestamp.newBuilder().build()), Instant.EPOCH);
 	}
 
 	@Test
