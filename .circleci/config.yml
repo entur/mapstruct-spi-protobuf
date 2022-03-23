@@ -178,7 +178,7 @@ jobs:
           - run: *release
 orbs:
   queue: eddiewebb/queue@volatile
-  maven: entur/maven-orb@0.0.9
+  maven: entur/maven-orb@0.0.10
 
 workflows:
   version: 2
