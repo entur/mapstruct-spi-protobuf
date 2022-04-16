@@ -26,6 +26,7 @@ package no.entur.mapstruct.spi.protobuf;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.lang.model.element.Element;
@@ -46,7 +47,7 @@ import org.mapstruct.ap.spi.util.IntrospectorUtils;
 public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrategy {
 	public static final String PROTOBUF_STRING_LIST_TYPE = "com.google.protobuf.ProtocolStringList";
 	public static final String PROTOBUF_MESSAGE_OR_BUILDER = "com.google.protobuf.MessageLiteOrBuilder";
-	public static final String PROTOBUF_GENERATED_MESSAGE = "com.google.protobuf.Message";
+    public static final String PROTOBUF_BUILDER = "com.google.protobuf.GeneratedMessageV3.Builder";
 	public static final String BUILDER_LIST_SUFFIX = "BuilderList";
 
 	protected static final Set<String> INTERNAL_METHODS = new HashSet<>(Arrays.asList("newBuilder", "newBuilderForType", "parseFrom", "parseDelimitedFrom",
@@ -58,7 +59,7 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 
 	protected static final List<String> INTERNAL_SPECIAL_METHOD_ENDINGS = Arrays.asList("Value", "Count", "Bytes", "Map", "ValueList");
 
-	protected static final List<String> INTERNAL_SPECIAL_METHOD_BEGINNINGS = Arrays.asList("remove", "clear", "mutable", "merge", "putAll", "getMutable");
+	protected static final List<String> INTERNAL_SPECIAL_METHOD_BEGINNINGS = Arrays.asList("remove", "clear", "mutable", "merge", "putAll");
 
 	protected TypeMirror protobufMesageOrBuilderType;
 
@@ -138,7 +139,12 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 			if (isSpecialMethod(method)) {
 				return false;
 			}
-
+			if (isGetMutableMap(method)) {
+				return true;
+			}
+			if (isGetUnmodifiableMap(method)) {
+				return !isMethodFromProtobufBuilder(method);
+			}
 			return super.isGetterMethod(method);
 		}
 
@@ -228,15 +234,26 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 
 	@Override
 	public String getPropertyName(ExecutableElement getterOrSetterMethod) {
-
 		String methodName = getterOrSetterMethod.getSimpleName().toString();
-		if (isGetList(getterOrSetterMethod) || isSetList(getterOrSetterMethod)) {
+
+		boolean isGetMutableMap = isGetMutableMap(getterOrSetterMethod);
+		boolean isGetUnmodifiableMap = isGetUnmodifiableMap(getterOrSetterMethod);
+
+		if (isGetList(getterOrSetterMethod) || isSetList(getterOrSetterMethod) || isGetMutableMap) {
 			Element receiver = getterOrSetterMethod.getEnclosingElement();
 			if (receiver != null && (receiver.getKind() == ElementKind.CLASS || receiver.getKind() == ElementKind.INTERFACE)) {
 				TypeElement type = (TypeElement) receiver;
 				if (isProtobufGeneratedMessage(type)) {
-					String propertyName = IntrospectorUtils.decapitalize(methodName.substring(3, methodName.length() - 4));
-					return propertyName;
+					if (isGetMutableMap) {
+						// 'getMutable...'
+						return IntrospectorUtils.decapitalize(methodName.substring(10));
+					} else if (isGetUnmodifiableMap) {
+						// 'get...'
+						return IntrospectorUtils.decapitalize(methodName.substring(3));
+					} else {
+						// 'get...List'
+						return IntrospectorUtils.decapitalize(methodName.substring(3, methodName.length() - 4));
+					}
 				}
 			}
 		}
@@ -245,6 +262,18 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 
 	private boolean isGetList(ExecutableElement element) {
 		return element.getSimpleName().toString().startsWith("get") && isListType(element.getReturnType());
+	}
+
+	private boolean isGetUnmodifiableMap(ExecutableElement element) {
+		return element.getSimpleName().toString().startsWith("get")
+				&& !element.getSimpleName().toString().startsWith("getMutable")
+                // skip 'get..'.Map pattern (this method are duplicated by 'get...')
+				&& !element.getSimpleName().toString().endsWith("Map")
+				&& isMapType(element.getReturnType());
+	}
+
+	private boolean isGetMutableMap(ExecutableElement element) {
+		return element.getSimpleName().toString().startsWith("getMutable") && isMapType(element.getReturnType());
 	}
 
 	private boolean isSetList(ExecutableElement element) {
@@ -257,6 +286,10 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 
 	private boolean isListType(TypeMirror t) {
 		return t.toString().startsWith(List.class.getCanonicalName()) || t.toString().startsWith(PROTOBUF_STRING_LIST_TYPE);
+	}
+
+	private boolean isMapType(TypeMirror t) {
+		return t.toString().startsWith(Map.class.getCanonicalName());
 	}
 
 	private boolean isProtobufGeneratedMessage(TypeElement type) {
@@ -288,5 +321,10 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 	private boolean isMethodFromProtobufGeneratedClass(ExecutableElement method) {
 		Element receiver = method.getEnclosingElement();
 		return protobufMesageOrBuilderType != null && receiver != null && typeUtils.isAssignable(receiver.asType(), protobufMesageOrBuilderType);
+	}
+
+	private boolean isMethodFromProtobufBuilder(ExecutableElement method) {
+		TypeElement cls = (TypeElement) method.getEnclosingElement();
+		return cls.getSuperclass().toString().startsWith(PROTOBUF_BUILDER);
 	}
 }
