@@ -113,7 +113,7 @@
                         <dependency>
                             <groupId>no.entur</groupId>
                             <artifactId>abt-codestyle</artifactId>
-                            <version>0.18</version>
+                            <version>0.19</version>
                         </dependency>
                     </dependencies>
                 </plugin>
