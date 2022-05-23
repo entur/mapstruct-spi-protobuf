@@ -95,7 +95,7 @@ aliases:
 
   - &java-container-config
       docker:
-        - image: cimg/openjdk:17.0
+        - image: cimg/openjdk:11.0
           auth:
             username: $DOCKERHUB_LOGIN
             password: $DOCKERHUB_PASSWORD
@@ -133,7 +133,6 @@ jobs:
           steps:
           - run: mvn verify
       # Cannot use -o because of snapshot dependencies.
-      - run: mvn verify
       - persist_to_workspace:
           root: .
           paths:
