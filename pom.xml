@@ -25,6 +25,7 @@
         <module>support-lite</module>
     </modules>
     <properties>
+        <gson.version>2.9.0</gson.version>
         <jupiter.version>5.8.2</jupiter.version>
         <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
@@ -60,6 +61,12 @@
                 <artifactId>junit-jupiter-api</artifactId>
                 <version>${jupiter.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <!-- due to security issue -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
