@@ -9,12 +9,12 @@ package no.entur.abt.mapstruct;
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 
 import com.google.protobuf.Timestamp;
+import com.google.protobuf.util.Timestamps;
 
 public class ProtobufStandardMappingsTest {
 
@@ -65,9 +66,16 @@ public class ProtobufStandardMappingsTest {
 		assertEquals(l, back);
 	}
 
+	// No longer true with the new implementation that ban null.
 	@Test
+	@org.junit.jupiter.api.Disabled
 	public void mapToInstant_whenSecondsAndNanosIs0_thenMapToNull() {
 		assertNull(MAPPER.mapToInstant(Timestamp.newBuilder().build()));
+	}
+
+	@Test
+	public void mapToInstant_whenSecondsAndNanosIs0_thenMapToEPOCH() {
+		assertEquals(MAPPER.mapToInstant(Timestamp.newBuilder().build()), Instant.EPOCH);
 	}
 
 	@Test
@@ -112,4 +120,16 @@ public class ProtobufStandardMappingsTest {
 		assertEquals(pbDuration, MAPPER.mapDuration(duration));
 	}
 
+	@Test
+	void timestamp_toEpochMilli_equals_Timestamps_toMillis() {
+		// GIVEN
+		Timestamp nowTimestamp = MAPPER.mapToTimestamp(Instant.now());
+
+		// WHEN
+		long millis1 = MAPPER.toEpochMilliseconds(nowTimestamp);
+		long millis2 = Timestamps.toMillis(nowTimestamp);
+
+		// THEN
+		assertEquals(millis1, millis2);
+	}
 }

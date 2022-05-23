@@ -9,12 +9,12 @@ package no.entur.abt.mapstruct;
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,7 +31,6 @@ import org.mapstruct.factory.Mappers;
 
 import com.google.protobuf.Timestamp;
 import com.google.protobuf.util.Durations;
-import com.google.protobuf.util.Timestamps;
 
 /***
  *
@@ -45,47 +44,35 @@ public interface ProtobufStandardMappings extends no.entur.abt.mapstruct.common.
 	ProtobufStandardMappings INSTANCE = Mappers.getMapper(ProtobufStandardMappings.class);
 
 	default Instant mapToInstant(Timestamp t) {
-		if (Timestamps.isValid(t) && (t.getSeconds() > 0 || t.getNanos() > 0)) {
-			return Instant.ofEpochSecond(t.getSeconds(), t.getNanos());
-		} else {
-			return null;
-		}
+		return t != null
+				? Instant.ofEpochSecond(t.getSeconds(), t.getNanos())
+				: Instant.EPOCH;
 	}
 
 	default Long toEpochMilliseconds(Timestamp instance) {
-		if (instance != null) {
-			return Timestamps.toMillis(instance);
-		} else {
-			return null;
-		}
+		return mapToInstant(instance).toEpochMilli();
 	}
 
 	default Timestamp mapToTimestamp(Instant i) {
-		if (i == null || i.getEpochSecond() == 0) {
-			return null;
-		} else {
-			return Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build();
-		}
+		return i != null
+				? Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build()
+				: Timestamp.getDefaultInstance();
 	}
 
-	default Timestamp fromEpochMilliseconds(long millis) {
-		return Timestamps.fromMillis(millis);
+	default Timestamp fromEpochMilliseconds(Long millis) {
+		return mapToTimestamp(Instant.ofEpochMilli(millis != null ? millis : 0L));
 	}
 
 	default Duration mapDuration(com.google.protobuf.Duration t) {
-		if (t != null) {
-			return Duration.ofSeconds(t.getSeconds(), t.getNanos());
-		} else {
-			return null;
-		}
+		return t != null
+				? Duration.ofSeconds(t.getSeconds(), t.getNanos())
+				: Duration.ZERO;
 	}
 
 	default com.google.protobuf.Duration mapDuration(Duration t) {
-		if (t != null) {
-			return Durations.fromNanos(t.toNanos());
-		} else {
-			return null;
-		}
+		return t != null
+				? Durations.fromNanos(t.toNanos())
+				: com.google.protobuf.Duration.getDefaultInstance();
 	}
 
 }
