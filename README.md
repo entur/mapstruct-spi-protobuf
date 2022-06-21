@@ -65,6 +65,12 @@ See [protobuf-support-standard](support-standard) and/or [protobuf-support-lite]
 
 [See example project](usage/)
 
+NB: Make sure you add `collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED` to your mapping interfaces as protobuf stubs use the builder pattern. 
+```
+@Mapper(collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED)
+public interface ... {
+```
+
 ## Maven
 
 Add the following section to you maven-compiler-plugin plugin configuration:
@@ -129,3 +135,5 @@ implementation"org.mapstruct:mapstruct:${mapstructVersion}"
 # More information:
 
 http://mapstruct.org/documentation/stable/reference/html/index.html#using-spi
+
+
