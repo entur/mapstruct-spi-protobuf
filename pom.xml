@@ -16,7 +16,7 @@
     </modules>
     <properties>
         <gson.version>2.9.0</gson.version>
-        <jupiter.version>5.8.2</jupiter.version>
+        <jupiter.version>5.9.0</jupiter.version>
         <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -128,7 +128,7 @@
                         <dependency>
                             <groupId>org.junit.jupiter</groupId>
                             <artifactId>junit-jupiter-engine</artifactId>
-                            <version>5.8.2</version>
+                            <version>5.9.0</version>
                         </dependency>
                     </dependencies>
                 </plugin>
