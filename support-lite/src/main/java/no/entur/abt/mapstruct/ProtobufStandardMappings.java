@@ -9,12 +9,12 @@ package no.entur.abt.mapstruct;
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -44,10 +44,12 @@ public interface ProtobufStandardMappings extends no.entur.abt.mapstruct.common.
 	ProtobufStandardMappings INSTANCE = Mappers.getMapper(ProtobufStandardMappings.class);
 
 	default Instant mapToInstant(Timestamp t) {
-		if (t == null || (t.getSeconds() == 0 && t.getNanos() == 0)) {
+		if (t != null && (t.getSeconds() > 0 || t.getNanos() > 0)) {
+			Timestamps.checkValid(t);
+			return Instant.ofEpochSecond(t.getSeconds(), t.getNanos());
+		} else {
 			return null;
 		}
-		return Instant.ofEpochSecond(t.getSeconds(), t.getNanos());
 	}
 
 	default Long toEpochMilliseconds(Timestamp instance) {
@@ -55,12 +57,15 @@ public interface ProtobufStandardMappings extends no.entur.abt.mapstruct.common.
 		return instant == null ? null : instant.toEpochMilli();
 	}
 
-	default Timestamp mapToTimestamp(Instant i) {
-		if (i == null || i.getEpochSecond() == 0) {
-			return null;
-		}
-		return Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build();
-	}
+    default Timestamp mapToTimestamp(Instant i) {
+        if (i == null || i.getEpochSecond() == 0) {
+            return null;
+        } else {
+            Timestamp t = Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build();
+            Timestamps.checkValid(t);
+            return t;
+        }
+    }
 
 	default Timestamp fromEpochMilliseconds(Long instance) {
 		if (instance == null) {

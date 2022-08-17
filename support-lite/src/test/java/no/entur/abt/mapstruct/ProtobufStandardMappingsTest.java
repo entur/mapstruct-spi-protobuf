@@ -25,6 +25,7 @@ package no.entur.abt.mapstruct;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -73,6 +74,17 @@ public class ProtobufStandardMappingsTest {
 	@Test
 	public void mapToInstant_whenNanosIsSet_thenMapToInstant() {
 		assertEquals(3000, MAPPER.mapToInstant(Timestamp.newBuilder().setNanos(3000).build()).getNano());
+	}
+
+	@Test
+	public void mapToInstant_whenValueIsOutOfRangeForTimestamp_thenThrowIllegalArgumentException() {
+		assertThrows(IllegalArgumentException.class, () -> MAPPER.mapToInstant(Timestamp.newBuilder().setSeconds(Long.MAX_VALUE).build()));
+	}
+
+
+	@Test
+	public void mapInstantToTimestamp_whenValueIsOutOfRangeForTimestamp_thenThrowIllegalArgumentException() {
+		assertThrows(IllegalArgumentException.class, () -> MAPPER.mapToTimestamp(Instant.now().plus(Integer.MAX_VALUE, ChronoUnit.DAYS)));
 	}
 
 	@Test
