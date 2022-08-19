@@ -30,7 +30,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import java.time.Duration;
-import java.time.Instant;
 
 /***
  *
@@ -43,30 +42,11 @@ public interface ProtobufStandardMappings extends no.entur.abt.mapstruct.common.
 
     ProtobufStandardMappings INSTANCE = Mappers.getMapper(ProtobufStandardMappings.class);
 
-    default Instant mapToInstant(Timestamp t) {
-        if (t != null && (t.getSeconds() > 0 || t.getNanos() > 0)) {
-            Timestamps.checkValid(t);
-            return Instant.ofEpochSecond(t.getSeconds(), t.getNanos());
-        } else {
-            return null;
-        }
-    }
-
     default Long toEpochMilliseconds(Timestamp instance) {
         if (instance != null) {
             return Timestamps.toMillis(instance);
         } else {
             return null;
-        }
-    }
-
-    default Timestamp mapToTimestamp(Instant i) {
-        if (i == null || i.getEpochSecond() == 0) {
-            return null;
-        } else {
-            Timestamp t = Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build();
-            Timestamps.checkValid(t);
-            return t;
         }
     }
 
