@@ -25,6 +25,7 @@ package no.entur.abt.mapstruct;
 
 import com.google.protobuf.Timestamp;
 import com.google.protobuf.util.Durations;
+import no.entur.abt.mapstruct.common.Timestamps;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
@@ -36,7 +37,6 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ProtobufStandardMappingsTest {
 
@@ -78,14 +78,24 @@ public class ProtobufStandardMappingsTest {
     }
 
     @Test
-    public void mapToInstant_whenValueIsOutOfRangeForTimestamp_thenThrowIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> MAPPER.mapToInstant(Timestamp.newBuilder().setSeconds(Long.MAX_VALUE).build()));
+    public void mapToInstant_whenValueIsTooLargeForRangeForTimestamp_thenMapFromMaxValidTimestamp() {
+        assertEquals(MAPPER.mapToInstant(Timestamps.MAX_VALUE), MAPPER.mapToInstant(Timestamp.newBuilder().setSeconds(Long.MAX_VALUE).build()));
+    }
+
+    @Test
+    public void mapToInstant_whenValueIsTooSmallForRangeForTimestamp_thenMapFromMinValidTimestamp() {
+        assertEquals(MAPPER.mapToInstant(Timestamps.MIN_VALUE), MAPPER.mapToInstant(Timestamp.newBuilder().setSeconds(-Long.MAX_VALUE).build()));
     }
 
 
     @Test
-    public void mapInstantToTimestamp_whenValueIsOutOfRangeForTimestamp_thenThrowIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> MAPPER.mapToTimestamp(Instant.now().plus(Integer.MAX_VALUE, ChronoUnit.DAYS)));
+    public void mapInstantToTimestamp_whenValueIsTooLargeForRangeForTimestamp_thenMapToMaxValidTimestamp() {
+        assertEquals(Timestamps.MAX_VALUE, MAPPER.mapToTimestamp(Instant.now().plus(Integer.MAX_VALUE, ChronoUnit.DAYS)));
+    }
+
+    @Test
+    public void mapInstantToTimestamp_whenValueIsTooSmallForRangeForTimestamp_thenMapToMinValidTimestamp() {
+        assertEquals(Timestamps.MIN_VALUE, MAPPER.mapToTimestamp(Instant.now().minus(Integer.MAX_VALUE, ChronoUnit.DAYS)));
     }
 
     @Test
