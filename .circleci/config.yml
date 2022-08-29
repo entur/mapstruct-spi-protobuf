@@ -3,7 +3,7 @@ aliases:
   - &release
     name: Release
     command: |
-      if [ "$(git log -n 1 --pretty="%an")" == "Renovate Bot" ]
+      if [ "$(git log -n 1 --pretty="%an")" == "renovate[bot]" ]
       then
         echo "Skipping release"
       else
