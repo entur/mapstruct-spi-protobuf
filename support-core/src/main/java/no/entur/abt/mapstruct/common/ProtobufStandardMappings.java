@@ -141,6 +141,10 @@ public interface ProtobufStandardMappings {
     }
 
     default Instant mapToInstant(Timestamp t) {
+        if (t == null) {
+            return null;
+        }
+
         Timestamp sanitized = Timestamps.sanitize(t);
 
         if (sanitized != null) {
@@ -151,11 +155,11 @@ public interface ProtobufStandardMappings {
     }
 
     default Timestamp mapToTimestamp(Instant i) {
-        if (i == null || i.getEpochSecond() == 0) {
+        if (i == null) {
             return null;
-        } else {
-            Timestamp t = Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build();
-            return Timestamps.sanitize(t);
         }
+
+        Timestamp t = Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build();
+        return Timestamps.sanitize(t);
     }
 }
