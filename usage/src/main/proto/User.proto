@@ -51,8 +51,8 @@ message UserDTO {
   //        double oneofv2 = 24;
   //    }
 
-  //    map<string, string> v19 = 25;
-  //    map<string, DepartmentDTO> v20 = 26;
+  map<string, string> stringMap = 25;
+  map<string, DepartmentDTO> entityMap = 26;
 
   MultiNumberDTO multi_number = 27;
 

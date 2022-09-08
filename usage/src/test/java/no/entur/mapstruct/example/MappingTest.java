@@ -43,6 +43,7 @@ package no.entur.mapstruct.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 
@@ -84,6 +85,30 @@ public class MappingTest {
 		assertEquals(null, back.getId());
 		assertEquals("test", back.getEmail());
 		assertEquals(null, back.getV16());
+	}
+
+	@Test
+	public void testMaps() throws InvalidProtocolBufferException {
+		User user = new User();
+		user.getStringMap().put("key1", "value1");
+		user.getStringMap().put("key2", "value2");
+		user.getEntityMap().put("entityKey1", new Department("DepartmentName1"));
+		user.getEntityMap().put("entityKey2", new Department("DepartmentName2"));
+
+		UserDTO dto = UserMapper.INSTANCE.map(user);
+		UserDTO deserialized = UserDTO.parseFrom(dto.toByteArray());
+		User back = UserMapper.INSTANCE.map(deserialized);
+
+		assertTrue(back.getStringMap().containsKey("key1"));
+		assertEquals("value1", back.getStringMap().get("key1"));
+		assertTrue(back.getStringMap().containsKey("key2"));
+		assertEquals("value2", back.getStringMap().get("key2"));
+
+		assertTrue(back.getEntityMap().containsKey("entityKey1"));
+		assertEquals("DepartmentName1", back.getEntityMap().get("entityKey1").getName());
+		assertTrue(back.getEntityMap().containsKey("entityKey2"));
+		assertEquals("DepartmentName2", back.getEntityMap().get("entityKey2").getName());
+
 	}
 
 	private User generateUser() {
@@ -220,6 +245,7 @@ public class MappingTest {
 		assertNotNull(back.getPoliceDepartment());
 		assertEquals(back.getPoliceDepartment().getName(), "POLICE");
 		// WILL FAIL: Mapstruct cannot handle presence checker on oneOfs : assertNull(back.getFireDepartment());
+
 	}
 
 	@Test

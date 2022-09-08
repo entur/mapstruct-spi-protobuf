@@ -24,7 +24,9 @@ package no.entur.mapstruct.spi.protobuf;
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.protobuf.ByteString;
 
@@ -86,6 +88,18 @@ public class User {
 
 	private Department fireDepartment;
 	private Department policeDepartment;
+
+	private Map<String, String> stringMap = new HashMap<>();
+
+	public Map<String, String> getStringMap() {
+		return stringMap;
+	}
+
+	public Map<String, Department> getEntityMap() {
+		return entityMap;
+	}
+
+	private Map<String, Department> entityMap = new HashMap<>();
 
 	public Department getFireDepartment() {
 		return fireDepartment;
