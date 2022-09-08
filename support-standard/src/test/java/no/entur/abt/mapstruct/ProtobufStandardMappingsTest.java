@@ -66,10 +66,21 @@ public class ProtobufStandardMappingsTest {
         assertEquals(l, back);
     }
 
+    @Test
+    public void testMapInstantToTimestampEpoch() {
+        Instant epoch = Instant.EPOCH;
+
+        Timestamp timestamp = MAPPER.mapToTimestamp(epoch);
+
+        Instant back = MAPPER.mapToInstant(timestamp);
+
+        assertEquals(epoch, back);
+    }
+
 
     @Test
-    public void mapToInstant_whenSecondsAndNanosIs0_thenMapToNull() {
-        assertNull(MAPPER.mapToInstant(Timestamp.newBuilder().build()));
+    public void mapToInstant_whenSecondsAndNanosIsNull_thenMapToNull() {
+        assertNull(MAPPER.mapToInstant(null));
     }
 
     @Test
