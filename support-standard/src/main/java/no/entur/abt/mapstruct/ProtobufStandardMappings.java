@@ -23,13 +23,14 @@ package no.entur.abt.mapstruct;
  * #L%
  */
 
-import com.google.protobuf.Timestamp;
-import com.google.protobuf.util.Durations;
-import com.google.protobuf.util.Timestamps;
+import java.time.Duration;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import java.time.Duration;
+import com.google.protobuf.Timestamp;
+import com.google.protobuf.util.Durations;
+import com.google.protobuf.util.Timestamps;
 
 /***
  *
@@ -40,34 +41,34 @@ import java.time.Duration;
 @Mapper
 public interface ProtobufStandardMappings extends no.entur.abt.mapstruct.common.ProtobufStandardMappings {
 
-    ProtobufStandardMappings INSTANCE = Mappers.getMapper(ProtobufStandardMappings.class);
+	ProtobufStandardMappings INSTANCE = Mappers.getMapper(ProtobufStandardMappings.class);
 
-    default Long toEpochMilliseconds(Timestamp instance) {
-        if (instance != null) {
-            return Timestamps.toMillis(instance);
-        } else {
-            return null;
-        }
-    }
+	default Long toEpochMilliseconds(Timestamp instance) {
+		if (instance != null) {
+			return Timestamps.toMillis(instance);
+		} else {
+			return null;
+		}
+	}
 
-    default Timestamp fromEpochMilliseconds(long millis) {
-        return Timestamps.fromMillis(millis);
-    }
+	default Timestamp fromEpochMilliseconds(long millis) {
+		return Timestamps.fromMillis(millis);
+	}
 
-    default Duration mapDuration(com.google.protobuf.Duration t) {
-        if (t != null) {
-            return Duration.ofSeconds(t.getSeconds(), t.getNanos());
-        } else {
-            return null;
-        }
-    }
+	default Duration mapDuration(com.google.protobuf.Duration t) {
+		if (t != null) {
+			return Duration.ofSeconds(t.getSeconds(), t.getNanos());
+		} else {
+			return null;
+		}
+	}
 
-    default com.google.protobuf.Duration mapDuration(Duration t) {
-        if (t != null) {
-            return Durations.fromNanos(t.toNanos());
-        } else {
-            return null;
-        }
-    }
+	default com.google.protobuf.Duration mapDuration(Duration t) {
+		if (t != null) {
+			return Durations.fromNanos(t.toNanos());
+		} else {
+			return null;
+		}
+	}
 
 }
