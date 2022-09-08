@@ -27,7 +27,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 
-import no.entur.abt.mapstruct.common.Timestamps;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -44,13 +43,10 @@ public interface ProtobufStandardMappings extends no.entur.abt.mapstruct.common.
 
 	ProtobufStandardMappings INSTANCE = Mappers.getMapper(ProtobufStandardMappings.class);
 
-
-
 	default Long toEpochMilliseconds(Timestamp instance) {
 		Instant instant = mapToInstant(instance);
 		return instant == null ? null : instant.toEpochMilli();
 	}
-
 
 	default Timestamp fromEpochMilliseconds(Long instance) {
 		if (instance == null) {

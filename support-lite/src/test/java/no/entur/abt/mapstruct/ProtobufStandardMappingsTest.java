@@ -33,10 +33,11 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
-import no.entur.abt.mapstruct.common.Timestamps;
 import org.junit.jupiter.api.Test;
 
 import com.google.protobuf.Timestamp;
+
+import no.entur.abt.mapstruct.common.Timestamps;
 
 public class ProtobufStandardMappingsTest {
 
@@ -87,7 +88,6 @@ public class ProtobufStandardMappingsTest {
 		assertEquals(3000, MAPPER.mapToInstant(Timestamp.newBuilder().setNanos(3000).build()).getNano());
 	}
 
-
 	@Test
 	public void mapToInstant_whenValueIsTooLargeForRangeForTimestamp_thenMapFromMaxValidTimestamp() {
 		assertEquals(MAPPER.mapToInstant(Timestamps.MAX_VALUE), MAPPER.mapToInstant(Timestamp.newBuilder().setSeconds(Long.MAX_VALUE).build()));
@@ -98,7 +98,6 @@ public class ProtobufStandardMappingsTest {
 		assertEquals(MAPPER.mapToInstant(Timestamps.MIN_VALUE), MAPPER.mapToInstant(Timestamp.newBuilder().setSeconds(-Long.MAX_VALUE).build()));
 	}
 
-
 	@Test
 	public void mapInstantToTimestamp_whenValueIsTooLargeForRangeForTimestamp_thenMapToMaxValidTimestamp() {
 		assertEquals(Timestamps.MAX_VALUE, MAPPER.mapToTimestamp(Instant.now().plus(Integer.MAX_VALUE, ChronoUnit.DAYS)));
@@ -108,6 +107,7 @@ public class ProtobufStandardMappingsTest {
 	public void mapInstantToTimestamp_whenValueIsTooSmallForRangeForTimestamp_thenMapToMinValidTimestamp() {
 		assertEquals(Timestamps.MIN_VALUE, MAPPER.mapToTimestamp(Instant.now().minus(Integer.MAX_VALUE, ChronoUnit.DAYS)));
 	}
+
 	public void mapPositiveDuration() {
 		Duration duration = Duration.of(3, ChronoUnit.NANOS);
 

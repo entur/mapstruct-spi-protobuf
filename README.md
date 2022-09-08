@@ -64,13 +64,18 @@ ready-to-use mapstruct mapper.
 
 [See example project](usage/)
 
-NB: Make sure you add `collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED` to your mapping interfaces as protobuf stubs use the builder pattern. 
+NB: Make sure you add `collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED` to your mapping interfaces
+as protobuf stubs use the builder pattern.
+
 ```
 @Mapper(collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED)
 public interface ... {
 ```
 
 ## Maven
+
+NB: Make sure you use the *same version of mapstruct* both in the annotation process and the general dependency.
+`mapstruct-spi-protobuf` generally depends on the latest released version of mapstruct.
 
 Add the following section to you maven-compiler-plugin plugin configuration:
 
@@ -79,7 +84,7 @@ Add the following section to you maven-compiler-plugin plugin configuration:
 <annotationProcessorPaths>
     <path>
         <groupId>no.entur.mapstruct.spi</groupId>
-        <artifactId>protobuf-spi-impl</artifactId>
+        <artifactId>protobuf-spi-impl</artifactId> <!-- Make sure mapstruct version here is the same as below -->
         <version>LATEST.VERSION</version>
     </path>
 </annotationProcessorPaths>
@@ -124,6 +129,9 @@ Complete example:
 ```
 
 ## Gradle
+
+Note: See Maven setup regarding using the same version of mapstruct both in the annotation processor and the general
+dependency.
 
 ```java
 implementation"org.mapstruct:mapstruct:${mapstructVersion}"
