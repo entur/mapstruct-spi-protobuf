@@ -11,7 +11,6 @@ Requires on mapstruct 1.4.0+.
 Extends ```DefaultProtobufAccessorNamingStrategy``` and provides necessary information to map all fields automatically *
 except*
 
-* map<k,v>
 * oneof
 
 which require manual mapping.
@@ -21,7 +20,7 @@ which require manual mapping.
 Implements ```EnumMappingStrategy``` and provides complete enum constant mappings if you follow Googles style guide for
 enums https://developers.google.com/protocol-buffers/docs/style#enums
 
-If needed you can specify a different postfix for the 0 value enum by passing in `mapstructSpi.enumPostfixOverrides` as 
+If needed you can specify a different postfix for the 0 value enum by passing in `mapstructSpi.enumPostfixOverrides` as
 a compilerArg in the format of:
 
 `-AmapstructSpi.enumPostfixOverrides=com.package.root.a=POSTFIX_1,com.package.root.b=POSTFIX_2`
@@ -48,7 +47,6 @@ Otherwise, this will default to `UNSPECIFIED` as per the Google style guide.
 
 ```
 
-
 ## Support - Mapping funcions:
 
 Standard mapping functions between often used proto types and java types:
@@ -59,7 +57,8 @@ Standard mapping functions between often used proto types and java types:
 * TimeOfDay <-> LocalTime
 * byte[] <-> ByteString
 
-See [protobuf-support-standard](support-standard) and/or [protobuf-support-lite](support-lite) folders for a ready-to-use mapstruct mapper.
+See [protobuf-support-standard](support-standard) and/or [protobuf-support-lite](support-lite) folders for a
+ready-to-use mapstruct mapper.
 
 # Usage
 
@@ -72,17 +71,17 @@ Add the following section to you maven-compiler-plugin plugin configuration:
 ```xml
 
 <annotationProcessorPaths>
-  <path>
-    <groupId>no.entur.mapstruct.spi</groupId>
-    <artifactId>protobuf-spi-impl</artifactId>
-    <version>LATEST.VERSION</version>
-  </path>
+    <path>
+        <groupId>no.entur.mapstruct.spi</groupId>
+        <artifactId>protobuf-spi-impl</artifactId>
+        <version>LATEST.VERSION</version>
+    </path>
 </annotationProcessorPaths>
 <dependencies>
 <dependency>
-  <groupId>org.mapstruct</groupId>
-  <artifactId>mapstruct</artifactId>
-  <version>${org.mapstruct.version}</version>
+    <groupId>org.mapstruct</groupId>
+    <artifactId>mapstruct</artifactId>
+    <version>${org.mapstruct.version}</version>
 </dependency>
 </dependencies>
 
@@ -93,27 +92,27 @@ Complete example:
 ```xml
 
 <plugin>
-  <groupId>org.apache.maven.plugins</groupId>
-  <artifactId>maven-compiler-plugin</artifactId>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
 
-  <configuration>
-    <source>1.8</source>
-    <target>1.8</target>
-    <annotationProcessorPaths>
-      <path>
-        <groupId>no.entur.mapstruct.spi</groupId>
-        <artifactId>protobuf-spi-impl</artifactId>
-        <version>LATEST.VERSION</version>
-      </path>
-    </annotationProcessorPaths>
-  </configuration>
-  <dependencies>
-    <dependency>
-      <groupId>org.mapstruct</groupId>
-      <artifactId>mapstruct</artifactId>
-      <version>${org.mapstruct.version}</version>
-    </dependency>
-  </dependencies>
+    <configuration>
+        <source>1.8</source>
+        <target>1.8</target>
+        <annotationProcessorPaths>
+            <path>
+                <groupId>no.entur.mapstruct.spi</groupId>
+                <artifactId>protobuf-spi-impl</artifactId>
+                <version>LATEST.VERSION</version>
+            </path>
+        </annotationProcessorPaths>
+    </configuration>
+    <dependencies>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+    </dependencies>
 
 </plugin>
 ```

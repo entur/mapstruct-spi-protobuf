@@ -47,7 +47,7 @@ import org.mapstruct.ap.spi.util.IntrospectorUtils;
 public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrategy {
 	public static final String PROTOBUF_STRING_LIST_TYPE = "com.google.protobuf.ProtocolStringList";
 	public static final String PROTOBUF_MESSAGE_OR_BUILDER = "com.google.protobuf.MessageLiteOrBuilder";
-    public static final String PROTOBUF_BUILDER = "com.google.protobuf.GeneratedMessageV3.Builder";
+	public static final String PROTOBUF_BUILDER = "com.google.protobuf.GeneratedMessageV3.Builder";
 	public static final String BUILDER_LIST_SUFFIX = "BuilderList";
 
 	protected static final Set<String> INTERNAL_METHODS = new HashSet<>(Arrays.asList("newBuilder", "newBuilderForType", "parseFrom", "parseDelimitedFrom",
@@ -265,11 +265,9 @@ public class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingStrateg
 	}
 
 	private boolean isGetUnmodifiableMap(ExecutableElement element) {
-		return element.getSimpleName().toString().startsWith("get")
-				&& !element.getSimpleName().toString().startsWith("getMutable")
-                // skip 'get..'.Map pattern (this method are duplicated by 'get...')
-				&& !element.getSimpleName().toString().endsWith("Map")
-				&& isMapType(element.getReturnType());
+		return element.getSimpleName().toString().startsWith("get") && !element.getSimpleName().toString().startsWith("getMutable")
+		// skip 'get..'.Map pattern (this method are duplicated by 'get...')
+				&& !element.getSimpleName().toString().endsWith("Map") && isMapType(element.getReturnType());
 	}
 
 	private boolean isGetMutableMap(ExecutableElement element) {
