@@ -23,10 +23,9 @@ package no.entur.abt.mapstruct.common;
  * #L%
  */
 
+import com.google.protobuf.Timestamp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.protobuf.Timestamp;
 
 public class Timestamps {
 
@@ -42,6 +41,9 @@ public class Timestamps {
 	 * Sanitize Timestamps outside legal range where possible.
 	 */
 	public static Timestamp sanitize(Timestamp t) {
+		if (t.getSeconds() == 0 && t.getNanos() == 0) {
+			return null; // Assuming null for epoch, cannot differentiate
+		}
 		if (t.getNanos() < 0 || t.getNanos() >= NANOS_PER_SECOND) {
 			throw new IllegalArgumentException(String.format(
 					"Timestamp is not valid. See proto definition for valid values. Seconds (%s) must be in range [-62,135,596,800, +253,402,300,799]. Nanos (%s) must be in range [0, +999,999,999].",

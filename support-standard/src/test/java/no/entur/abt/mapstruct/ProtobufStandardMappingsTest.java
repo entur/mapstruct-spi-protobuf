@@ -23,8 +23,10 @@ package no.entur.abt.mapstruct;
  * #L%
  */
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import com.google.protobuf.Timestamp;
+import com.google.protobuf.util.Durations;
+import no.entur.abt.mapstruct.common.Timestamps;
+import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -33,12 +35,8 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.jupiter.api.Test;
-
-import com.google.protobuf.Timestamp;
-import com.google.protobuf.util.Durations;
-
-import no.entur.abt.mapstruct.common.Timestamps;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ProtobufStandardMappingsTest {
 
@@ -69,14 +67,8 @@ public class ProtobufStandardMappingsTest {
 	}
 
 	@Test
-	public void testMapInstantToTimestampEpoch() {
-		Instant epoch = Instant.EPOCH;
-
-		Timestamp timestamp = MAPPER.mapToTimestamp(epoch);
-
-		Instant back = MAPPER.mapToInstant(timestamp);
-
-		assertEquals(epoch, back);
+	public void mapToInstant_whenSecondsAndNanosIs0_thenMapToNull() {
+		assertNull(MAPPER.mapToInstant(Timestamp.newBuilder().build()));
 	}
 
 	@Test
