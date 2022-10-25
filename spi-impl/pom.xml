@@ -4,7 +4,7 @@
     <parent>
         <groupId>no.entur.mapstruct.spi</groupId>
         <artifactId>spi-protobuf-parent</artifactId>
-        <version>1.39</version>
+        <version>1.40</version>
     </parent>
     <artifactId>protobuf-spi-impl</artifactId>
     <dependencies>
@@ -19,7 +19,6 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>31.1-jre</version>
         </dependency>
     </dependencies>
     <build>

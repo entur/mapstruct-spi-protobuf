@@ -4,14 +4,13 @@
     <parent>
         <groupId>no.entur.mapstruct.spi</groupId>
         <artifactId>spi-protobuf-parent</artifactId>
-        <version>1.39</version>
+        <version>1.40</version>
     </parent>
     <artifactId>protobuf-support-lite</artifactId>
     <dependencies>
         <dependency>
             <groupId>no.entur.mapstruct.spi</groupId>
             <artifactId>protobuf-support-core</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -20,7 +19,6 @@
         <dependency>
             <groupId>com.google.api.grpc</groupId>
             <artifactId>proto-google-common-protos</artifactId>
-            <version>2.9.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
