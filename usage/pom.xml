@@ -15,7 +15,6 @@
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>${protobuf.java.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

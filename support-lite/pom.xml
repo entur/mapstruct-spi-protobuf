@@ -11,7 +11,6 @@
         <dependency>
             <groupId>no.entur.mapstruct.spi</groupId>
             <artifactId>protobuf-support-core</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -20,7 +19,6 @@
         <dependency>
             <groupId>com.google.api.grpc</groupId>
             <artifactId>proto-google-common-protos</artifactId>
-            <version>2.9.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
