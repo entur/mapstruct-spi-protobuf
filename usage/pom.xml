@@ -61,9 +61,6 @@
                   (in this case from the local M2-repo cache). -->
                         </path>
                     </annotationProcessorPaths>
-                    <compilerArgs>
-                        <arg>-AmapstructSpi.enumPostfixOverrides=no.entur.mapstruct.example.EnumPostfixOverrideProtos=INVALID</arg>
-                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>

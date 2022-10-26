@@ -52,10 +52,8 @@ import org.junit.jupiter.api.Test;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import no.entur.mapstruct.example.EnumPostfixOverrideProtos.EnumPostfixOverrideValuesDTO;
 import no.entur.mapstruct.example.UserProtos.UserDTO;
 import no.entur.mapstruct.spi.protobuf.Department;
-import no.entur.mapstruct.spi.protobuf.EnumPostfixOverrideValues;
 import no.entur.mapstruct.spi.protobuf.MultiNumber;
 import no.entur.mapstruct.spi.protobuf.Status;
 import no.entur.mapstruct.spi.protobuf.User;
@@ -246,14 +244,5 @@ public class MappingTest {
 		assertEquals(back.getPoliceDepartment().getName(), "POLICE");
 		// WILL FAIL: Mapstruct cannot handle presence checker on oneOfs : assertNull(back.getFireDepartment());
 
-	}
-
-	@Test
-	public void testEnumPostfixOverride() {
-		EnumPostfixOverrideValues enumValue = EnumPostfixOverrideValues.TWO;
-		EnumPostfixOverrideValuesDTO dto = EnumPostfixOverrideMapper.INSTANCE.map(enumValue);
-		EnumPostfixOverrideValues back = EnumPostfixOverrideMapper.INSTANCE.map(dto);
-
-		assertEquals(enumValue, back);
 	}
 }
