@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.entur.mapstruct.spi</groupId>
     <artifactId>spi-protobuf-parent</artifactId>
-    <version>1.40</version>
+    <version>1.41</version>
     <packaging>pom</packaging>
     <name>Mapstruct SPI implementation for protobuf stubs</name>
     <description>Protobuf support for mapstruct</description>
@@ -23,10 +23,11 @@
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
+        <!-- Downgraded from 1.5.3.Final because of https://github.com/mapstruct/mapstruct/issues/2825 . Nested types (ie includes) are causing new methods to be generated and these do not respect original annotations. -->
+        <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
         <os.mavenplugin.version>1.7.0</os.mavenplugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <protobuf.java.version>3.21.8</protobuf.java.version>
+        <protobuf.java.version>3.21.9</protobuf.java.version>
         <protobuf.plugin.version>0.7.1</protobuf.plugin.version>
         <slf4j.version>2.0.3</slf4j.version>
         <spotless.version>2.27.2</spotless.version>
