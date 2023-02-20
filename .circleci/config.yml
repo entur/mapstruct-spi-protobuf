@@ -102,7 +102,7 @@ aliases:
 
   - &sonar-scan
     command: |
-      mvn sonar:sonar \
+      mvn compile sonar:sonar \
         -Dsonar.projectKey=${CIRCLE_PROJECT_REPONAME} \
         -Dsonar.organization=enturas-github \
         -Dsonar.projectName=${CIRCLE_PROJECT_REPONAME} \
@@ -176,7 +176,7 @@ jobs:
           steps:
           - run: *release
 orbs:
-  queue: eddiewebb/queue@1.8.4
+  queue: eddiewebb/queue@1.12.0
   maven: entur/maven-orb@0.0.12
 
 workflows:
