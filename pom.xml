@@ -15,7 +15,7 @@
         <module>support-lite</module>
     </modules>
     <properties>
-        <grpc.api.version>2.14.1</grpc.api.version>
+        <grpc.api.version>2.14.2</grpc.api.version>
         <gson.version>2.10.1</gson.version>
         <guava.version>31.1-jre</guava.version>
         <jupiter.version>5.9.2</jupiter.version>
