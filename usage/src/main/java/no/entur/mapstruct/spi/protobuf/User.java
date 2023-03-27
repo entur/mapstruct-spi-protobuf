@@ -76,6 +76,7 @@ public class User {
 	List<String> rv14;
 	List<ByteString> rv15;
 	List<Status> rv16;
+	Status[] rv17;
 	MultiNumber multiNumber;
 	List<MultiNumber> repMultiNumbers;
 	private String id;
@@ -444,4 +445,12 @@ public class User {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+
+    public Status[] getRv17() {
+        return rv17;
+    }
+
+    public void setRv17(Status[] rv17) {
+        this.rv17 = rv17;
+    }
 }
