@@ -123,7 +123,7 @@
                         <java>
                             <eclipse>
                                 <file>eclipsecodestyle/abt_codestyle.xml</file>
-                                <version>4.11.0</version>
+                                <version>4.26</version>
                                 <!-- Eclipse JDT version of the formatter implementation -->
                             </eclipse>
                             <removeUnusedImports></removeUnusedImports>
