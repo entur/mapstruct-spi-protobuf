@@ -4,7 +4,7 @@
     <parent>
         <groupId>no.entur.mapstruct.spi</groupId>
         <artifactId>spi-protobuf-parent</artifactId>
-        <version>1.43</version>
+        <version>1.44</version>
     </parent>
     <artifactId>protobuf-spi-impl</artifactId>
     <dependencies>
