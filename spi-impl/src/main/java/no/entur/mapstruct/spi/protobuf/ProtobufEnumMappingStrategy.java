@@ -37,7 +37,6 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.ap.spi.DefaultEnumMappingStrategy;
 
 import com.google.common.base.CaseFormat;
-import com.google.common.collect.ImmutableMap;
 
 public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 
@@ -73,7 +72,7 @@ public class ProtobufEnumMappingStrategy extends DefaultEnumMappingStrategy {
 					.map(override -> override.split("=", 2))
 					.collect(Collectors.toMap(args -> args[0].trim(), args -> args[1].trim()));
 		} else {
-			enumPostfixOverrides = ImmutableMap.of();
+			enumPostfixOverrides = Map.of();
 		}
 	}
 
