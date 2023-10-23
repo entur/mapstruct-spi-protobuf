@@ -34,8 +34,6 @@ import javax.annotation.processing.SupportedOptions;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 
-import com.google.common.collect.ImmutableMap;
-
 /**
  * This is not a true processor. It merely exists to pass the defined supported options to a global context that is accessible by the MapStruct classes which
  * would otherwise not have visibility to these.
@@ -51,7 +49,7 @@ public class ProcessingEnvOptionsHolder extends AbstractProcessor {
 	@Override
 	public synchronized void init(ProcessingEnvironment processingEnv) {
 		super.init(processingEnv);
-		OPTIONS = ImmutableMap.copyOf(processingEnv.getOptions());
+		OPTIONS = Map.copyOf(processingEnv.getOptions());
 	}
 
 	@Override
