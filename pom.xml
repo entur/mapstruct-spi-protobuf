@@ -30,7 +30,7 @@
         <protobuf.java.version>3.25.1</protobuf.java.version>
         <protobuf.plugin.version>0.7.1</protobuf.plugin.version>
         <slf4j.version>2.0.9</slf4j.version>
-        <spotless.version>2.40.0</spotless.version>
+        <spotless.version>2.41.0</spotless.version>
     </properties>
     <dependencyManagement>
         <dependencies>
