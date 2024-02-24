@@ -17,7 +17,7 @@
     <properties>
         <grpc.api.version>2.34.0</grpc.api.version>
         <gson.version>2.10.1</gson.version>
-        <guava.version>31.1-jre</guava.version>
+        <guava.version>33.0.0-jre</guava.version>
         <jupiter.version>5.10.2</jupiter.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
