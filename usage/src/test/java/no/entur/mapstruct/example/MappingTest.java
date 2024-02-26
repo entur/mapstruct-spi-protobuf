@@ -152,6 +152,7 @@ public class MappingTest {
 		user.setRv14(Arrays.asList("some string"));
 		user.setRv15(Arrays.asList(ByteString.copyFromUtf8("some byte string")));
 		user.setRv16(Arrays.asList(Status.STARTED));
+		user.setRv17(new Status[]{Status.STARTED, Status.STOPPED});
 
 		MultiNumber mm = new MultiNumber();
 		mm.setNumber(1);
@@ -241,6 +242,10 @@ public class MappingTest {
 
 		assertEquals(orig.getRv16().size(), back.getRv16().size());
 		assertEquals(orig.getRv16().get(0), back.getRv16().get(0));
+
+		assertEquals(orig.getRv17().length, back.getRv17().length);
+		assertEquals(orig.getRv17()[0], back.getRv17()[0]);
+		assertEquals(orig.getRv17()[1], back.getRv17()[1]);
 
 		assertNotNull(back.getPoliceDepartment());
 		assertEquals(back.getPoliceDepartment().getName(), "POLICE");
