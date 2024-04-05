@@ -20,7 +20,7 @@
         <guava.version>31.1-jre</guava.version>
         <jupiter.version>5.10.2</jupiter.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
-        <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <!-- Downgraded from 1.5.3.Final because of https://github.com/mapstruct/mapstruct/issues/2825 . Nested types (ie includes) are causing new methods to be generated and these do not respect original annotations. -->
