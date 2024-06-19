@@ -176,7 +176,7 @@ jobs:
           steps:
           - run: *release
 orbs:
-  queue: eddiewebb/queue@2.2.1
+  queue: eddiewebb/queue@3.2.0
   maven: entur/maven-orb@0.0.12
 
 workflows:
