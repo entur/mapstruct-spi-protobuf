@@ -19,7 +19,7 @@
         <gson.version>2.11.0</gson.version>
         <guava.version>31.1-jre</guava.version>
         <jupiter.version>5.10.3</jupiter.version>
-        <maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.8.0</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
