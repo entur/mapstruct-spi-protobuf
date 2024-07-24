@@ -139,7 +139,7 @@
                         <dependency>
                             <groupId>no.entur</groupId>
                             <artifactId>abt-codestyle</artifactId>
-                            <version>0.34</version>
+                            <version>0.35</version>
                         </dependency>
                     </dependencies>
                 </plugin>
