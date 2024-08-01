@@ -19,7 +19,7 @@
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java-util</artifactId>
-            <version>${protobuf.java.version}</version>
+            <version>${proto.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.api.grpc</groupId>
