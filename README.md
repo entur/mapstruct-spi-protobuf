@@ -47,7 +47,7 @@ Otherwise, this will default to `UNSPECIFIED` as per the Google style guide.
 
 ```
 
-## Support - Mapping funcions:
+## Support - Mapping functions:
 
 Standard mapping functions between often used proto types and java types:
 
