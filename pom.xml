@@ -29,7 +29,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <proto.version>3.25.4</proto.version>
         <protobuf.plugin.version>0.7.1</protobuf.plugin.version>
-        <slf4j.version>2.0.13</slf4j.version>
+        <slf4j.version>2.0.14</slf4j.version>
         <spotless.version>2.43.0</spotless.version>
     </properties>
     <dependencyManagement>
