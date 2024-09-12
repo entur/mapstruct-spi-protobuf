@@ -146,6 +146,9 @@ public interface ProtobufStandardMappings {
         if (t == null) {
             return null;
         }
+        if (Timestamp.getDefaultInstance().equals(from)) {
+            return Instant.EPOCH;
+        }        
 
         Timestamp sanitized = Timestamps.sanitize(t);
 
