@@ -143,4 +143,3 @@ implementation"org.mapstruct:mapstruct:${mapstructVersion}"
 
 http://mapstruct.org/documentation/stable/reference/html/index.html#using-spi
 
-
