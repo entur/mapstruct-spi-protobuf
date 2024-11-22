@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.entur.mapstruct.spi</groupId>
     <artifactId>spi-protobuf-parent</artifactId>
-    <version>1.45</version>
+    <version>1.46</version>
     <packaging>pom</packaging>
     <name>Mapstruct SPI implementation for protobuf stubs</name>
     <description>Protobuf support for mapstruct</description>
@@ -15,21 +15,21 @@
         <module>support-lite</module>
     </modules>
     <properties>
-        <grpc.api.version>2.42.0</grpc.api.version>
+        <grpc.api.version>2.49.0</grpc.api.version>
         <gson.version>2.11.0</gson.version>
-        <guava.version>33.2.1-jre</guava.version>
-        <jupiter.version>5.10.3</jupiter.version>
-        <maven-javadoc-plugin.version>3.8.0</maven-javadoc-plugin.version>
+        <guava.version>33.3.1-jre</guava.version>
+        <jupiter.version>5.11.3</jupiter.version>
+        <maven-javadoc-plugin.version>3.11.1</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <!-- Downgraded from 1.5.3.Final because of https://github.com/mapstruct/mapstruct/issues/2825 . Nested types (ie includes) are causing new methods to be generated and these do not respect original annotations. -->
-        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+        <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <os.mavenplugin.version>1.7.1</os.mavenplugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <proto.version>3.25.4</proto.version>
+        <proto.version>3.25.5</proto.version>
         <protobuf.plugin.version>0.7.1</protobuf.plugin.version>
-        <slf4j.version>2.0.13</slf4j.version>
+        <slf4j.version>2.0.16</slf4j.version>
         <spotless.version>2.43.0</spotless.version>
     </properties>
     <dependencyManagement>
@@ -132,7 +132,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.3.1</version>
+                    <version>3.5.2</version>
                     <configuration>
                         <useSystemClassLoader>false</useSystemClassLoader>
                         <excludes>
@@ -277,7 +277,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.2.4</version>
+                        <version>3.2.7</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
