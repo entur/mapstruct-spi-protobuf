@@ -4,9 +4,11 @@
     <parent>
         <groupId>no.entur.mapstruct.spi</groupId>
         <artifactId>spi-protobuf-parent</artifactId>
-        <version>1.47-SNAPSHOT</version>
+        <version>1.46</version>
     </parent>
+    <groupId>io.github.dnalchemist.mapstruct.spi</groupId>
     <artifactId>protobuf-spi-impl</artifactId>
+    <version>1.47-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>org.mapstruct</groupId>
