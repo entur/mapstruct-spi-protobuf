@@ -1,5 +1,13 @@
 # Mapstruct SPI implementation for protocol buffers [![CircleCI](https://circleci.com/gh/entur/mapstruct-spi-protobuf.svg?style=svg)](https://circleci.com/gh/entur/mapstruct-spi-protobuf)
 
+---
+
+### This is a fork of the original project, with the following changes:
+- All other project that not related to the SPI implementation are removed
+- Package name changed to `io.github.dnalchemist.spi.mapstruct` to avoid conflicts with the original project
+- TODO Implement Enum to int mapping through getUserEnumValue() method to avoid UNRECOGNIZED enum values with outdated proto files
+---
+
 This naming strategy helps [mapstruct](http://mapstruct.org/) generate working mapping code between your domain classes
 and protobuf classes. Both [fullblown Java protobuf](https://github.com/protocolbuffers/protobuf/tree/master/java)
 and [protolite](https://github.com/protocolbuffers/protobuf/blob/master/java/lite.md) classes suported.
