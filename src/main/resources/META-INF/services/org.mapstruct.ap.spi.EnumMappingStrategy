@@ -1,1 +1,1 @@
-no.entur.mapstruct.spi.protobuf.ProtobufEnumMappingStrategy
+io.github.dnalchemist.mapstruct.spi.protobuf.ProtobufEnumMappingStrategy

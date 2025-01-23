@@ -1,4 +1,4 @@
-package no.entur.mapstruct.spi.protobuf;
+package io.github.dnalchemist.mapstruct.spi.protobuf;
 
 /*-
  * #%L

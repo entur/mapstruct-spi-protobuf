@@ -42,7 +42,7 @@
                         <configuration>
                             <compilerArgument>-proc:none</compilerArgument>
                             <includes>
-                                <include>no/entur/mapstruct/spi/protobuf/ProcessingEnvOptionsHolder.java</include>
+                                <include>io/github/dnalchemist/mapstruct/spi/protobuf/ProcessingEnvOptionsHolder.java</include>
                             </includes>
                         </configuration>
                     </execution>

@@ -1,1 +1,1 @@
-no.entur.mapstruct.spi.protobuf.ProtobufLiteBuilderProvider
+io.github.dnalchemist.mapstruct.spi.protobuf.ProtobufLiteBuilderProvider

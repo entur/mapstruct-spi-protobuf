@@ -1,1 +1,1 @@
-no.entur.mapstruct.spi.protobuf.ProtobufAccessorNamingStrategy
+io.github.dnalchemist.mapstruct.spi.protobuf.ProtobufAccessorNamingStrategy
