@@ -146,6 +146,9 @@ public interface ProtobufStandardMappings {
         if (t == null) {
             return null;
         }
+        if (Timestamp.getDefaultInstance().equals(from)) {
+            return Instant.EPOCH;
+        }        
 
         Timestamp sanitized = Timestamps.sanitize(t);
 
@@ -160,6 +163,9 @@ public interface ProtobufStandardMappings {
         if (i == null) {
             return null;
         }
+        if (i.getEpochSecond() == 0) {
+            return Timestamp.getDefaultInstance();
+        }        
 
         Timestamp t = Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build();
         return Timestamps.sanitize(t);
