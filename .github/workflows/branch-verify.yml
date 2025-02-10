@@ -1,0 +1,15 @@
+name: Validate branch
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+jobs:
+  test-branch-build:
+    uses: entur/abt-gha-public/.github/workflows/validate-jar-maven.yml@main
+    secrets: inherit
+    with:
+      automerge-dependabot: true
+      server-id: entur-partner
+      channel-id: ${{ vars.CHANNEL_ID }}
+      java-version: 18
