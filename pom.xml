@@ -120,14 +120,6 @@
                         </java>
                         <encoding>UTF-8</encoding>
                     </configuration>
-                    <dependencies>
-                        <!-- NOTE not publicly available artifact -->
-                        <dependency>
-                            <groupId>no.entur</groupId>
-                            <artifactId>abt-codestyle</artifactId>
-                            <version>0.36</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -172,17 +164,6 @@
                         <phase>initialize</phase>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.amashchenko.maven.plugin</groupId>
-                <artifactId>gitflow-maven-plugin</artifactId>
-                <version>1.21.0</version>
-                <configuration>
-                    <verbose>true</verbose>
-                    <commitMessagePrefix>[ci skip]</commitMessagePrefix>
-                    <allowSnapshots>false</allowSnapshots>
-                    <skipTestProject>true</skipTestProject>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.github.ekryd.sortpom</groupId>
