@@ -1,0 +1,14 @@
+name: Validate, build and deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  maven-build-and-release:
+    uses: entur/abt-gha-public/.github/workflows/maven-release-sona.yml@main
+    secrets: inherit
+    with:
+      server-id: ossrh
+      channel-id: ${{ vars.CHANNEL_ID }}
+      java-version: 18
