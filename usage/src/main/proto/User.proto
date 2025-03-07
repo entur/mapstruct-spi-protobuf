@@ -75,6 +75,7 @@ message UserDTO {
   repeated bytes rv15 = 114;
 
   repeated EnumStatus rv16 = 115;
+  repeated EnumStatus rv17 = 116;
   // repeated google.protobuf.Any rv17 = 116;
 
   repeated MultiNumberDTO rep_multi_numbers = 120;
