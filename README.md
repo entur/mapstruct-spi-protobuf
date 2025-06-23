@@ -107,8 +107,8 @@ Complete example:
     <artifactId>maven-compiler-plugin</artifactId>
 
     <configuration>
-        <source>1.8</source>
-        <target>1.8</target>
+        <source>17</source>
+        <target>17</target>
         <annotationProcessorPaths>
             <path>
                 <groupId>no.entur.mapstruct.spi</groupId>

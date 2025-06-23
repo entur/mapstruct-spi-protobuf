@@ -1,14 +1,15 @@
-name: Validate, build and deploy
+name: Validate, build and deploy to Maven Central
 on:
   push:
     branches:
       - main
 
 jobs:
-  maven-build-and-release:
-    uses: entur/abt-gha-public/.github/workflows/maven-release-sona.yml@main
+  maven-build-and-releas:
+    if: "!contains(github.event.head_commit.message, '[skip-release]')"
+    uses: entur/gha-maven-central/.github/workflows/maven-publish.yml@main
     secrets: inherit
     with:
-      server-id: ossrh
-      channel-id: ${{ vars.CHANNEL_ID }}
-      java-version: 18
+      next_version: minor
+      version_strategy: tag
+      version_tag_prefix: release-
