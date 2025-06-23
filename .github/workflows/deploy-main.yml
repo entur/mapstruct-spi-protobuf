@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  maven-build-and-releas:
+  maven-build-and-release:
     if: "!contains(github.event.head_commit.message, '[skip-release]')"
     uses: entur/gha-maven-central/.github/workflows/maven-publish.yml@main
     secrets: inherit

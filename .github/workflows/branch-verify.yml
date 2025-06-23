@@ -1,4 +1,4 @@
-name: Validate branch
+name: validate-maven-build
 on:
   pull_request:
     types:
