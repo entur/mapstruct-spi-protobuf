@@ -9,7 +9,6 @@
     <description>Protobuf support for mapstruct</description>
     <modules>
         <module>spi-impl</module>
-        <module>usage</module>
         <module>support-core</module>
         <module>support-standard</module>
         <module>support-lite</module>
@@ -286,19 +285,16 @@
         <url>https://github.com/entur/mapstruct-spi-protobuf/tree/master</url>
         <tag>HEAD</tag>
     </scm>
-    <distributionManagement>
-        <repository>
-            <id>ossrh</id>
-            <name>Sonatype release</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <name>Sonatype snapshot</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
     <profiles>
+        <profile>
+            <id>examples</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>usage</module>
+            </modules>
+        </profile>
         <profile>
             <id>publication</id>
             <properties>

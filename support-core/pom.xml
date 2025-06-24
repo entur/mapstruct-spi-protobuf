@@ -8,6 +8,8 @@
     </parent>
     <artifactId>protobuf-support-core</artifactId>
     <version>0.1-SNAPSHOT</version>
+    <name>protobuf-support-core</name>
+    <description>protobuf-support-core</description>
     <dependencies>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -48,4 +50,5 @@
             </plugin>
         </plugins>
     </build>
+    <url>https://github.com/entur/mapstruct-spi-protobuf</url>
 </project>
