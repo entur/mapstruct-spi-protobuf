@@ -23,6 +23,15 @@ package no.entur.abt.mapstruct.common;
  * #L%
  */
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
 import com.google.protobuf.BoolValue;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.BytesValue;
@@ -35,133 +44,124 @@ import com.google.protobuf.Timestamp;
 import com.google.protobuf.UInt32Value;
 import com.google.protobuf.UInt64Value;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
-
 public interface ProtobufStandardMappings {
 
-    default ByteString mapByteString(byte[] array) {
-        if (array == null) {
-            return ByteString.EMPTY;
-        }
-        return ByteString.copyFrom(array);
-    }
+	default ByteString mapByteString(byte[] array) {
+		if (array == null) {
+			return ByteString.EMPTY;
+		}
+		return ByteString.copyFrom(array);
+	}
 
-    default byte[] mapByteString(ByteString in) {
-        if (in != null && !in.isEmpty()) {
-            return in.toByteArray();
-        }
+	default byte[] mapByteString(ByteString in) {
+		if (in != null && !in.isEmpty()) {
+			return in.toByteArray();
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    default ByteString mapByteStringToString(String string) {
-        return ByteString.copyFromUtf8(string);
-    }
+	default ByteString mapByteStringToString(String string) {
+		return ByteString.copyFromUtf8(string);
+	}
 
-    default String mapStringToByteString(ByteString in) {
-        if (in != null && !in.isEmpty()) {
-            return in.toStringUtf8();
-        }
+	default String mapStringToByteString(ByteString in) {
+		if (in != null && !in.isEmpty()) {
+			return in.toStringUtf8();
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    default com.google.type.Date mapLocalDate(LocalDate t) {
-        return com.google.type.Date.newBuilder().setYear(t.getYear()).setMonth(t.getMonthValue()).setDay(t.getDayOfMonth()).build();
-    }
+	default com.google.type.Date mapLocalDate(LocalDate t) {
+		return com.google.type.Date.newBuilder().setYear(t.getYear()).setMonth(t.getMonthValue()).setDay(t.getDayOfMonth()).build();
+	}
 
-    default LocalDate mapDate(com.google.type.Date t) {
-        return LocalDate.of(t.getYear(), t.getMonth(), t.getDay());
-    }
+	default LocalDate mapDate(com.google.type.Date t) {
+		return LocalDate.of(t.getYear(), t.getMonth(), t.getDay());
+	}
 
-    default com.google.type.TimeOfDay mapLocalTime(LocalTime t) {
-        return com.google.type.TimeOfDay.newBuilder().setHours(t.getHour()).setMinutes(t.getMinute()).setSeconds(t.getSecond()).setNanos(t.getNano()).build();
-    }
+	default com.google.type.TimeOfDay mapLocalTime(LocalTime t) {
+		return com.google.type.TimeOfDay.newBuilder().setHours(t.getHour()).setMinutes(t.getMinute()).setSeconds(t.getSecond()).setNanos(t.getNano()).build();
+	}
 
-    default LocalTime mapTimeOfDay(com.google.type.TimeOfDay t) {
-        return LocalTime.of(t.getHours(), t.getMinutes(), t.getSeconds(), t.getNanos());
-    }
+	default LocalTime mapTimeOfDay(com.google.type.TimeOfDay t) {
+		return LocalTime.of(t.getHours(), t.getMinutes(), t.getSeconds(), t.getNanos());
+	}
 
-    default Timestamp map(LocalDateTime i) {
-        if (i == null) {
-            return null;
-        }
+	default Timestamp map(LocalDateTime i) {
+		if (i == null) {
+			return null;
+		}
 
-        TimeZone systemDefault = TimeZone.getDefault();
+		TimeZone systemDefault = TimeZone.getDefault();
 
-        int offset = systemDefault.getOffset(GregorianCalendar.AD, i.getYear(), i.getMonthValue() - 1, i.getDayOfMonth(), i.getDayOfWeek().getValue(),
-                i.getNano() / 1000);
+		int offset = systemDefault.getOffset(GregorianCalendar.AD, i.getYear(), i.getMonthValue() - 1, i.getDayOfMonth(), i.getDayOfWeek().getValue(),
+				i.getNano() / 1000);
 
-        return Timestamp.newBuilder().setSeconds(i.toEpochSecond(ZoneOffset.ofTotalSeconds(offset / 1000))).setNanos(i.getNano()).build();
-    }
+		return Timestamp.newBuilder().setSeconds(i.toEpochSecond(ZoneOffset.ofTotalSeconds(offset / 1000))).setNanos(i.getNano()).build();
+	}
 
-    default Timestamp map(OffsetDateTime in) {
-        return Timestamp.newBuilder().setSeconds(in.toEpochSecond()).setNanos(0).build();
-    }
+	default Timestamp map(OffsetDateTime in) {
+		return Timestamp.newBuilder().setSeconds(in.toEpochSecond()).setNanos(0).build();
+	}
 
-    default float map(FloatValue f) {
-        return f.getValue();
-    }
+	default float map(FloatValue f) {
+		return f.getValue();
+	}
 
-    default double map(DoubleValue f) {
-        return f.getValue();
-    }
+	default double map(DoubleValue f) {
+		return f.getValue();
+	}
 
-    default int map(Int32Value f) {
-        return f.getValue();
-    }
+	default int map(Int32Value f) {
+		return f.getValue();
+	}
 
-    default long map(Int64Value f) {
-        return f.getValue();
-    }
+	default long map(Int64Value f) {
+		return f.getValue();
+	}
 
-    default int map(UInt32Value f) {
-        return f.getValue();
-    }
+	default int map(UInt32Value f) {
+		return f.getValue();
+	}
 
-    default long map(UInt64Value f) {
-        return f.getValue();
-    }
+	default long map(UInt64Value f) {
+		return f.getValue();
+	}
 
-    default String map(StringValue f) {
-        return f.getValue();
-    }
+	default String map(StringValue f) {
+		return f.getValue();
+	}
 
-    default boolean map(BoolValue f) {
-        return f.getValue();
-    }
+	default boolean map(BoolValue f) {
+		return f.getValue();
+	}
 
-    default ByteString map(BytesValue f) {
-        return f.getValue();
-    }
+	default ByteString map(BytesValue f) {
+		return f.getValue();
+	}
 
-    default Instant mapToInstant(Timestamp t) {
-        if (t == null) {
-            return null;
-        }
+	default Instant mapToInstant(Timestamp t) {
+		if (t == null) {
+			return null;
+		}
 
-        Timestamp sanitized = Timestamps.sanitize(t);
+		Timestamp sanitized = Timestamps.sanitize(t);
 
-        if (sanitized != null) {
-            return Instant.ofEpochSecond(sanitized.getSeconds(), sanitized.getNanos());
-        } else {
-            return null;
-        }
-    }
+		if (sanitized != null) {
+			return Instant.ofEpochSecond(sanitized.getSeconds(), sanitized.getNanos());
+		} else {
+			return null;
+		}
+	}
 
-    default Timestamp mapToTimestamp(Instant i) {
-        if (i == null) {
-            return null;
-        }
+	default Timestamp mapToTimestamp(Instant i) {
+		if (i == null) {
+			return null;
+		}
 
-        Timestamp t = Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build();
-        return Timestamps.sanitize(t);
-    }
+		Timestamp t = Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build();
+		return Timestamps.sanitize(t);
+	}
 }

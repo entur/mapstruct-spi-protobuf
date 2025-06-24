@@ -1,4 +1,4 @@
-# Mapstruct SPI implementation for protocol buffers [![CircleCI](https://circleci.com/gh/entur/mapstruct-spi-protobuf.svg?style=svg)](https://circleci.com/gh/entur/mapstruct-spi-protobuf)
+# Mapstruct SPI implementation for protocol buffers
 
 This naming strategy helps [mapstruct](http://mapstruct.org/) generate working mapping code between your domain classes
 and protobuf classes. Both [fullblown Java protobuf](https://github.com/protocolbuffers/protobuf/tree/master/java)
@@ -107,8 +107,8 @@ Complete example:
     <artifactId>maven-compiler-plugin</artifactId>
 
     <configuration>
-        <source>1.8</source>
-        <target>1.8</target>
+        <source>17</source>
+        <target>17</target>
         <annotationProcessorPaths>
             <path>
                 <groupId>no.entur.mapstruct.spi</groupId>
@@ -133,10 +133,10 @@ Complete example:
 Note: See Maven setup regarding using the same version of mapstruct both in the annotation processor and the general
 dependency.
 
-```java
+```groovy
 implementation"org.mapstruct:mapstruct:${mapstructVersion}"
-        annotationProcessor"org.mapstruct:mapstruct-processor:${mapstructVersion}"
-        annotationProcessor"no.entur.mapstruct.spi:protobuf-spi-impl:LATEST.VERSION"
+annotationProcessor"org.mapstruct:mapstruct-processor:${mapstructVersion}"
+annotationProcessor"no.entur.mapstruct.spi:protobuf-spi-impl:LATEST.VERSION"
 ```
 
 # More information:

@@ -23,9 +23,10 @@ package no.entur.abt.mapstruct.common;
  * #L%
  */
 
-import com.google.protobuf.Timestamp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.protobuf.Timestamp;
 
 public class Timestamps {
 

@@ -1,4 +1,4 @@
-name: Validate branch
+name: validate-maven-build
 on:
   pull_request:
     types:
@@ -7,8 +7,6 @@ on:
 
 jobs:
   validate-maven-build:
-    uses: entur/abt-gha-public/.github/workflows/validate-jar-maven-sona.yml@main
-    secrets: inherit
+    uses: entur/abt-gha-public/.github/workflows/maven-open-source-verify.yml@main
     with:
-      server-id: entur-partner
-      java-version: 18
+      java-version: 21
