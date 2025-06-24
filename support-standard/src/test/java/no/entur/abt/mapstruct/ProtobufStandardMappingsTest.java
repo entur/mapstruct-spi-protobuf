@@ -23,10 +23,8 @@ package no.entur.abt.mapstruct;
  * #L%
  */
 
-import com.google.protobuf.Timestamp;
-import com.google.protobuf.util.Durations;
-import no.entur.abt.mapstruct.common.Timestamps;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -35,8 +33,12 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.jupiter.api.Test;
+
+import com.google.protobuf.Timestamp;
+import com.google.protobuf.util.Durations;
+
+import no.entur.abt.mapstruct.common.Timestamps;
 
 public class ProtobufStandardMappingsTest {
 
@@ -102,6 +104,11 @@ public class ProtobufStandardMappingsTest {
 	}
 
 	@Test
+	public void mapToInstant_whenEpoch_thenReturnDefaultTimestamp() {
+		assertEquals(Timestamp.getDefaultInstance(), MAPPER.mapToTimestamp(Instant.ofEpochSecond(0)));
+	}
+
+	@Test
 	public void mapPositiveDuration() {
 		Duration duration = Duration.of(3, ChronoUnit.NANOS);
 
@@ -137,4 +144,15 @@ public class ProtobufStandardMappingsTest {
 		Durations.checkValid(pbDuration);
 		assertEquals(pbDuration, MAPPER.mapDuration(duration));
 	}
+
+	@Test
+	public void mapDurationToProto_whenNull_thenReturnDefaultDuration() {
+		assertEquals(com.google.protobuf.Duration.getDefaultInstance(), MAPPER.mapDuration((Duration) null));
+	}
+
+	@Test
+	public void mapLocalDate_whenNull_thenReturnDefaultLocalDate() {
+		assertEquals(com.google.type.Date.getDefaultInstance(), MAPPER.mapLocalDate(null));
+	}
+
 }

@@ -48,11 +48,8 @@ public interface ProtobufStandardMappings extends no.entur.abt.mapstruct.common.
 		return instant == null ? null : instant.toEpochMilli();
 	}
 
-	default Timestamp fromEpochMilliseconds(Long instance) {
-		if (instance == null) {
-			return null;
-		}
-		Instant instant = Instant.ofEpochMilli(instance);
+	default Timestamp fromEpochMilliseconds(Long millis) {
+		Instant instant = Instant.ofEpochMilli(millis != null ? millis : 0L);
 		return mapToTimestamp(instant);
 	}
 
@@ -61,6 +58,9 @@ public interface ProtobufStandardMappings extends no.entur.abt.mapstruct.common.
 	}
 
 	default com.google.protobuf.Duration mapDuration(Duration t) {
+		if (t == null) {
+			return com.google.protobuf.Duration.getDefaultInstance();
+		}
 		long seconds = t.getSeconds();
 		int nanos = t.getNano();
 
