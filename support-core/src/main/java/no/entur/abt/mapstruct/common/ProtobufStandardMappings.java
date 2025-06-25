@@ -62,7 +62,7 @@ public interface ProtobufStandardMappings {
 	}
 
 	default ByteString mapByteStringToString(String string) {
-		return ByteString.copyFromUtf8(string);
+		return ByteString.copyFromUtf8(string != null ? string : "");
 	}
 
 	default String mapStringToByteString(ByteString in) {
@@ -74,7 +74,8 @@ public interface ProtobufStandardMappings {
 	}
 
 	default com.google.type.Date mapLocalDate(LocalDate t) {
-		return com.google.type.Date.newBuilder().setYear(t.getYear()).setMonth(t.getMonthValue()).setDay(t.getDayOfMonth()).build();
+		return t != null ? com.google.type.Date.newBuilder().setYear(t.getYear()).setMonth(t.getMonthValue()).setDay(t.getDayOfMonth()).build()
+				: com.google.type.Date.getDefaultInstance();
 	}
 
 	default LocalDate mapDate(com.google.type.Date t) {
@@ -82,7 +83,9 @@ public interface ProtobufStandardMappings {
 	}
 
 	default com.google.type.TimeOfDay mapLocalTime(LocalTime t) {
-		return com.google.type.TimeOfDay.newBuilder().setHours(t.getHour()).setMinutes(t.getMinute()).setSeconds(t.getSecond()).setNanos(t.getNano()).build();
+		return t != null
+				? com.google.type.TimeOfDay.newBuilder().setHours(t.getHour()).setMinutes(t.getMinute()).setSeconds(t.getSecond()).setNanos(t.getNano()).build()
+				: com.google.type.TimeOfDay.getDefaultInstance();
 	}
 
 	default LocalTime mapTimeOfDay(com.google.type.TimeOfDay t) {
@@ -91,7 +94,7 @@ public interface ProtobufStandardMappings {
 
 	default Timestamp map(LocalDateTime i) {
 		if (i == null) {
-			return null;
+			return Timestamp.getDefaultInstance();
 		}
 
 		TimeZone systemDefault = TimeZone.getDefault();
@@ -103,7 +106,7 @@ public interface ProtobufStandardMappings {
 	}
 
 	default Timestamp map(OffsetDateTime in) {
-		return Timestamp.newBuilder().setSeconds(in.toEpochSecond()).setNanos(0).build();
+		return in != null ? Timestamp.newBuilder().setSeconds(in.toEpochSecond()).setNanos(0).build() : Timestamp.getDefaultInstance();
 	}
 
 	default float map(FloatValue f) {
@@ -143,22 +146,16 @@ public interface ProtobufStandardMappings {
 	}
 
 	default Instant mapToInstant(Timestamp t) {
-		if (t == null) {
+		if (t == null || Timestamp.getDefaultInstance().equals(t)) {
 			return null;
 		}
-
 		Timestamp sanitized = Timestamps.sanitize(t);
-
-		if (sanitized != null) {
-			return Instant.ofEpochSecond(sanitized.getSeconds(), sanitized.getNanos());
-		} else {
-			return null;
-		}
+		return Instant.ofEpochSecond(sanitized.getSeconds(), sanitized.getNanos());
 	}
 
 	default Timestamp mapToTimestamp(Instant i) {
 		if (i == null) {
-			return null;
+			return Timestamp.getDefaultInstance();
 		}
 
 		Timestamp t = Timestamp.newBuilder().setSeconds(i.getEpochSecond()).setNanos(i.getNano()).build();
