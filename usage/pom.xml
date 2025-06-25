@@ -8,6 +8,8 @@
     </parent>
     <artifactId>protobuf-usage</artifactId>
     <version>0.1-SNAPSHOT</version>
+    <name>protobuf-usage</name>
+    <description>protobuf-usage</description>
     <dependencies>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -26,17 +28,20 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>dev.cookiecode</groupId>
+                <groupId>io.github.ascopes</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>${protobuf.plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>compile-sources</id>
                         <goals>
-                            <goal>compile</goal>
+                            <goal>generate</goal>
                         </goals>
-                        <phase>generate-sources</phase>
                         <configuration>
-                            <protocArtifact>com.google.protobuf:protoc:${proto.version}:exe:${os.detected.classifier}</protocArtifact>
+                            <protocVersion>${proto.version}</protocVersion>
+                            <sourceDirectories>
+                                <sourceDirectory>src/main/proto</sourceDirectory>
+                            </sourceDirectories>
                         </configuration>
                     </execution>
                 </executions>
@@ -77,4 +82,5 @@
             </extension>
         </extensions>
     </build>
+    <url>https://github.com/entur/mapstruct-spi-protobuf</url>
 </project>
