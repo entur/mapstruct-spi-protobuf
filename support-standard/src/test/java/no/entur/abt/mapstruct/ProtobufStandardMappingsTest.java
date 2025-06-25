@@ -23,10 +23,8 @@ package no.entur.abt.mapstruct;
  * #L%
  */
 
-import com.google.protobuf.Timestamp;
-import com.google.protobuf.util.Durations;
-import no.entur.abt.mapstruct.common.Timestamps;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -35,8 +33,12 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.jupiter.api.Test;
+
+import com.google.protobuf.Timestamp;
+import com.google.protobuf.util.Durations;
+
+import no.entur.abt.mapstruct.common.Timestamps;
 
 public class ProtobufStandardMappingsTest {
 
