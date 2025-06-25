@@ -31,7 +31,7 @@
         <os.mavenplugin.version>1.7.1</os.mavenplugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <proto.version>3.25.6</proto.version>
-        <protobuf.plugin.version>0.7.1</protobuf.plugin.version>
+        <protobuf.plugin.version>3.4.0</protobuf.plugin.version>
         <slf4j.version>2.0.16</slf4j.version>
         <spotless.version>2.44.5</spotless.version>
     </properties>
