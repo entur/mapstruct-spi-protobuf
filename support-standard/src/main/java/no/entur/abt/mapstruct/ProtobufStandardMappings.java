@@ -67,7 +67,7 @@ public interface ProtobufStandardMappings extends no.entur.abt.mapstruct.common.
 		if (t != null) {
 			return Durations.fromNanos(t.toNanos());
 		} else {
-			return null;
+			return com.google.protobuf.Duration.getDefaultInstance();
 		}
 	}
 
