@@ -1,4 +1,4 @@
-name: validate-maven-build
+name: Validate branch
 on:
   pull_request:
     types:
@@ -7,6 +7,6 @@ on:
 
 jobs:
   validate-maven-build:
-    uses: entur/abt-gha-public/.github/workflows/maven-open-source-verify.yml@main
+    uses: entur/abt-gha-public/.github/workflows/maven-open-source-verify.yml@v1
     with:
       java-version: 21
