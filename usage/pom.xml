@@ -38,7 +38,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <protocVersion>${proto.version}</protocVersion>
+                            <protoc>${proto.version}</protoc>
                             <sourceDirectories>
                                 <sourceDirectory>src/main/proto</sourceDirectory>
                             </sourceDirectories>
