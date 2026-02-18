@@ -1,0 +1,26 @@
+# Reusable Workflows see: https://github.com/entur/gha-security/blob/main/README-code-scan.md
+
+name: CodeQL Scan
+
+on:
+  pull_request:
+    branches:
+      - "main"
+  push:
+    branches:
+      - "main"
+  schedule:
+    - cron: "0 2 * * WED" # Run Wednesday at 2AM UTC
+
+jobs:
+  code-scan:
+    name: CodeQL Scan
+    uses: entur/gha-security/.github/workflows/code-scan.yml@v2
+    secrets: inherit
+    with:
+      use_setup_java: true
+      java_version: "25"
+      java_distribution: "liberica"
+      java_server_id_artifactory: entur-partner
+      use_maven_cache: true
+      job_runner: grp-ubuntu-24.04-16core-x64
