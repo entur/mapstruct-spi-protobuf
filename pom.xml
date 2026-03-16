@@ -20,7 +20,7 @@
         <jreleaser-maven-plugin.version>1.18.0</jreleaser-maven-plugin.version>
         <jupiter.version>6.0.3</jupiter.version>
         <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
-        <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
         <maven.compiler.plugin.version>3.15.0</maven.compiler.plugin.version>
