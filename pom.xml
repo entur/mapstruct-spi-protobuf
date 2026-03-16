@@ -14,7 +14,7 @@
         <module>support-lite</module>
     </modules>
     <properties>
-        <grpc.api.version>2.51.0</grpc.api.version>
+        <grpc.api.version>2.66.0</grpc.api.version>
         <gson.version>2.13.2</gson.version>
         <guava.version>33.5.0-jre</guava.version>
         <jreleaser-maven-plugin.version>1.18.0</jreleaser-maven-plugin.version>
