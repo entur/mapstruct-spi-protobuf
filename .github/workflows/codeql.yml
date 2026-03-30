@@ -16,7 +16,13 @@ jobs:
   code-scan:
     name: CodeQL Scan
     uses: entur/gha-security/.github/workflows/code-scan.yml@v2
-    secrets: inherit
+    # no secrets necessary
+    permissions: # some of these only apply when running on the default branch
+      actions: read
+      contents: write
+      pull-requests: write
+      security-events: write
+      issues: write
     with:
       use_setup_java: true
       java_version: "25"
