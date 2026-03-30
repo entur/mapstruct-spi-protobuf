@@ -4,3 +4,23 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 7
+      exclude:
+        - "no.entur.*"
+        - "org.entur.*"
+        - "io.entur.*"
+  - package-ecosystem: "github-actions"
+    directory: ".github/workflows"
+    cooldown:
+      default-days: 7
+    groups:
+      auto-merge-minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+      major-updates:
+        update-types:
+          - "major"
+    schedule:
+      interval: "daily"
