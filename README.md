@@ -55,7 +55,7 @@ Standard mapping functions between often used proto types and java types:
 * Duration <-> Duration
 * Date <-> LocalDate
 * TimeOfDay <-> LocalTime
-* byte[] <-> ByteString
+* ByteString <-> byte[]
 
 See [protobuf-support-standard](support-standard) and/or [protobuf-support-lite](support-lite) folders for a
 ready-to-use mapstruct mapper.
