@@ -15,7 +15,7 @@
     </modules>
     <properties>
         <grpc.api.version>2.68.0</grpc.api.version>
-        <gson.version>2.13.2</gson.version>
+        <gson.version>2.14.0</gson.version>
         <guava.version>33.6.0-jre</guava.version>
         <jreleaser-maven-plugin.version>1.23.0</jreleaser-maven-plugin.version>
         <jupiter.version>6.0.3</jupiter.version>
