@@ -14,7 +14,7 @@
         <module>support-lite</module>
     </modules>
     <properties>
-        <grpc.api.version>2.68.0</grpc.api.version>
+        <grpc.api.version>2.71.0</grpc.api.version>
         <gson.version>2.13.2</gson.version>
         <guava.version>33.6.0-jre</guava.version>
         <jreleaser-maven-plugin.version>1.24.0</jreleaser-maven-plugin.version>
@@ -32,8 +32,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <proto.version>4.34.1</proto.version>
         <protobuf.plugin.version>5.1.2</protobuf.plugin.version>
-        <slf4j.version>2.0.17</slf4j.version>
-        <spotless.version>3.4.0</spotless.version>
+        <slf4j.version>2.0.18</slf4j.version>
+        <spotless.version>3.5.0</spotless.version>
     </properties>
     <dependencyManagement>
         <dependencies>
