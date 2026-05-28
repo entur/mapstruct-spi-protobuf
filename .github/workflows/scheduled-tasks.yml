@@ -1,0 +1,21 @@
+name: Scheduled Workflow Tasks
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 08 * * 1-5'
+
+jobs:
+  # Dependabot auto-merges via `gh pr merge --auto` are performed by
+  # GITHUB_TOKEN, so the resulting push on main does not trigger
+  # the deploy workflow. This dispatches the deploy if the latest
+  # commit on main is from dependabot and the deploy has not yet run for it.
+  trigger-missed-dependabot-deploy:
+    uses: entur/abt-gha-public/.github/workflows/trigger-missed-dependabot-deploy.yml@v1
+    with:
+      target-workflow: deploy-main.yml
+      target-ref: main
+      channel-id: ${{ vars.ALERT_CHANNEL_ID }}
+    secrets: inherit
+    permissions:
+      contents: read
+      actions: write

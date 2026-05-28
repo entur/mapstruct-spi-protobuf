@@ -1,26 +1,37 @@
 version: 2
 updates:
-  - package-ecosystem: "maven"
-    directory: "/"
-    schedule:
-      interval: "daily"
+  - package-ecosystem: maven
+    directories:
+      - "/"
     cooldown:
       default-days: 7
       exclude:
         - "no.entur.*"
         - "org.entur.*"
         - "io.entur.*"
+    groups:
+      entur-dependencies:
+        patterns:
+          - "no.entur*"
+          - "org.entur*"
+        update-types:
+          - "patch"
+          - "minor"
+    schedule:
+      interval: "daily"
+
   - package-ecosystem: "github-actions"
     directory: ".github/workflows"
     cooldown:
       default-days: 7
+    ignore:
+      - dependency-name: "entur/*"
+        update-types: ["version-update:semver-minor", "version-update:semver-patch"]
+      - dependency-name: "actions/*"
+        update-types: ["version-update:semver-minor", "version-update:semver-patch"]
     groups:
-      auto-merge-minor-and-patch:
-        update-types:
-          - "minor"
-          - "patch"
-      major-updates:
-        update-types:
-          - "major"
+      github-actions:
+        patterns:
+          - "*"
     schedule:
       interval: "daily"
