@@ -1,0 +1,28 @@
+name: Auto Merge Dependabot (Entur)
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  auto-merge:
+    if: >
+      github.event.pull_request.user.login == 'dependabot[bot]' &&
+      github.repository == 'entur/mapstruct-spi-protobuf'
+    uses: entur/abt-gha-public/.github/workflows/auto-merge.yml@v1
+    with:
+      # Semver gate: patch and minor are auto-merged, major needs manual review.
+      auto-merge-patch: true
+      auto-merge-minor: true
+      auto-merge-major: false
+      # Ecosystem gate: only library/package dependencies (maven) are auto-merged.
+      # GitHub Actions and Docker updates are reviewed manually.
+      auto-merge-dependencies: true
+      auto-merge-docker: false
+      auto-merge-github-actions: false
+      channel-id: ${{ vars.ALERT_CHANNEL_ID }}
+    secrets: inherit
+    permissions:
+      pull-requests: write
+      contents: write
