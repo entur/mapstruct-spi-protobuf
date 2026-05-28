@@ -4,7 +4,6 @@ on:
     types:
       - opened
       - synchronize
-      - closed
 
 jobs:
   auto-merge:
