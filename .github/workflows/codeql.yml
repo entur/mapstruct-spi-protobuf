@@ -15,19 +15,12 @@ on:
 jobs:
   code-scan:
     name: CodeQL Scan
-    uses: entur/gha-security/.github/workflows/code-scan.yml@aeebe7ddac5952b3ef9f14380e2d5884b42a6c2e  # v2.13.0
+    uses: entur/gha-security/.github/workflows/code-scan.yml@v2
     # no secrets necessary
-    permissions: # some of these only apply when running on the default branch
+    permissions:
       packages: read
+      security-events: write
       actions: read
       contents: write
-      pull-requests: write
-      security-events: write
       issues: write
-    with:
-      use_setup_java: true
-      java_version: "25"
-      java_distribution: "liberica"
-      java_server_id_artifactory: entur-partner
-      use_maven_cache: true
-      job_runner: grp-ubuntu-24.04-16core-x64
+      pull-requests: write
