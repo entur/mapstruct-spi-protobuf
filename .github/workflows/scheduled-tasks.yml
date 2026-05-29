@@ -2,7 +2,7 @@ name: Scheduled Workflow Tasks
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 08 * * 1-5'
+    - cron: '0 04 * * 1-5'
 
 jobs:
   # Dependabot auto-merges via `gh pr merge --auto` are performed by
