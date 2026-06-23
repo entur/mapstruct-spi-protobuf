@@ -1,5 +1,6 @@
 name: Validate, build and deploy to Maven Central
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
