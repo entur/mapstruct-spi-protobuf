@@ -6,9 +6,9 @@ updates:
     cooldown:
       default-days: 7
       exclude:
-        - "no.entur.*"
-        - "org.entur.*"
-        - "io.entur.*"
+        - "no.entur*"
+        - "org.entur*"
+        - "io.entur*"
     groups:
       entur-dependencies:
         patterns:
