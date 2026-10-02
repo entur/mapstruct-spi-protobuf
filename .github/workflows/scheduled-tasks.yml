@@ -7,7 +7,7 @@ on:
 
 jobs:
   check-last-workflow-run:
-    uses: entur/abt-gha-public/.github/workflows/check-last-workflow-run.yml@v1
+    uses: entur/abt-gha-public/.github/workflows/check-last-workflow-run.yml@v2
     with:
       workflow: deploy-main.yml
       target-ref: main

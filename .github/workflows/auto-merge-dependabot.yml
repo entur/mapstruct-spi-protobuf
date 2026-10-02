@@ -10,7 +10,7 @@ jobs:
     if: >
       github.event.pull_request.user.login == 'dependabot[bot]' &&
       github.repository == 'entur/mapstruct-spi-protobuf'
-    uses: entur/abt-gha-public/.github/workflows/auto-merge.yml@v1
+    uses: entur/abt-gha-public/.github/workflows/auto-merge.yml@v2
     with:
       # Semver gate: patch and minor are auto-merged, major needs manual review.
       auto-merge-patch: true
