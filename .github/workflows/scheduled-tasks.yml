@@ -1,0 +1,19 @@
+name: Scheduled Workflow Tasks
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 05 * * 1-5'
+      timezone: "Europe/Oslo"
+
+jobs:
+  check-last-workflow-run:
+    uses: entur/abt-gha-public/.github/workflows/check-last-workflow-run.yml@v2
+    with:
+      workflow: deploy-main.yml
+      target-ref: main
+      trigger-release: true
+      channel-id: ${{ vars.ALERT_CHANNEL_ID }}
+    secrets: inherit
+    permissions:
+      contents: read
+      actions: write
