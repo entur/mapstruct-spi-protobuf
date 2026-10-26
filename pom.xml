@@ -274,16 +274,14 @@
     </licenses>
     <developers>
         <developer>
-            <name>Arne Seime</name>
-            <email>arne.seime@entur.org</email>
+            <name>Entur</name>
             <organization>Entur</organization>
-            <organizationUrl>http://www.entur.org</organizationUrl>
+            <organizationUrl>https://www.entur.org</organizationUrl>
         </developer>
         <developer>
-            <name>Dainius Figoras</name>
-            <email>dainius.figoras@entur.org</email>
-            <organization>Entur</organization>
-            <organizationUrl>http://www.entur.org</organizationUrl>
+            <name>Waltti</name>
+            <organization>Waltti</organization>
+            <organizationUrl>https://waltti.fi</organizationUrl>
         </developer>
     </developers>
     <scm>
