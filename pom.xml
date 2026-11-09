@@ -17,7 +17,7 @@
         <grpc.api.version>2.79.0</grpc.api.version>
         <gson.version>2.15.0</gson.version>
         <guava.version>33.8.0-jre</guava.version>
-        <jreleaser-maven-plugin.version>1.26.0</jreleaser-maven-plugin.version>
+        <jreleaser-maven-plugin.version>1.27.0</jreleaser-maven-plugin.version>
         <jupiter.version>6.1.3</jupiter.version>
         <maven-deploy-plugin.version>3.2.0</maven-deploy-plugin.version>
         <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
