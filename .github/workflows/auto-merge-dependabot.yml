@@ -22,7 +22,8 @@ jobs:
       auto-merge-docker: false
       auto-merge-github-actions: false
       channel-id: ${{ vars.ALERT_CHANNEL_ID }}
-    secrets: inherit
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
     permissions:
       pull-requests: write
       contents: write
