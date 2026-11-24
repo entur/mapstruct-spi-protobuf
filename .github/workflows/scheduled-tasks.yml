@@ -13,7 +13,8 @@ jobs:
       target-ref: main
       trigger-release: true
       channel-id: ${{ vars.ALERT_CHANNEL_ID }}
-    secrets: inherit
+    secrets:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
     permissions:
       contents: read
       actions: write
